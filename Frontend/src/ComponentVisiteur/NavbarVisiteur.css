@@ -1,0 +1,68 @@
+.navbar-visiteur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: linear-gradient(90deg, #4B2E83 0%, #2E5EAA 100%);
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-visiteur-logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.navbar-visiteur-logo span {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.navbar-visiteur-icons {
+  display: flex;
+  list-style: none;
+  gap: 26px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-visiteur-icons a {
+  text-decoration: none;
+  font-size: 1.1rem;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.navbar-visiteur-icons a:hover {
+  opacity: 1;
+}
+
+.navbar-visiteur-auth {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.navbar-visiteur-auth a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.navbar-visiteur-auth a:hover {
+  text-decoration: underline;
+}
+
+.navbar-visiteur-auth .separator {
+  color: rgba(255, 255, 255, 0.5);
+}

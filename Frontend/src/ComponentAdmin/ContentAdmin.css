@@ -1,0 +1,7 @@
+.content-admin {
+  margin-top: 52px;
+  margin-bottom: 36px;
+  min-height: calc(100vh - 88px);
+  padding: 24px 32px;
+  background-color: #F5F4FB;
+}

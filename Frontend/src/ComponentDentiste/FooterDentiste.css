@@ -1,0 +1,19 @@
+.footer-dentiste {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, #2E5EAA 0%, #4B2E83 100%);
+  z-index: 1000;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.footer-dentiste p {
+  color: #ffffff;
+  font-size: 0.78rem;
+  margin: 0;
+}
