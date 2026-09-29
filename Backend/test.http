@@ -1,0 +1,39 @@
+### Inscription
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "mail": "tbilarsiah@gmail.com",
+  "mot_de_passe": "Test1234"
+}
+
+### Connexion
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "mail": "ton_adresse@gmail.com",
+  "mot_de_passe": "Test1234"
+}
+
+### Profil connecté (remplace TON_TOKEN)
+GET http://localhost:5000/api/auth/me
+Authorization: Bearer TON_TOKEN
+
+### Mot de passe oublié
+POST http://localhost:5000/api/auth/forgot-password
+Content-Type: application/json
+
+{
+  "mail": "ton_adresse@gmail.com"
+}
+
+### Réinitialisation (remplace LE_CODE)
+POST http://localhost:5000/api/auth/reset-password
+Content-Type: application/json
+
+{
+  "mail": "ton_adresse@gmail.com",
+  "otp": "LE_CODE",
+  "nouveau_mot_de_passe": "Nouveau1234"
+}
