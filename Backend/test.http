@@ -3,7 +3,7 @@ POST http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
-  "mail": "tbilarsiah@gmail.com",
+  "mail": "bilarsiah@gmail.com",
   "mot_de_passe": "Test1234"
 }
 
@@ -12,20 +12,20 @@ POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "mail": "ton_adresse@gmail.com",
+  "mail": "bilarsiah@gmail.com",
   "mot_de_passe": "Test1234"
 }
 
 ### Profil connecté (remplace TON_TOKEN)
 GET http://localhost:5000/api/auth/me
-Authorization: Bearer TON_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwicm9sZSI6ImRlbnRpc3RlIiwiaWF0IjoxNzkwNzQ3MzE0LCJleHAiOjE3OTEzNTIxMTR9.L2auuBY9b5wkovWCRm596tKrfXcPy2289y5CZT_VzTM
 
 ### Mot de passe oublié
 POST http://localhost:5000/api/auth/forgot-password
 Content-Type: application/json
 
 {
-  "mail": "ton_adresse@gmail.com"
+  "mail": "bilarsiah@gmail.com"
 }
 
 ### Réinitialisation (remplace LE_CODE)
@@ -33,7 +33,7 @@ POST http://localhost:5000/api/auth/reset-password
 Content-Type: application/json
 
 {
-  "mail": "ton_adresse@gmail.com",
-  "otp": "LE_CODE",
+  "mail": "bilarsiah@gmail.com",
+  "otp": "LR58GH",
   "nouveau_mot_de_passe": "Nouveau1234"
 }

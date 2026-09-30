@@ -1,0 +1,72 @@
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzkwNzUwOTEzLCJleHAiOjE3OTEzNTU3MTN9.jrknXfxx1_IGKQo8QayBikvAMyu0vLpuIdX4_5DI0aU
+
+### Connexion admin
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "mail": "rakotoarison0219@gmail.com",
+  "mot_de_passe": "Tinaky1002"
+}
+
+### Créer une actualité AVEC image
+...### Créer une actualité AVEC image
+POST http://localhost:5000/api/actualites
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=FormBoundary
+
+--FormBoundary
+Content-Disposition: form-data; name="titre"
+
+Journée de prévention bucco-dentaire
+--FormBoundary
+Content-Disposition: form-data; name="contenu"
+
+Une journée de sensibilisation aura lieu le mois prochain.
+--FormBoundary
+Content-Disposition: form-data; name="image"; filename="test.jpg"
+Content-Type: image/jpeg
+
+< ./test.jpg
+--FormBoundary--
+
+### Créer une actualité SANS image
+POST http://localhost:5000/api/actualites
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "titre": "Nouvelle actualité",
+  "contenu": "Texte sans image."
+}
+
+### Mauvais format (fichier texte)
+POST http://localhost:5000/api/actualites
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=FormBoundary
+
+--FormBoundary
+Content-Disposition: form-data; name="titre"
+
+Test
+--FormBoundary
+Content-Disposition: form-data; name="contenu"
+
+Test
+--FormBoundary
+Content-Disposition: form-data; name="image"; filename="test.txt"
+Content-Type: text/plain
+
+< ./test.txt
+--FormBoundary--
+
+### Liste publique (sans token)
+GET http://localhost:5000/api/actualites
+
+### Une actualité (remplace 1)
+GET http://localhost:5000/api/actualites/1
+
+### Supprimer (remplace 1)
+DELETE http://localhost:5000/api/actualites/1
+Authorization: Bearer {{token}}

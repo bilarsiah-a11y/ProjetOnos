@@ -1,0 +1,49 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzkwNzUwODAxLCJleHAiOjE3OTEzNTU2MDF9.vjmvdIYTRF7pH_tNNDty8mtL9DtMxQl2pN8zfzl_MV8
+
+ ### Connexion admin
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "mail": "rakotoarison0219@gmail.com",
+  "mot_de_passe": "Tinaky1002"
+}
+
+### Inscrire un dentiste de test
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "mail": "tbilarsiah@gmail.com",
+  "mot_de_passe": "Test1234"
+}
+
+### Demandes en attente
+GET http://localhost:5000/api/admin/demandes
+Authorization: Bearer {{token}}
+
+### Accepter (remplace 6 par l'id de la demande)
+PATCH http://localhost:5000/api/admin/demandes/6/accepter
+Authorization: Bearer {{token}}
+
+### Refuser (remplace 6 par l'id d'une autre demande)
+DELETE http://localhost:5000/api/admin/demandes/6
+Authorization: Bearer {{token}}
+
+### Dentistes validés
+GET http://localhost:5000/api/admin/dentistes
+Authorization: Bearer {{token}}
+
+### Supprimer un dentiste (remplace 6)
+DELETE http://localhost:5000/api/admin/dentistes/6
+Authorization: Bearer {{token}}
+
+### Modifier le compte admin
+PUT http://localhost:5000/api/admin/compte
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "mot_de_passe_actuel": "TON_MOT_DE_PASSE_ADMIN",
+  "nouveau_mot_de_passe": "NouveauAdmin1234"
+}

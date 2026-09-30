@@ -1,10 +1,11 @@
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../Config/db');
 const generateOtp = require('../Utils/generateOtp');
 const sendMail = require('../Utils/sendMail');
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_ESSAIS_OTP = 5;
 
 // POST /api/auth/register
 exports.register = async (req, res) => {
@@ -120,7 +121,7 @@ exports.forgotPassword = async (req, res) => {
 
     await pool.query(
       `UPDATE utilisateur
-       SET otp_hash = $1, otp_expire = NOW() + INTERVAL '10 minutes'
+       SET otp_hash = $1, otp_expire = NOW() + INTERVAL '10 minutes', otp_essais = 0
        WHERE id = $2`,
       [otpHash, rows[0].id]
     );
@@ -149,11 +150,14 @@ exports.resetPassword = async (req, res) => {
       return res.status(400).json({ message: 'Le mot de passe doit contenir au moins 8 caractères' });
     }
 
+    // Chaque tentative est comptée avant la vérification du code
     const { rows } = await pool.query(
-      `SELECT id, otp_hash FROM utilisateur
+      `UPDATE utilisateur SET otp_essais = otp_essais + 1
        WHERE mail = $1 AND statut = 'valide'
-         AND otp_hash IS NOT NULL AND otp_expire > NOW()`,
-      [mail]
+         AND otp_hash IS NOT NULL AND otp_expire > NOW()
+         AND otp_essais < $2
+       RETURNING id, otp_hash`,
+      [mail, MAX_ESSAIS_OTP]
     );
     const user = rows[0];
 
@@ -164,7 +168,7 @@ exports.resetPassword = async (req, res) => {
     const hash = await bcrypt.hash(nouveau, 10);
     await pool.query(
       `UPDATE utilisateur
-       SET mot_de_passe = $1, otp_hash = NULL, otp_expire = NULL
+       SET mot_de_passe = $1, otp_hash = NULL, otp_expire = NULL, otp_essais = 0
        WHERE id = $2`,
       [hash, user.id]
     );

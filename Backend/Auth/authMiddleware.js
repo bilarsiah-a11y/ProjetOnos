@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-// Vérifie que l'utilisateur est connecté (token valide)
+// Vérification que l'utilisateur est connecté (token valide)
 function verifyToken(req, res, next) {
   const header = req.headers.authorization;
   if (!header || !header.startsWith('Bearer ')) {
@@ -14,7 +14,7 @@ function verifyToken(req, res, next) {
   }
 }
 
-// Vérifie le rôle : requireRole('admin') ou requireRole('dentiste')
+// Vérification de rôle : radmin ou dentiste
 function requireRole(...roles) {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {

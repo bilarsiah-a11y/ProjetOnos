@@ -1,0 +1,53 @@
+@tokenDentiste = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Niwicm9sZSI6ImRlbnRpc3RlIiwiaWF0IjoxNzkwNzUxOTI1LCJleHAiOjE3OTEzNTY3MjV9.93IIPwuOMI2PAOrJLEmVc8k6L3zcaqhE1cmErl1zkgo
+
+### Connexion dentiste
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "mail": "tbilarsiah@gmail.com",
+  "mot_de_passe": "Test1234"
+}
+
+### Ajouter ou changer ma photo
+PUT http://localhost:5000/api/dentistes/photo
+Authorization: Bearer {{tokenDentiste}}
+Content-Type: multipart/form-data; boundary=FormBoundary
+
+--FormBoundary
+Content-Disposition: form-data; name="photo"; filename="test.jpg"
+Content-Type: image/jpeg
+
+< ./test.jpg
+--FormBoundary--
+
+### Supprimer ma photo
+DELETE http://localhost:5000/api/dentistes/photo
+Authorization: Bearer {{tokenDentiste}}
+
+### Mon profil
+GET http://localhost:5000/api/dentistes/mon-profil
+Authorization: Bearer {{tokenDentiste}}
+
+### Annuaire
+GET http://localhost:5000/api/dentistes
+
+### Modifier mon mot de passe
+PUT http://localhost:5000/api/dentistes/compte
+Authorization: Bearer {{tokenDentiste}}
+Content-Type: application/json
+
+{
+  "mot_de_passe_actuel": "Test1234",
+  "nouveau_mot_de_passe": "Nouveau1234"
+}
+
+### Modifier mon email (mauvais mot de passe actuel, doit donner 401)
+PUT http://localhost:5000/api/dentistes/compte
+Authorization: Bearer {{tokenDentiste}}
+Content-Type: application/json
+
+{
+  "mot_de_passe_actuel": "Faux12345",
+  "nouveau_mail": "autre@gmail.com"
+}

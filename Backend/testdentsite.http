@@ -1,0 +1,55 @@
+@tokenDentiste = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Niwicm9sZSI6ImRlbnRpc3RlIiwiaWF0IjoxNzkwNzUwMDE3LCJleHAiOjE3OTEzNTQ4MTd9.wq0T8W_CYnKEkiNgCOauE4LTx1umrDMNuCqFjHM4fpQ
+
+### Connexion dentiste
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "mail": "tbilarsiah@gmail.com",
+  "mot_de_passe": "Test1234"
+}
+
+### Listes pour les menus déroulants
+GET http://localhost:5000/api/dentistes/options
+
+### Mon profil (404 tant qu'il n'est pas créé)
+GET http://localhost:5000/api/dentistes/mon-profil
+Authorization: Bearer {{tokenDentiste}}
+
+### Créer mon profil
+POST http://localhost:5000/api/dentistes/profil
+Authorization: Bearer {{tokenDentiste}}
+Content-Type: application/json
+
+{
+  "nom": "Rakoto",
+  "prenom": "Jean",
+  "date_naissance": "1990-05-12",
+  "lieu_naissance": "Antananarivo",
+  "genre": "Homme",
+  "adresse": "Lot 12 Analakely",
+  "contact": "0341234567",
+  "autre_contact": "0321234567",
+  "titre": "Docteur",
+  "domaine": "Libéral",
+  "region": "Analamanga"
+}
+
+### Modifier mon profil
+PUT http://localhost:5000/api/dentistes/profil
+Authorization: Bearer {{tokenDentiste}}
+Content-Type: application/json
+
+{
+  "adresse": "Lot 15 Antaninarenina",
+  "contact": "0349876543"
+}
+
+### Annuaire public (sans token)
+GET http://localhost:5000/api/dentistes
+
+### Annuaire filtré
+GET http://localhost:5000/api/dentistes?region=Analamanga&domaine=Libéral
+
+### Fiche publique (remplace 1 par l'id du dentiste)
+GET http://localhost:5000/api/dentistes/1
