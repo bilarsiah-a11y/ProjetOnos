@@ -7,7 +7,7 @@ export interface Utilisateur {
   aProfil: boolean;
 }
 
-// Fiche publique (annuaire)
+// Fiche publique
 export interface Dentiste {
   id: number;
   nom: string;
@@ -42,4 +42,29 @@ export interface OptionsProfil {
   titres: string[];
   domaines: string[];
   regions: string[];
+}
+
+export interface Demande {
+  id: number;
+  mail: string;
+  created_at: string;
+}
+
+// liste admin : le profil peut être vide 
+export interface DentisteAdmin {
+  id: number;
+  mail: string;
+  created_at: string;
+  nom: string | null;
+  prenom: string | null;
+  date_naissance: string | null;
+  lieu_naissance: string | null;
+  genre: 'Homme' | 'Femme' | null;
+  adresse: string | null;
+  contact: string | null;
+  autre_contact: string | null;
+  titre: string | null;
+  domaine: string | null;
+  region: string | null;
+  photo: string | null;
 }

@@ -1,0 +1,31 @@
+.gestion-dentiste { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+.gestion-dentiste h1 { display: flex; align-items: center; gap: 10px; font-size: 1.6rem; }
+.gd-badge {
+  background: #5b4bdb; color: #fff; font-size: .85rem;
+  min-width: 24px; height: 24px; padding: 0 8px; border-radius: 12px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.gd-recherche {
+  width: 100%; box-sizing: border-box; margin: 8px 0 16px;
+  padding: 10px 14px; border: 1px solid #ccc; border-radius: 8px; font: inherit;
+}
+.gd-erreur { background: #fdecea; color: #b3261e; padding: 10px 14px; border-radius: 8px; }
+.gd-vide { color: #777; text-align: center; padding: 40px 0; }
+.gd-liste { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.gd-carte {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  background: #fff; border-radius: 10px; padding: 14px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+.gd-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.gd-photo-vide {
+  background: #e0dfff; color: #5b4bdb; font-weight: 700; font-size: 1.3rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.gd-infos { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 200px; word-break: break-word; }
+.gd-infos span { color: #666; font-size: .88rem; }
+.gd-supprimer {
+  background: #d64545; color: #fff; border: none; border-radius: 6px;
+  padding: 8px 16px; cursor: pointer; font: inherit;
+}
+.gd-supprimer:disabled { opacity: .6; cursor: not-allowed; }

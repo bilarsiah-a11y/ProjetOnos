@@ -63,3 +63,22 @@
 .navbar-dentiste-profil a:hover {
   background: rgba(255, 255, 255, 0.22);
 }
+.navbar-dentiste-profil { position: relative; }
+.navbar-dentiste-profil-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: transparent; border: none; color: #fff; cursor: pointer; font: inherit;
+}
+.navbar-dentiste-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #fff; display: flex; align-items: center; justify-content: center;
+}
+.navbar-dentiste-menu {
+  position: absolute; right: 0; top: 120%; min-width: 160px;
+  background: #fff; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.navbar-dentiste-menu a, .navbar-dentiste-menu button {
+  padding: 10px 14px; text-align: left; background: none; border: none;
+  color: #333; text-decoration: none; cursor: pointer; font: inherit;
+}
+.navbar-dentiste-menu a:hover, .navbar-dentiste-menu button:hover { background: #f1efff; }

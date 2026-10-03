@@ -21,9 +21,12 @@ function NavbarVisiteur() {
       </Link>
 
       <ul className="navbar-visiteur-icons">
+             
         <li><Link to="/" title="Accueil">🏠</Link></li>
-         <li><Link to="/apropos" title="À propos">ℹ️</Link></li>
+        <li><Link to="/apropos" title="À propos">i️</Link></li>
         <li><Link to="/annuaire" title="Annuaire">🦷</Link></li>
+        <li><Link to="/contact" title="Contact">✉️</Link></li>
+      
       </ul>
 
       <div className="navbar-visiteur-auth">

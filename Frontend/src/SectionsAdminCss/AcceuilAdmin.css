@@ -1,0 +1,12 @@
+.acc-salut { color: #666; margin-top: -8px; }
+.acc-grille {
+  display: grid; gap: 16px; margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.acc-carte {
+  display: flex; flex-direction: column; gap: 6px; padding: 20px;
+  text-decoration: none; color: inherit; transition: transform .15s;
+}
+.acc-carte:hover { transform: translateY(-3px); }
+.acc-nombre { font-size: 2rem; font-weight: 700; color: #5b4bdb; }
+.acc-libelle { color: #666; }

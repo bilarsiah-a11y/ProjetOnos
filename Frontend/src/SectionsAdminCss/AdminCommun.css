@@ -1,0 +1,20 @@
+.adm-page { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+.adm-page h1 { display: flex; align-items: center; gap: 10px; font-size: 1.6rem; }
+.adm-erreur { background: #fdecea; color: #b3261e; padding: 10px 14px; border-radius: 8px; }
+.adm-succes { background: #e6f6ec; color: #1e7a43; padding: 10px 14px; border-radius: 8px; }
+.adm-vide { color: #777; text-align: center; padding: 40px 0; }
+.adm-carte {
+  background: #fff; border-radius: 10px; padding: 14px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+.adm-champ { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.adm-champ input, .adm-champ textarea, .adm-champ select {
+  padding: 10px 14px; border: 1px solid #ccc; border-radius: 8px;
+  font: inherit; box-sizing: border-box; width: 100%;
+}
+.adm-btn {
+  border: none; border-radius: 6px; padding: 10px 18px; cursor: pointer;
+  font: inherit; color: #fff; background: #5b4bdb;
+}
+.adm-btn:disabled { opacity: .6; cursor: not-allowed; }
+.adm-btn-danger { background: #d64545; }

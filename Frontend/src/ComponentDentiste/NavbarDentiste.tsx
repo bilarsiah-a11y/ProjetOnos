@@ -1,7 +1,19 @@
 import { Link } from 'react-router-dom'
 import './NavbarDentiste.css'
+  
+  const { utilisateur, deconnexion } = useAuth()
+  const navigate = useNavigate()
+  const [ouvert, setOuvert] = useState(false)
 
+  const pseudo = (utilisateur?.mail ?? '').split('@')[0]
+
+  const seDeconnecter = () => {
+    deconnexion()
+    setOuvert(false)
+    navigate('/connexion')
+  }
 function NavbarDentiste() {
+  
   return (
     <nav className="navbar-dentiste">
       <Link to="/dentiste/accueil" className="navbar-dentiste-logo">

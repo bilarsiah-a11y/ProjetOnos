@@ -1,0 +1,37 @@
+.auth-page {
+  display: flex; justify-content: center; align-items: center;
+  padding: 24px 16px;
+}
+.auth-carte {
+  width: 100%; max-width: 420px; box-sizing: border-box;
+  background: #fff; border-radius: 14px; padding: 28px 24px;
+  box-shadow: 0 6px 24px rgba(91, 75, 219, .18);
+}
+.auth-carte h1 {
+  margin: 0 0 6px; font-size: 1.5rem; text-align: center;
+  background: linear-gradient(135deg, #6a4bdb, #3b6fe0);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.auth-sous { text-align: center; color: #666; margin: 0 0 18px; font-size: .92rem; }
+.auth-champ { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.auth-champ input {
+  padding: 10px 14px; border: 1px solid #ccc; border-radius: 8px;
+  font: inherit; box-sizing: border-box; width: 100%;
+}
+.auth-champ input:focus { outline: 2px solid #b9b0f5; border-color: #6a4bdb; }
+.auth-btn {
+  width: 100%; border: none; border-radius: 8px; padding: 12px;
+  cursor: pointer; font: inherit; font-weight: 600; color: #fff;
+  background: linear-gradient(135deg, #6a4bdb, #3b6fe0);
+}
+.auth-btn:disabled { opacity: .6; cursor: not-allowed; }
+.auth-erreur { background: #fdecea; color: #b3261e; padding: 10px 14px; border-radius: 8px; margin: 0 0 14px; }
+.auth-info { background: #e6f6ec; color: #1e7a43; padding: 10px 14px; border-radius: 8px; margin: 0 0 14px; }
+.auth-liens {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px; margin-top: 18px; font-size: .92rem;
+}
+.auth-liens a, .auth-lien-btn {
+  color: #5b4bdb; background: none; border: none;
+  cursor: pointer; font: inherit; text-decoration: underline;
+}

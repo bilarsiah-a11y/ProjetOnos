@@ -1,0 +1,28 @@
+.notification { max-width: 800px; margin: 0 auto; padding: 24px 16px; }
+.notification h1 { display: flex; align-items: center; gap: 10px; font-size: 1.6rem; }
+.notification-badge {
+  background: #5b4bdb; color: #fff; font-size: .85rem;
+  min-width: 24px; height: 24px; padding: 0 8px; border-radius: 12px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.notification-erreur {
+  background: #fdecea; color: #b3261e; padding: 10px 14px; border-radius: 8px;
+}
+.notification-vide { color: #777; text-align: center; padding: 40px 0; }
+.notification-liste { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.notification-carte {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+  background: #fff; border-radius: 10px; padding: 14px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+.notification-infos { display: flex; flex-direction: column; gap: 4px; word-break: break-all; }
+.notification-infos span { color: #777; font-size: .85rem; }
+.notification-actions { display: flex; gap: 8px; }
+.notification-actions button {
+  border: none; border-radius: 6px; padding: 8px 16px;
+  cursor: pointer; font: inherit; color: #fff;
+}
+.notification-actions button:disabled { opacity: .6; cursor: not-allowed; }
+.btn-accepter { background: #2e9e5b; }
+.btn-refuser { background: #d64545; }

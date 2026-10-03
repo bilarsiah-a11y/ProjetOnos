@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import ContentAdmin from './ComponentAdmin/ContentAdmin'
 import ContentVisiteur from './ComponentVisiteur/ContentVisiteur'
 import ContentDentiste from './ComponentDentiste/ContentDentiste'
+import { AuthProvider } from './AuthContext'
+import RequireAdmin from './RequireAdmin'
 
 // Layouts 
 import NavbarVisiteur from './ComponentVisiteur/NavbarVisiteur'
@@ -21,6 +23,7 @@ import Seconnecter from './SectionsVisiteur/Seconnecter'
 import Sinscrire from './SectionsVisiteur/Sinscrire'
 
 // PageDentiste
+import RequireDentiste from './RequireDentiste'
 import AcceuilDentiste from './SectionsDentiste/AcceuilDentiste'
 import AnnuaireDentiste from './SectionsDentiste/AnnuaireDentiste'
 import DeconnectionDentiste from './SectionsDentiste/DeconnectionDentiste'
@@ -33,6 +36,7 @@ import Deconnexionadmin from './SectionsAdmin/Deconnexionadmin'
 import GestionActualiter from './SectionsAdmin/GestionActualiter'
 import Notification from './SectionsAdmin/Notification'
 import ProfilAdmin from './SectionsAdmin/ProfilAdmin'
+import Gestiondentiste from './SectionsAdmin/Gestiondentiste'
 
 // Layout Visiteur
 function LayoutVisiteur({ children }: { children: React.ReactNode }) {
@@ -72,6 +76,7 @@ function LayoutDentiste({ children }: { children: React.ReactNode }) {
 function App() {
   return (
     <BrowserRouter>
+    <AuthProvider>
       <Routes>
         {/* Espace Visiteur */}
         <Route path="/" element={<LayoutVisiteur><AcceuilVisiteur /></LayoutVisiteur>} />
@@ -82,19 +87,25 @@ function App() {
         <Route path="/inscription" element={<LayoutVisiteur><Sinscrire /></LayoutVisiteur>} />
 
         {/* Espace Dentiste */}
-        <Route path="/dentiste/accueil" element={<LayoutDentiste><AcceuilDentiste /></LayoutDentiste>} />
-        <Route path="/dentiste/annuaire" element={<LayoutDentiste><AnnuaireDentiste /></LayoutDentiste>} />
-        <Route path="/dentiste/profil" element={<LayoutDentiste><ProfilDentsite /></LayoutDentiste>} />
-        <Route path="/dentiste/deconnexion" element={<LayoutDentiste><DeconnectionDentiste /></LayoutDentiste>} />
-
+                  {/* Espace Dentiste (protégé) */}
+          <Route element={<RequireDentiste />}>
+            <Route path="/dentiste/accueil" element={<LayoutDentiste><AcceuilDentiste /></LayoutDentiste>} />
+            <Route path="/dentiste/annuaire" element={<LayoutDentiste><AnnuaireDentiste /></LayoutDentiste>} />
+            <Route path="/dentiste/profil" element={<LayoutDentiste><ProfilDentsite /></LayoutDentiste>} />
+            <Route path="/dentiste/deconnexion" element={<LayoutDentiste><DeconnectionDentiste /></LayoutDentiste>} />
+          </Route>
         {/* Espace Admin */}
-        <Route path="/admin/accueil" element={<LayoutAdmin><AcceuilAdmin /></LayoutAdmin>} />
-        <Route path="/admin/annuaire" element={<LayoutAdmin><AnnuaireAdmin /></LayoutAdmin>} />
-        <Route path="/admin/actualites" element={<LayoutAdmin><GestionActualiter /></LayoutAdmin>} />
-        <Route path="/admin/notifications" element={<LayoutAdmin><Notification /></LayoutAdmin>} />
-        <Route path="/admin/profil" element={<LayoutAdmin><ProfilAdmin /></LayoutAdmin>} />
-        <Route path="/admin/deconnexion" element={<LayoutAdmin><Deconnexionadmin /></LayoutAdmin>} />
+        <Route element={<RequireAdmin />}>
+            <Route path="/admin/accueil" element={<LayoutAdmin><AcceuilAdmin /></LayoutAdmin>} />
+            <Route path="/admin/annuaire" element={<LayoutAdmin><AnnuaireAdmin /></LayoutAdmin>} />
+            <Route path="/admin/actualites" element={<LayoutAdmin><GestionActualiter /></LayoutAdmin>} />
+            <Route path="/admin/dentistes" element={<LayoutAdmin><Gestiondentiste /></LayoutAdmin>} />
+            <Route path="/admin/notifications" element={<LayoutAdmin><Notification /></LayoutAdmin>} />
+            <Route path="/admin/profil" element={<LayoutAdmin><ProfilAdmin /></LayoutAdmin>} />
+            <Route path="/admin/deconnexion" element={<LayoutAdmin><Deconnexionadmin /></LayoutAdmin>} />
+          </Route>
       </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }

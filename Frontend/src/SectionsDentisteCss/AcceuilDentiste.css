@@ -1,0 +1,12 @@
+.acc-dent-profil { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.acc-dent-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.acc-dent-photo-vide {
+  background: #e0dfff; color: #5b4bdb; font-weight: 700; font-size: 1.8rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.acc-dent-texte { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.acc-dent-texte span { color: #666; }
+.acc-dent-btn { margin-top: 4px; }
+.acc-dent-actus { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+.acc-dent-actus p { margin: 4px 0 0; color: #444; }
+.acc-dent-date { display: block; color: #777; font-size: .85rem; }

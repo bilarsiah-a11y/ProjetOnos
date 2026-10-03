@@ -1,0 +1,8 @@
+.contact-infos { margin-bottom: 20px; }
+.contact-infos a { color: #5b4bdb; text-decoration: none; }
+.contact-form h3 { margin-top: 0; }
+.contact-champ { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.contact-champ input, .contact-champ textarea {
+  padding: 10px 14px; border: 1px solid #ccc; border-radius: 8px;
+  font: inherit; box-sizing: border-box; width: 100%;
+}

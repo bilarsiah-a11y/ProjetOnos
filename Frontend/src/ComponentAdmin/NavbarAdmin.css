@@ -63,3 +63,24 @@
 .navbar-admin-profil a:hover {
   background: rgba(255, 255, 255, 0.22);
 }
+
+.navbar-admin-profil { position: relative; }
+.navbar-admin-profil-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: transparent; border: none; color: #fff; cursor: pointer; font: inherit;
+}
+.navbar-admin-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: #fff; color: #5b4bdb; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.navbar-admin-menu {
+  position: absolute; right: 0; top: 120%; min-width: 160px;
+  background: #fff; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.navbar-admin-menu a, .navbar-admin-menu button {
+  padding: 10px 14px; text-align: left; background: none; border: none;
+  color: #333; text-decoration: none; cursor: pointer; font: inherit;
+}
+.navbar-admin-menu a:hover, .navbar-admin-menu button:hover { background: #f1efff; }

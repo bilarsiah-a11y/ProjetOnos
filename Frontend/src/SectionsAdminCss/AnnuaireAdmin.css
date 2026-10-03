@@ -1,0 +1,14 @@
+.ann-filtres {
+  display: grid; gap: 12px; margin: 12px 0;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.ann-filtres .adm-champ { margin-bottom: 0; }
+.ann-liste { list-style: none; padding: 0; display: grid; gap: 12px; }
+.ann-carte { display: flex; align-items: center; gap: 14px; }
+.ann-photo { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.ann-photo-vide {
+  background: #e0dfff; color: #5b4bdb; font-weight: 700; font-size: 1.4rem;
+  display: flex; align-items: center; justify-content: center;
+}
+.ann-infos { display: flex; flex-direction: column; gap: 3px; min-width: 0; word-break: break-word; }
+.ann-infos span { color: #666; font-size: .9rem; }
