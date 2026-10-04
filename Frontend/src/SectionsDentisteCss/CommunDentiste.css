@@ -1,0 +1,31 @@
+.dent-page { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+.dent-titre {
+  font-size: 1.8rem; margin: 0 0 8px;
+  background: linear-gradient(135deg, #6a4bdb, #3b6fe0);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.dent-intro { color: #555; margin: 0 0 20px; }
+.dent-carte {
+  background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(91, 75, 219, .12);
+}
+.dent-carte h2 { margin: 0 0 14px; font-size: 1.2rem; color: #3a2fa0; }
+.dent-grille { display: grid; gap: 0 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.dent-champ { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.dent-champ input, .dent-champ select {
+  padding: 10px 14px; border: 1px solid #ccc; border-radius: 8px;
+  font: inherit; box-sizing: border-box; width: 100%; background: #fff;
+}
+.dent-btn {
+  display: inline-block; border: none; border-radius: 8px; padding: 10px 20px;
+  font: inherit; font-weight: 600; color: #fff; text-decoration: none; cursor: pointer;
+  background: linear-gradient(135deg, #6a4bdb, #3b6fe0);
+}
+.dent-btn:disabled { opacity: .6; cursor: not-allowed; }
+.dent-btn-danger { background: #d64545; }
+.dent-erreur { background: #fdecea; color: #b3261e; padding: 10px 14px; border-radius: 8px; margin: 0 0 14px; }
+.dent-succes { background: #e6f6ec; color: #1e7a43; padding: 10px 14px; border-radius: 8px; margin: 0 0 14px; }
+.dent-alerte { background: #fff6e0; color: #8a5a00; padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; }
+.dent-vide { color: #777; padding: 10px 0; margin: 0; }
+.dent-champ label { color: #444; }
+.dent-champ input, .dent-champ select { color: #333; }

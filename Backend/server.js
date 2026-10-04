@@ -9,6 +9,7 @@ const authRoutes = require('./Routes/authRoutes');
 const dentisteRoutes = require('./Routes/dentisteRoutes');
 const adminRoutes = require('./Routes/adminRoutes');
 const actualiteRoutes = require('./Routes/actualiteRoutes');
+const rdvRoutes = require('./Routes/rdvRoutes');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(cors({ origin: process.env.FRONT_URL || 'http://localhost:5173' }));
 app.use(express.json({ limit: '100kb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'Uploads')));
 
+app.use('/api/rdv', rdvRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/dentistes', dentisteRoutes);
 app.use('/api/admin', adminRoutes);

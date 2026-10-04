@@ -26,3 +26,8 @@
 .liste-infos { display: flex; flex-direction: column; gap: 3px; min-width: 0; word-break: break-word; }
 .liste-infos span { color: #666; font-size: .9rem; }
 .liste-infos a { color: #5b4bdb; text-decoration: none; }
+.liste-rdv-btn {
+  align-self: flex-start; margin-top: 6px; border: none; border-radius: 8px;
+  padding: 8px 14px; cursor: pointer; font: inherit; font-weight: 600; color: #fff;
+  background: linear-gradient(135deg, #6a4bdb, #3b6fe0);
+}

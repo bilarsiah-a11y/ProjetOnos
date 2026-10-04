@@ -6,7 +6,7 @@ function AnnuaireVisiteur() {
     <section className="vis-page">
       <h1 className="vis-titre">Annuaire des dentistes</h1>
       <p className="vis-intro">Trouvez un dentiste à Madagascar, par région et par domaine d'exercice.</p>
-      <AnnuaireListe />
+            <AnnuaireListe reservation />
     </section>
   )
 }

@@ -1,0 +1,53 @@
+.dent-carte h2 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.rv-badge {
+  background: #e08a00; color: #fff; font-size: .8rem; font-weight: 600;
+  padding: 3px 10px; border-radius: 12px;
+}
+.rv-option { display: flex; align-items: center; gap: 8px; color: #555; margin-bottom: 14px; }
+.rv-aide { color: #666; font-size: .92rem; margin: 0 0 16px; }
+.rv-liste { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.rv-rdv {
+  display: grid; gap: 12px; align-items: center; padding: 14px 16px;
+  border: 1px solid #e3e0fb; border-radius: 10px; color: #333;
+  grid-template-columns: minmax(130px, 1fr) minmax(160px, 2fr) auto;
+}
+.rv-rdv.rv-annule { opacity: .6; }
+.rv-rdv.rv-annule .rv-quand { text-decoration: line-through; }
+.rv-quand { display: flex; flex-direction: column; gap: 2px; text-transform: capitalize; }
+.rv-heure { font-size: 1.2rem; font-weight: 700; color: #5b4bdb; }
+.rv-patient { display: flex; flex-direction: column; gap: 2px; word-break: break-word; }
+.rv-patient a { color: #5b4bdb; text-decoration: none; }
+.rv-patient span { color: #666; font-size: .9rem; }
+.rv-motif { font-style: italic; }
+.rv-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: flex-end; }
+.rv-statut { font-size: .8rem; font-weight: 600; padding: 4px 10px; border-radius: 12px; }
+.rv-statut-en_attente { background: #fff1d6; color: #8a5a00; }
+.rv-statut-confirme { background: #e6f6ec; color: #1e7a43; }
+.rv-statut-annule { background: #eee; color: #666; }
+.rv-actions .dent-btn { padding: 8px 14px; }
+
+.rv-duree { max-width: 240px; }
+.rv-jour {
+  display: grid; gap: 8px; padding: 10px 0; border-top: 1px solid #eee;
+  grid-template-columns: 100px 1fr; align-items: start; color: #333;
+}
+.rv-jour-nom { font-weight: 600; padding-top: 6px; }
+.rv-plages { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.rv-ferme { color: #999; padding-top: 6px; }
+.rv-plage { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rv-plage input[type="time"] {
+  padding: 8px 10px; border: 1px solid #ccc; border-radius: 8px; font: inherit; color: #333; background: #fff;
+}
+.rv-retirer { background: none; border: none; color: #d64545; cursor: pointer; font-size: 1.1rem; }
+.rv-ajouter { background: none; border: none; color: #5b4bdb; cursor: pointer; font: inherit; padding: 0; text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .rv-rdv { grid-template-columns: 1fr; }
+  .rv-actions { justify-content: flex-start; }
+  .rv-jour { grid-template-columns: 1fr; }
+}
+.rv-heure-select {
+  padding: 8px 10px; border: 1px solid #ccc; border-radius: 8px;
+  font: inherit; color: #333; background: #fff;
+}
+.rv-apercu { margin: 0; color: #666; font-size: .85rem; max-width: 520px; }

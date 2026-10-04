@@ -24,6 +24,7 @@ import Sinscrire from './SectionsVisiteur/Sinscrire'
 
 // PageDentiste
 import RequireDentiste from './RequireDentiste'
+import RendezVousDentiste from './SectionsDentiste/RendezVousDentiste'
 import AcceuilDentiste from './SectionsDentiste/AcceuilDentiste'
 import AnnuaireDentiste from './SectionsDentiste/AnnuaireDentiste'
 import DeconnectionDentiste from './SectionsDentiste/DeconnectionDentiste'
@@ -93,6 +94,7 @@ function App() {
             <Route path="/dentiste/annuaire" element={<LayoutDentiste><AnnuaireDentiste /></LayoutDentiste>} />
             <Route path="/dentiste/profil" element={<LayoutDentiste><ProfilDentsite /></LayoutDentiste>} />
             <Route path="/dentiste/deconnexion" element={<LayoutDentiste><DeconnectionDentiste /></LayoutDentiste>} />
+            <Route path="/dentiste/rendez-vous" element={<LayoutDentiste><RendezVousDentiste /></LayoutDentiste>} />
           </Route>
         {/* Espace Admin */}
         <Route element={<RequireAdmin />}>

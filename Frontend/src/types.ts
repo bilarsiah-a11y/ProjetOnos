@@ -68,3 +68,29 @@ export interface DentisteAdmin {
   region: string | null;
   photo: string | null;
 }
+
+export interface Horaire {
+  id?: number;
+  jour_semaine: number; // 1 = lundi ... 7 = dimanche
+  heure_debut: string;  // "08:00"
+  heure_fin: string;    // "12:00"
+}
+
+export interface ReglagesRdv {
+  duree_rdv: number;
+  horaires: Horaire[];
+}
+
+export type StatutRdv = 'en_attente' | 'confirme' | 'annule';
+
+export interface Rdv {
+  id: number;
+  date_rdv: string; // "2026-10-05"
+  heure: string;    // "09:00"
+  nom_patient: string;
+  telephone: string;
+  email: string | null;
+  motif: string | null;
+  statut: StatutRdv;
+  created_at: string;
+}

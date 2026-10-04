@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { api, urlImage } from '../services/api'
 import type { Dentiste, OptionsProfil } from '../types'
+import ReservationRdv from './ReservationRdv'
 import './AnnuaireListe.css'
 
-function AnnuaireListe() {
+function AnnuaireListe({ reservation = false }: { reservation?: boolean }) {
   const [dentistes, setDentistes] = useState<Dentiste[]>([])
   const [options, setOptions] = useState<OptionsProfil | null>(null)
+  const [actifs, setActifs] = useState<number[]>([])
+  const [choisi, setChoisi] = useState<Dentiste | null>(null)
   const [recherche, setRecherche] = useState('')
   const [region, setRegion] = useState('')
   const [domaine, setDomaine] = useState('')
@@ -16,14 +19,19 @@ function AnnuaireListe() {
     Promise.all([
       api.get<Dentiste[]>('/api/dentistes'),
       api.get<OptionsProfil>('/api/dentistes/options'),
+      // Si cette route échoue, l'annuaire s'affiche quand même (sans boutons)
+      reservation
+        ? api.get<number[]>('/api/rdv/dentistes-actifs').catch(() => [] as number[])
+        : Promise.resolve([] as number[]),
     ])
-      .then(([liste, opts]) => {
+      .then(([liste, opts, ids]) => {
         setDentistes(liste)
         setOptions(opts)
+        setActifs(ids)
       })
       .catch((e: Error) => setErreur(e.message))
       .finally(() => setChargement(false))
-  }, [])
+  }, [reservation])
 
   const terme = recherche.trim().toLowerCase()
   const filtres = dentistes.filter(
@@ -90,6 +98,11 @@ function AnnuaireListe() {
                         <> / <a href={`tel:${d.autre_contact.replace(/\s/g, '')}`}>{d.autre_contact}</a></>
                       )}
                     </span>
+                    {reservation && actifs.includes(d.id) && (
+                      <button className="liste-rdv-btn" onClick={() => setChoisi(d)}>
+                        Prendre rendez-vous
+                      </button>
+                    )}
                   </div>
                 </li>
               )
@@ -97,6 +110,8 @@ function AnnuaireListe() {
           </ul>
         </>
       )}
+
+      {choisi && <ReservationRdv dentiste={choisi} onFermer={() => setChoisi(null)} />}
     </div>
   )
 }
