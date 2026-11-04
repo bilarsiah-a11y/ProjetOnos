@@ -1,0 +1,27 @@
+/* Remonte le contenu sous la navbar */
+.page-annuaire {
+  padding-top: 10px; 
+  background-color: #f8f9fc;
+  min-height: 100vh;
+}
+
+.annuaire-entete {
+  text-align: center;
+
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Rend le titre visible (bleu foncé) */
+.annuaire-titre {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1e1b4b; /* Couleur foncée pour le rendre visible */
+  margin: 0 0 10px 0;
+}
+
+.annuaire-sous-titre {
+  font-size: 1.05rem;
+  color: #52526b;
+  margin: 0;
+}

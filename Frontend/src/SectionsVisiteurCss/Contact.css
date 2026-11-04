@@ -1,8 +1,115 @@
-.contact-infos { margin-bottom: 20px; }
-.contact-infos a { color: #5b4bdb; text-decoration: none; }
-.contact-form h3 { margin-top: 0; }
-.contact-champ { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
-.contact-champ input, .contact-champ textarea {
-  padding: 10px 14px; border: 1px solid #ccc; border-radius: 8px;
-  font: inherit; box-sizing: border-box; width: 100%;
+
+/* =========================================================
+   EN-TÊTE
+   ========================================================= */
+.contact-entete {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+/* Titre principal (Style Navbar) */
+.contact-titre {
+  font-size: 1.8rem; /* Taille réduite pour ressembler à la navbar */
+  font-weight: 700;
+  color: #1e1b4b;
+  margin: 0 0 12px;
+  letter-spacing: -0.5px;
+}
+
+/* Sous-titre (Style Navbar) */
+.contact-sous-titre {
+  font-size: 0.95rem; /* Taille de texte de la navbar */
+  color: #52526b;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+  font-weight: 500;
+}
+
+/* =========================================================
+   GRILLE DES COORDONNÉES (Centrée, 2 colonnes max)
+   ========================================================= */
+.contact-grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* S'adapte automatiquement */
+  gap: 20px;
+  max-width: 800px; /* Réduit pour centrer les cartes au milieu de la page */
+  margin: 0 auto;
+}
+
+/* =========================================================
+   CARTE DE CONTACT
+   ========================================================= */
+.contact-carte {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #f1f1f5;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-carte:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(91, 75, 219, 0.08);
+}
+
+/* Icône */
+.contact-icone {
+  font-size: 1.4rem;
+  background: #f5f4fb;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+/* Texte */
+.contact-texte {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-carte h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e1b4b;
+}
+
+.contact-carte p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #52526b;
+  line-height: 1.5;
+}
+
+.contact-carte a {
+  color: #5b4bdb;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contact-carte a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 600px) {
+  .contact-grille {
+    grid-template-columns: 1fr; /* 1 colonne sur mobile */
+  }
+  
+  .contact-carte {
+    padding: 20px;
+  }
 }

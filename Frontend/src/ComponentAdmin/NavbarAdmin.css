@@ -1,3 +1,4 @@
+/* ===== NAVBAR PRINCIPALE ===== */
 .navbar-admin {
   position: fixed;
   top: 0;
@@ -13,6 +14,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+/* ===== LOGO ===== */
 .navbar-admin-logo {
   display: flex;
   align-items: center;
@@ -27,6 +29,7 @@
   letter-spacing: 1px;
 }
 
+/* ===== LIENS ===== */
 .navbar-admin-links {
   display: flex;
   list-style: none;
@@ -47,40 +50,147 @@
   color: #ffffff;
 }
 
-.navbar-admin-profil a {
+/* ===== PROFIL (style image 2 : plat, sans fond) ===== */
+.navbar-admin-profil {
+  position: relative;
+}
+
+.navbar-admin-profil-btn {
   display: flex;
   align-items: center;
   gap: 8px;
+  background: transparent;
+  border: none;
   color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 4px 0;
+  transition: opacity 0.2s ease;
+}
+
+.navbar-admin-profil-btn:hover {
+  opacity: 0.8;
+}
+
+.navbar-admin-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar-admin-pseudo {
+  color: #ffffff;
+}
+
+.navbar-admin-arrow {
+  font-size: 0.65rem;
+  margin-left: 2px;
+  opacity: 0.8;
+}
+
+/* ===== MENU DÉROULANT ===== */
+.navbar-admin-menu {
+  position: absolute;
+  right: 0;
+  top: 130%;
+  min-width: 160px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.navbar-admin-menu a,
+.navbar-admin-menu button {
+  padding: 10px 14px;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #333;
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.12);
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 0.85rem;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
   transition: background 0.2s ease;
 }
 
-.navbar-admin-profil a:hover {
-  background: rgba(255, 255, 255, 0.22);
+.navbar-admin-menu a:hover,
+.navbar-admin-menu button:hover {
+  background: #f1efff;
 }
 
-.navbar-admin-profil { position: relative; }
-.navbar-admin-profil-btn {
-  display: flex; align-items: center; gap: 8px;
-  background: transparent; border: none; color: #fff; cursor: pointer; font: inherit;
+/* ===== BURGER ===== */
+.burger {
+  display: none;
 }
-.navbar-admin-avatar {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: #fff; color: #5b4bdb; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
+
+.burger-btn {
+  background: none;
+  border: none;
+  font-size: 1.7rem;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
 }
-.navbar-admin-menu {
-  position: absolute; right: 0; top: 120%; min-width: 160px;
-  background: #fff; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.2);
-  display: flex; flex-direction: column; overflow: hidden;
+
+.burger-panel {
+  position: absolute;
+  top: 52px;
+  right: 0;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  min-width: 210px;
+  gap: 4px;
+  z-index: 1001;
 }
-.navbar-admin-menu a, .navbar-admin-menu button {
-  padding: 10px 14px; text-align: left; background: none; border: none;
-  color: #333; text-decoration: none; cursor: pointer; font: inherit;
+
+.burger-panel a {
+  color: #1e293b;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
 }
-.navbar-admin-menu a:hover, .navbar-admin-menu button:hover { background: #f1efff; }
+
+.burger-panel a:hover {
+  background: #f1f5f9;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .navbar-admin {
+    padding: 0 18px;
+    height: 54px;
+  }
+
+  .navbar-admin-links {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+    position: relative;
+  }
+
+  .navbar-admin-pseudo {
+    display: none; /* sur mobile, on ne montre que l'avatar (initiale) */
+  }
+}

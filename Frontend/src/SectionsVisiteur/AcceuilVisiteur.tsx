@@ -1,9 +1,9 @@
+
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api, urlImage } from '../services/api'
 import type { Actualite } from '../types'
 import photoPresident from '../Public/Pesident.png'
-import '../SectionsVisiteurCss/CommunVisiteur.css'
 import '../SectionsVisiteurCss/AcceuilVisiteur.css'
 
 const ENGAGEMENTS = [
@@ -33,66 +33,36 @@ function AcceuilVisiteur() {
   return (
     <div className="acc-full">
     
-      
-
-      {/* ===== Qu'est-ce que l'ONOS ===== */}
-      <section className="acc-section acc-fond-blanc">
+      {/* ===== Intro & Engagement (Fusionnés) ===== */}
+      <section className="acc-section acc-intro-section">
         <div className="acc-inner acc-centre">
-          <p className="acc-sigle">Ordre National des Odonto-Stomatologistes de Madagascar</p>
-          <p className="acc-texte">
-            L'Ordre National des Odonto-Stomatologistes de Madagascar (ONOS) est l'institution de
-            régulation de la profession dentaire dans le pays. Créé pour veiller à l'éthique, à la
-            déontologie et à la qualité des soins bucco-dentaires, il regroupe l'ensemble des
-            chirurgiens-dentistes légalement autorisés à exercer à Madagascar.
+          <h1 className="acc-intro-titre">
+            Ordre National des <br />
+            <span className="acc-couleur">Odonto-Stomatologistes</span> de Madagascar
+          </h1>
+          <p className="acc-intro-texte">
+            L'ONOS est l'institution de régulation de la profession dentaire dans le pays. 
+            Créé pour veiller à l'éthique, à la déontologie et à la qualité des soins bucco-dentaires, 
+            il regroupe l'ensemble des chirurgiens-dentistes légalement autorisés à exercer à Madagascar.
           </p>
-        </div>
-      </section>
-
-      {/* ===== Notre engagement ===== */}
-      <section className="acc-section acc-fond-clair">
-        <div className="acc-inner">
-          <h2 className="acc-titre">Notre engagement</h2>
-          <ul className="acc-engagements">
-            {ENGAGEMENTS.map((e) => (
-              <li key={e}>
-                <span className="acc-puce">✓</span>
-                <span>{e}</span>
-              </li>
-            ))}
-          </ul>
+          
+          <div className="acc-engagement-bloc">
+            <h2 className="acc-sous-titre-titre">Notre engagement</h2>
+            <ul className="acc-engagements">
+              {ENGAGEMENTS.map((e, index) => (
+                <li key={e}>
+                  <span className="acc-numero">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="acc-engagement-texte">{e}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
       {/* ===== Mot du Président ===== */}
-      <section className="acc-section acc-fond-blanc acc-section-president">
-        <svg
-          className="acc-decor"
-          viewBox="0 0 100 100"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <defs>
-            <linearGradient id="onosDecor" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#6a4bdb" />
-              <stop offset="100%" stopColor="#3b6fe0" />
-            </linearGradient>
-          </defs>
-          <path
-            d="M75 15 C 45 15, 45 45, 25 45 C 10 45, 10 25, 25 25"
-            stroke="url(#onosDecor)"
-            strokeWidth="6"
-            strokeLinecap="round"
-            fill="none"
-          />
-          <path
-            d="M25 55 C 55 55, 55 85, 75 85 C 90 85, 90 65, 75 65"
-            stroke="url(#onosDecor)"
-            strokeWidth="6"
-            strokeLinecap="round"
-            fill="none"
-          />
-        </svg>
-
+      <section className="acc-section acc-section-president">
+        <div className="acc-decor-blob"></div>
         <div className="acc-inner acc-president">
           <div className="acc-president-texte">
             <h2>Mot de bienvenue du Président</h2>
@@ -110,31 +80,35 @@ function AcceuilVisiteur() {
               et tournée vers l'avenir.
             </p>
             <p><strong>Bienvenue et merci pour votre engagement à nos côtés.</strong></p>
-            <p className="acc-signature">
+            
+            <div className="acc-signature">
               <strong>Dr. Daniel A. RABEMANANJARA</strong>
               <span>Président de l'ONOS</span>
-            </p>
+            </div>
           </div>
 
           <div className="acc-president-photo-zone">
-            <img
-              className="acc-president-photo"
-              src={photoPresident}
-              alt="Dr. Daniel A. RABEMANANJARA"
-            />
+            <div className="acc-photo-cadre">
+              <img
+                className="acc-president-photo"
+                src={photoPresident}
+                alt="Dr. Daniel A. RABEMANANJARA"
+              />
+            </div>
           </div>
         </div>
       </section>
 
+      {/* ===== Hero / Annuaire ===== */}
       <section className="acc-hero">
         <div className="acc-inner">
-          <h1>
-            Trouvez le <span className="acc-couleur">bon dentiste</span>,
-            <br />
-            près de chez vous
-          </h1>
+          <h2 className="acc-hero-titre">
+            Services et Ressources
+          </h2>
           <p className="acc-sous-titre">
-            Onos réunit les dentistes de Madagascar dans un annuaire simple à consulter,
+            Accédez rapidement aux services et informations dont vous avez besoin
+            Trouvez le  dentiste près de chez vous . 
+            ONOS réunit les dentistes de Madagascar dans un annuaire simple à consulter,
             avec leurs coordonnées et leur domaine d'exercice.
           </p>
           <div className="acc-hero-actions">
@@ -145,7 +119,7 @@ function AcceuilVisiteur() {
       </section>
 
       {/* ===== Actualités ===== */}
-      <section className="acc-section acc-fond-clair acc-derniere">
+      <section className="acc-section acc-derniere">
         <div className="acc-inner">
           <h2 className="acc-titre">Dernières actualités</h2>
           {erreur && <p className="vis-erreur">{erreur}</p>}

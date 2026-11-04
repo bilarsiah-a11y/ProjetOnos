@@ -1,1 +1,246 @@
-.apropos-etapes { color: #444; line-height: 1.8; padding-left: 22px; }
+
+/* =========================================================
+   TYPOGRAPHIE & EN-TÊTE
+   ========================================================= */
+.apropos-hero {
+  padding: 20px 0 10px;
+}
+
+/* 1. Taille réduite pour le titre principal */
+.apropos-titre {
+  font-size: 2rem; /* Réduit de 2.5rem à 2rem */
+  font-weight: 800;
+  color: #1e1b4b;
+  margin: 0 0 12px;
+}
+
+.apropos-couleur { color: #5b4bdb; }
+
+.apropos-sous-titre {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1rem; /* Un peu plus petit pour équilibrer */
+  line-height: 1.7;
+  color: #52526b;
+}
+
+.apropos-titre-section {
+  text-align: center;
+  font-size: 1.6rem; /* Réduit aussi pour être cohérent */
+  font-weight: 800;
+  color: #1e1b4b;
+  margin-bottom: 30px;
+}
+
+.apropos-texte-gauche {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.apropos-sous-titre-section {
+  text-align: center;
+  color: #52526b;
+  font-size: 1rem;
+  margin-top: -20px;
+  margin-bottom: 40px;
+}
+
+/* =========================================================
+   LISTE DES MISSIONS (Numérotée)
+   ========================================================= */
+.apropos-liste-numerotee {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 850px;
+}
+
+.apropos-liste-numerotee li {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 16px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.apropos-liste-numerotee li:first-child {
+  border-top: 1px solid #e2e8f0;
+}
+
+.apropos-numero {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #5b4bdb;
+  opacity: 0.3;
+  min-width: 35px;
+  margin-top: 2px;
+}
+
+.apropos-texte-item {
+  font-size: 1rem;
+  color: #2d2d3a;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   HISTOIRE & PHOTO (Sans carte, directement sur le fond)
+   ========================================================= */
+.apropos-grille-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.apropos-texte-bloc p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #52526b;
+  margin-bottom: 24px;
+}
+
+.apropos-liste-puces {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.apropos-liste-puces li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: #1e1b4b;
+  font-weight: 500;
+}
+
+.apropos-puce {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: #eef0f8;
+  color: #5b4bdb;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.apropos-image-bloc {
+  width: 100%;
+}
+
+.apropos-image {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  object-fit: cover;
+}
+
+/* =========================================================
+   3. NOUVELLE FORME POUR LES VALEURS (Style Image 1)
+   ========================================================= */
+.apropos-grille-valeurs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 colonnes */
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.apropos-carte-valeur {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 30px 24px;
+  border: 1px solid #eef0f8;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.apropos-carte-valeur:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.apropos-icone-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Forme de l'icône */
+.apropos-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+}
+
+/* Couleurs spécifiques pour les icônes */
+.couleur-bleu .apropos-icone {
+  background: #eef4ff;
+  color: #3b82f6;
+}
+.couleur-vert .apropos-icone {
+  background: #ecfdf5;
+  color: #10b981;
+}
+.couleur-violet .apropos-icone {
+  background: #f5f3ff;
+  color: #8b5cf6;
+}
+
+.apropos-carte-valeur h3 {
+  font-size: 1.1rem;
+  color: #1e1b4b;
+  margin: 0;
+  font-weight: 700;
+}
+
+.apropos-carte-valeur p {
+  font-size: 0.95rem;
+  color: #52526b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 900px) {
+  .apropos-grille-2 {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .apropos-image-bloc {
+    order: -1;
+  }
+  
+  .apropos-grille-valeurs {
+    grid-template-columns: 1fr; /* 1 colonne sur mobile */
+  }
+  
+  .apropos-carte-valeur {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .apropos-titre { font-size: 1.8rem; }
+  .apropos-titre-section { font-size: 1.4rem; }
+}

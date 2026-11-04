@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { api, ApiError } from '../services/api'
 import type { Dentiste } from '../types'
-import './ReservationRdv.css'
+import '../SectionsVisiteurCss/ReservationRdv.css'
 
 const TEL_REGEX = /^\+?[\d\s.-]{8,20}$/
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -32,12 +32,15 @@ const formaterDate = (iso: string) =>
   })
 
 function ReservationRdv({ dentiste, onFermer }: { dentiste: Dentiste; onFermer: () => void }) {
+  const [etape, setEtape] = useState<1 | 2>(1) // Nouvel état pour les 2 étapes
+  
   const [date, setDate] = useState('')
   const [creneaux, setCreneaux] = useState<string[] | null>(null)
   const [chargement, setChargement] = useState(false)
   const [erreurCreneaux, setErreurCreneaux] = useState('')
   const [rechargement, setRechargement] = useState(0)
   const [heure, setHeure] = useState('')
+  
   const [nom, setNom] = useState('')
   const [telephone, setTelephone] = useState('')
   const [email, setEmail] = useState('')
@@ -45,9 +48,9 @@ function ReservationRdv({ dentiste, onFermer }: { dentiste: Dentiste; onFermer: 
   const [envoi, setEnvoi] = useState(false)
   const [erreur, setErreur] = useState('')
   const [succes, setSucces] = useState('')
- const jours = Array.from({ length: JOURS_MAX + 1 }, (_, n) => dansJours(n))
+  
+  const jours = Array.from({ length: JOURS_MAX + 1 }, (_, n) => dansJours(n))
 
-  // Fermeture avec la touche Échap
   useEffect(() => {
     const surTouche = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onFermer()
@@ -56,7 +59,6 @@ function ReservationRdv({ dentiste, onFermer }: { dentiste: Dentiste; onFermer: 
     return () => window.removeEventListener('keydown', surTouche)
   }, [onFermer])
 
-  // Chargement des créneaux libres quand la date change
   useEffect(() => {
     setHeure('')
     setErreurCreneaux('')
@@ -85,14 +87,15 @@ function ReservationRdv({ dentiste, onFermer }: { dentiste: Dentiste; onFermer: 
     }
   }, [date, dentiste.id, rechargement])
 
+  const choisirCreneau = (h: string) => {
+    setHeure(h)
+    setEtape(2) // Passe à l'étape 2 dès qu'on choisit l'heure
+  }
+
   const reserver = async (e: FormEvent) => {
     e.preventDefault()
     setErreur('')
 
-    if (!date || !heure) {
-      setErreur('Choisissez une date et un créneau.')
-      return
-    }
     if (nom.trim().length < 2) {
       setErreur('Saisissez votre nom.')
       return
@@ -120,8 +123,10 @@ function ReservationRdv({ dentiste, onFermer }: { dentiste: Dentiste; onFermer: 
       setSucces(r.message)
     } catch (err) {
       setErreur(err instanceof Error ? err.message : 'Une erreur est survenue')
-      // Créneau pris entre-temps : on rafraîchit la liste
-      if (err instanceof ApiError && err.status === 409) setRechargement((n) => n + 1)
+      if (err instanceof ApiError && err.status === 409) {
+        setRechargement((n) => n + 1)
+        setEtape(1) // Retourne à l'étape 1 si le créneau a été pris
+      }
     } finally {
       setEnvoi(false)
     }
@@ -129,73 +134,88 @@ function ReservationRdv({ dentiste, onFermer }: { dentiste: Dentiste; onFermer: 
 
   return (
     <div className="rdv-fond" onClick={onFermer} role="presentation">
-      <div
-        className="rdv-fenetre"
-        role="dialog"
-        aria-modal="true"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="rdv-fenetre" role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()}>
         <button className="rdv-fermer" aria-label="Fermer" onClick={onFermer}>✕</button>
-        <h2>Prendre rendez-vous</h2>
-        <p className="rdv-dentiste">{dentiste.titre} {dentiste.prenom} {dentiste.nom}</p>
+        
+        <div className="rdv-entete">
+          <h2>Prendre rendez-vous</h2>
+          <p className="rdv-dentiste">{dentiste.titre} {dentiste.prenom} {dentiste.nom}</p>
+          {/* Indicateur d'étape */}
+          {!succes && (
+            <div className="rdv-etapes-indicateur">
+              <span className={etape === 1 ? 'actif' : ''}>1. Date & Heure</span>
+              <span className="rdv-tiret">-</span>
+              <span className={etape === 2 ? 'actif' : ''}>2. Vos infos</span>
+            </div>
+          )}
+        </div>
 
         {succes ? (
-          <>
+          <div className="rdv-succes-zone">
             <p className="rdv-succes">{succes}</p>
             <p className="rdv-recap">{formaterDate(date)} à {heure}</p>
             <button className="rdv-btn" onClick={onFermer}>Fermer</button>
-          </>
+          </div>
         ) : (
           <form onSubmit={reserver}>
-                       <div className="rdv-champ">
-              <span>Choisissez un jour</span>
-              <div className="rdv-jours">
-                {jours.map((j) => {
-                  const p = partiesDate(j)
-                  return (
-                    <button
-                      key={j}
-                      type="button"
-                      className={`rdv-jour${j === date ? ' actif' : ''}`}
-                      onClick={() => setDate(j)}
-                    >
-                      <span>{p.semaine}</span>
-                      <strong>{p.jour}</strong>
-                      <span>{p.mois}</span>
-                    </button>
-                  )
-                })}
-              </div>
-            </div>
-
-            {erreurCreneaux && <p className="rdv-erreur">{erreurCreneaux}</p>}
-            {chargement && <p className="rdv-info">Recherche des créneaux...</p>}
-
-            {!chargement && creneaux !== null && (
-              creneaux.length === 0 ? (
-                <p className="rdv-info">Aucun créneau libre ce jour-là, essayez une autre date.</p>
-              ) : (
-                <>
-                  <p className="rdv-info">Créneaux disponibles :</p>
-                  <div className="rdv-creneaux">
-                    {creneaux.map((h) => (
-                      <button
-                        key={h}
-                        type="button"
-                        className={`rdv-creneau${h === heure ? ' actif' : ''}`}
-                        onClick={() => setHeure(h)}
-                      >
-                        {h}
-                      </button>
-                    ))}
+            
+            {/* ================= ÉTAPE 1 : DATE & HEURE ================= */}
+            {etape === 1 && (
+              <div className="rdv-etape-contenu">
+                <div className="rdv-champ">
+                  <span className="rdv-label">Choisissez un jour</span>
+                  <div className="rdv-jours">
+                    {jours.map((j) => {
+                      const p = partiesDate(j)
+                      return (
+                        <button
+                          key={j}
+                          type="button"
+                          className={`rdv-jour${j === date ? ' actif' : ''}`}
+                          onClick={() => setDate(j)}
+                        >
+                          <span>{p.semaine}</span>
+                          <strong>{p.jour}</strong>
+                          <span>{p.mois}</span>
+                        </button>
+                      )
+                    })}
                   </div>
-                </>
-              )
+                </div>
+
+                {erreurCreneaux && <p className="rdv-erreur">{erreurCreneaux}</p>}
+                {chargement && <p className="rdv-info">Recherche des créneaux...</p>}
+
+                {!chargement && creneaux !== null && (
+                  creneaux.length === 0 ? (
+                    <p className="rdv-info">Aucun créneau libre ce jour-là.</p>
+                  ) : (
+                    <>
+                      <p className="rdv-label" style={{ marginTop: '16px' }}>Créneaux disponibles :</p>
+                      <div className="rdv-creneaux">
+                        {creneaux.map((h) => (
+                          <button
+                            key={h}
+                            type="button"
+                            className="rdv-creneau"
+                            onClick={() => choisirCreneau(h)}
+                          >
+                            {h}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )
+                )}
+              </div>
             )}
 
-            {heure && (
-              <>
-                <p className="rdv-recap">{formaterDate(date)} à {heure}</p>
+            {/* ================= ÉTAPE 2 : INFOS ================= */}
+            {etape === 2 && (
+              <div className="rdv-etape-contenu">
+                <p className="rdv-recap">
+                  {formaterDate(date)} à {heure}
+                </p>
 
                 <div className="rdv-champ">
                   <label htmlFor="rdv-nom">Votre nom *</label>
@@ -203,30 +223,33 @@ function ReservationRdv({ dentiste, onFermer }: { dentiste: Dentiste; onFermer: 
                 </div>
                 <div className="rdv-champ">
                   <label htmlFor="rdv-tel">Téléphone *</label>
-                  <input id="rdv-tel" type="tel" value={telephone}
-                    onChange={(e) => setTelephone(e.target.value)} />
+                  <input id="rdv-tel" type="tel" value={telephone} onChange={(e) => setTelephone(e.target.value)} />
                 </div>
                 <div className="rdv-champ">
                   <label htmlFor="rdv-email">Email (facultatif)</label>
-                  <input id="rdv-email" type="email" value={email}
-                    onChange={(e) => setEmail(e.target.value)} />
+                  <input id="rdv-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div className="rdv-champ">
                   <label htmlFor="rdv-motif">Motif (facultatif)</label>
-                  <textarea id="rdv-motif" rows={2} value={motif}
-                    onChange={(e) => setMotif(e.target.value)} />
+                  <textarea id="rdv-motif" rows={2} value={motif} onChange={(e) => setMotif(e.target.value)} />
                 </div>
 
                 {erreur && <p className="rdv-erreur">{erreur}</p>}
 
-                <button className="rdv-btn" type="submit" disabled={envoi}>
-                  {envoi ? 'Envoi...' : 'Envoyer ma demande'}
-                </button>
+                <div className="rdv-actions">
+                  <button type="button" className="rdv-btn-retour" onClick={() => setEtape(1)}>
+                    ← Retour
+                  </button>
+                  <button className="rdv-btn" type="submit" disabled={envoi}>
+                    {envoi ? 'Envoi...' : 'Confirmer'}
+                  </button>
+                </div>
                 <p className="rdv-note">
-                  Le cabinet vous rappellera au numéro indiqué pour confirmer le rendez-vous.
+                  Le cabinet vous rappellera pour confirmer.
                 </p>
-              </>
+              </div>
             )}
+            
           </form>
         )}
       </div>
