@@ -7,13 +7,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(90deg, #2E5EAA 0%, #4B2E83 100%);
+  background: #c0bcbc;
+  border-top: 1px solid #D5D5DD;
   z-index: 1000;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .footer-dentiste p {
-  color: #ffffff;
+  color: #41414d;
   font-size: 0.78rem;
   margin: 0;
 }

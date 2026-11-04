@@ -50,47 +50,78 @@ function Sinscrire() {
   }
 
   return (
-    <section className="auth-page">
-      <div className="auth-carte">
-        <h1>S'inscrire</h1>
-        <p className="auth-sous">Réservé aux dentistes. Votre demande sera examinée par l'administrateur.</p>
+    <section className="auth-page auth-inscription">
+      <aside className="auth-visuel">
+        <h2>ONOS</h2>
+        <p className="auth-visuel-nom">
+          Ordre National des Odonto-Stomatologistes de Madagascar
+        </p>
+        <p className="auth-visuel-texte">
+          L'annuaire officiel des chirurgiens-dentistes de Madagascar.
+        </p>
+      </aside>
 
-        {succes ? (
-          <>
-            <p className="auth-info">{succes}</p>
-            <div className="auth-liens">
-              <Link to="/connexion">Aller à la connexion</Link>
-            </div>
-          </>
-        ) : (
-          <form onSubmit={sInscrire}>
-            {erreur && <p className="auth-erreur">{erreur}</p>}
+      <div className="auth-formulaire">
+        <div className="auth-carte">
+          <h1>S'inscrire</h1>
+          <p className="auth-sous">
+            Réservé aux dentistes. Votre demande sera examinée par l'administrateur.
+          </p>
 
-            <div className="auth-champ">
-              <label htmlFor="i-mail">Email</label>
-              <input id="i-mail" type="email" autoComplete="email" value={mail}
-                onChange={(e) => setMail(e.target.value)} />
-            </div>
-            <div className="auth-champ">
-              <label htmlFor="i-mdp">Mot de passe (8 caractères minimum)</label>
-              <input id="i-mdp" type="password" autoComplete="new-password" value={motDePasse}
-                onChange={(e) => setMotDePasse(e.target.value)} />
-            </div>
-            <div className="auth-champ">
-              <label htmlFor="i-conf">Confirmer le mot de passe</label>
-              <input id="i-conf" type="password" autoComplete="new-password" value={confirmation}
-                onChange={(e) => setConfirmation(e.target.value)} />
-            </div>
+          {succes ? (
+            <>
+              <p className="auth-info">{succes}</p>
+              <div className="auth-liens">
+                <Link to="/connexion">Aller à la connexion</Link>
+              </div>
+            </>
+          ) : (
+            <form onSubmit={sInscrire}>
+              {erreur && <p className="auth-erreur">{erreur}</p>}
 
-            <button className="auth-btn" type="submit" disabled={envoi}>
-              {envoi ? 'Envoi...' : "Envoyer ma demande"}
-            </button>
+              <div className="auth-champ">
+                <label htmlFor="i-mail">Email</label>
+                <input
+                  id="i-mail"
+                  type="email"
+                  autoComplete="email"
+                  value={mail}
+                  onChange={(e) => setMail(e.target.value)}
+                />
+              </div>
+              <div className="auth-champ">
+                <label htmlFor="i-mdp">Mot de passe (8 caractères minimum)</label>
+                <input
+                  id="i-mdp"
+                  type="password"
+                  autoComplete="new-password"
+                  value={motDePasse}
+                  onChange={(e) => setMotDePasse(e.target.value)}
+                />
+              </div>
+              <div className="auth-champ">
+                <label htmlFor="i-conf">Confirmer le mot de passe</label>
+                <input
+                  id="i-conf"
+                  type="password"
+                  autoComplete="new-password"
+                  value={confirmation}
+                  onChange={(e) => setConfirmation(e.target.value)}
+                />
+              </div>
 
-            <div className="auth-liens">
-              <span>Déjà inscrit ? <Link to="/connexion">Se connecter</Link></span>
-            </div>
-          </form>
-        )}
+              <button className="auth-btn" type="submit" disabled={envoi}>
+                {envoi ? 'Envoi...' : 'Envoyer ma demande'}
+              </button>
+
+              <div className="auth-liens">
+                <span>
+                  Déjà inscrit ? <Link to="/connexion">Se connecter</Link>
+                </span>
+              </div>
+            </form>
+          )}
+        </div>
       </div>
     </section>
   )

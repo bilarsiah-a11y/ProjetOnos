@@ -1,0 +1,392 @@
+/* ==========================================================================
+   PAGE DE CONNEXION - STYLE MAQUETTE
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --font-login: 'Plus Jakarta Sans', sans-serif;
+  --primary-blue: #2563EB;
+  --primary-blue-hover: #1D4ED8;
+  --bg-page: #F0F4F8;
+  --text-dark: #0F172A;
+  --text-gray: #64748B;
+  --border-color: #E2E8F0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Wrapper principal de la page */
+.login-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-page);
+  /* Motif de fond subtil (points) */
+  background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
+  background-size: 20px 20px;
+  font-family: var(--font-login);
+  padding: 20px;
+}
+
+/* Carte principale */
+.login-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  max-width: 1000px;
+  min-height: 600px;
+  background: #FFFFFF;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   PANNEAU GAUCHE (Image & Design)
+   -------------------------------------------------------------------------- */
+.login-left-panel {
+  position: relative;
+  /* L'IMAGE DE FOND EST ICI */
+  background-image: url('/chaise.png'); 
+  background-size: cover;
+  background-position: center;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #FFFFFF;
+}
+
+/* Filtre bleu par-dessus l'image pour correspondre à la maquette */
+.login-left-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.85) 0%, rgba(29, 78, 216, 0.9) 100%);
+  z-index: 1;
+}
+
+.login-left-panel > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Badge en haut */
+.login-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(4px);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+/* Contenu central (Logo ONOS) */
+.login-brand-center {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brand-logo {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 16px;
+}
+
+.login-brand-center h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  letter-spacing: -1px;
+}
+
+.login-brand-center p {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0 0 24px 0;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.brand-separator {
+  width: 40px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.4);
+  margin-bottom: 24px;
+}
+
+.login-brand-center span {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   PANNEAU DROIT (Formulaire)
+   -------------------------------------------------------------------------- */
+.login-right-panel {
+  padding: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 380px;
+}
+
+/* En-tête du formulaire (Icône + Titre) */
+.form-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.header-icon {
+  width: 48px;
+  height: 48px;
+  background: #EFF6FF;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-blue);
+  flex-shrink: 0;
+}
+
+.header-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.form-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 4px 0;
+}
+
+.form-header p {
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Formulaire */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.text-link {
+  background: none;
+  border: none;
+  color: var(--primary-blue);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
+/* Inputs avec icônes */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  width: 20px;
+  height: 20px;
+  color: #94A3B8;
+}
+
+.input-wrapper input {
+  width: 100%;
+  height: 52px;
+  background: #FFFFFF;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0 16px 0 48px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: var(--text-dark);
+  transition: all 0.2s ease;
+}
+
+.input-wrapper input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.eye-btn {
+  position: absolute;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #94A3B8;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+}
+
+.eye-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Input OTP spécifique */
+.otp-input {
+  width: 100%;
+  height: 52px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 8px;
+  color: var(--primary-blue);
+}
+
+/* Bouton de soumission */
+.submit-btn {
+  width: 100%;
+  height: 52px;
+  background: var(--primary-blue);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.1s;
+  margin-top: 8px;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: var(--primary-blue-hover);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--text-gray);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.back-btn:hover {
+  color: var(--text-dark);
+}
+
+/* Footer (Lien inscription) */
+.form-footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
+}
+
+.form-footer a {
+  display: block;
+  margin-top: 6px;
+  color: var(--primary-blue);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Alertes Box */
+.alert-box {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.alert-error {
+  background: #FEF2F2;
+  color: #991B1B;
+  border: 1px solid #F87171;
+}
+
+.alert-success {
+  background: #F0FDF4;
+  color: #166534;
+  border: 1px solid #4ADE80;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .login-card {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+  }
+
+  .login-left-panel {
+    display: none; /* On cache le panneau image sur mobile */
+  }
+
+  .login-right-panel {
+    padding: 40px 24px;
+  }
+}

@@ -1,17 +1,305 @@
+/* =========================================================
+   Plein écran : on supprime les côtés noirs sur cette page
+   ========================================================= */
+body:has(.acc-full) {
+  background: #f5f4fb;
+  overflow-x: hidden;
+}
+
+body:has(.acc-full) #root {
+  background: #f5f4fb;
+}
+
+.acc-full {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  color: #2d2d3a;
+}
+
+.acc-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.acc-centre { text-align: center; }
+
+.acc-section { padding: 64px 0; }
+.acc-fond-blanc { background: #ffffff; }
+.acc-fond-clair { background: #f5f4fb; }
+
+.acc-titre {
+  margin: 0 0 24px;
+  text-align: center;
+  font-size: 1.8rem;
+  color: #4b2e83;
+}
+
+/* =========================================================
+   Hero
+   ========================================================= */
 .acc-hero {
-  text-align: center; color: #fff; border-radius: 16px; padding: 40px 20px;
+  padding: 70px 0 56px;
+  text-align: center;
+  background: #f5f4fb;
+}
+
+.acc-hero h1 {
+  margin: 0 0 16px;
+  font-size: 2.6rem;
+  line-height: 1.25;
+  font-weight: 700;
+  color: #2d2d3a;
+}
+
+.acc-couleur { color: #5b4bdb; }
+
+.acc-sous-titre {
+  max-width: 600px;
+  margin: 0 auto 28px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555566;
+}
+
+.acc-hero-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.acc-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid #5b4bdb;
+  transition: opacity 0.2s ease;
+}
+
+.acc-btn:hover { opacity: 0.85; }
+
+.acc-btn-plein {
+  color: #ffffff;
+  background: linear-gradient(90deg, #5b4bdb, #3b6fe0);
+  border-color: transparent;
+}
+
+.acc-btn-contour {
+  color: #5b4bdb;
+  background: #ffffff;
+}
+
+/* =========================================================
+   Qu'est-ce que l'ONOS
+   ========================================================= */
+.acc-sigle {
+  display: inline-block;
+  margin: 0 0 18px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  color: #ffffff;
+  font-weight: 600;
+  background: linear-gradient(90deg, #6a4bdb, #3b6fe0);
+}
+
+.acc-texte {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.08rem;
+  line-height: 1.8;
+  color: #2d2d3a;
+}
+
+/* =========================================================
+   Engagement
+   ========================================================= */
+.acc-engagements {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.acc-engagements li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 14px;
+  border-left: 5px solid #6a4bdb;
+  box-shadow: 0 3px 12px rgba(91, 75, 219, 0.12);
+  color: #2d2d3a;
+  line-height: 1.5;
+}
+
+.acc-puce {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 0.9rem;
   background: linear-gradient(135deg, #6a4bdb, #3b6fe0);
 }
-.acc-hero h1 { margin: 0 0 12px; font-size: 1.9rem; }
-.acc-hero p { margin: 0 auto 22px; max-width: 560px; opacity: .95; }
-.acc-hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.acc-btn-blanc { background: #fff; color: #5b4bdb; }
-.acc-btn-contour { background: transparent; color: #fff; border-color: #fff; }
+
+/* =========================================================
+   Mot du Président (texte à gauche, photo à droite)
+   ========================================================= */
+.acc-section-president {
+  position: relative;
+  overflow: hidden;
+}
+
+.acc-decor {
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  width: 380px;
+  height: 380px;
+  transform: translateY(-50%);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.acc-president {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  align-items: center;
+  gap: 48px;
+}
+
+.acc-president-texte h2 {
+  margin: 0 0 20px;
+  font-size: 1.9rem;
+  color: #2d2d3a;
+}
+
+.acc-president-texte p {
+  margin: 0 0 14px;
+  line-height: 1.75;
+  color: #3d3d4d;
+}
+
+.acc-signature {
+  display: flex;
+  flex-direction: column;
+  margin-top: 22px !important;
+}
+
+.acc-signature strong { color: #2563eb; }
+.acc-signature span { color: #555566; }
+
+.acc-president-photo-zone {
+  display: flex;
+  justify-content: center;
+}
+
+.acc-president-photo {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 5px solid #2563eb;
+  box-shadow: 0 10px 28px rgba(37, 99, 235, 0.25);
+  background: #ffffff;
+}
+
+/* =========================================================
+   Actualités
+   ========================================================= */
+.acc-derniere { padding-bottom: 90px; } /* place pour le footer fixe */
+
 .acc-actu { display: flex; flex-direction: column; gap: 6px; }
 .acc-actu-image { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; }
-.acc-actu-date { color: #777; font-size: .85rem; }
+.acc-actu-date { color: #666677; font-size: 0.85rem; }
 .acc-actu h3 { margin: 0; }
 .acc-actu-lien {
-  align-self: flex-start; background: none; border: none; padding: 0;
-  color: #5b4bdb; cursor: pointer; font: inherit; text-decoration: underline;
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #5b4bdb;
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+}
+
+/* =========================================================
+   Tablette (jusqu'à 900px)
+   ========================================================= */
+@media (max-width: 900px) {
+  .acc-inner { padding: 0 22px; }
+  .acc-section { padding: 48px 0; }
+
+  .acc-hero { padding: 54px 0 44px; }
+  .acc-hero h1 { font-size: 2.1rem; }
+
+  .acc-titre { font-size: 1.6rem; }
+
+  .acc-president {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  /* la photo passe au-dessus du texte */
+  .acc-president-photo-zone { order: -1; }
+  .acc-president-photo { width: 240px; height: 240px; }
+  .acc-president-texte { text-align: center; }
+  .acc-signature { align-items: center; }
+
+  .acc-decor {
+    right: 50%;
+    top: 130px;
+    transform: translateX(50%);
+    width: 300px;
+    height: 300px;
+  }
+}
+
+/* =========================================================
+   Téléphone (jusqu'à 600px)
+   ========================================================= */
+@media (max-width: 600px) {
+  .acc-inner { padding: 0 16px; }
+  .acc-section { padding: 36px 0; }
+
+  .acc-hero { padding: 40px 0 34px; }
+  .acc-hero h1 { font-size: 1.55rem; }
+  .acc-sous-titre { font-size: 1rem; }
+
+  .acc-hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .acc-btn { text-align: center; }
+
+  .acc-titre { font-size: 1.35rem; }
+
+  .acc-sigle {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  .acc-texte { font-size: 1rem; line-height: 1.7; }
+
+  .acc-engagements { grid-template-columns: 1fr; gap: 12px; }
+  .acc-engagements li { padding: 16px; }
+
+  .acc-president-photo { width: 190px; height: 190px; }
+  .acc-president-texte h2 { font-size: 1.4rem; }
+  .acc-president-texte p { text-align: left; }
+  .acc-signature { align-items: center; }
+  .acc-signature { text-align: center; }
+
+  .acc-decor { width: 220px; height: 220px; top: 100px; }
 }
