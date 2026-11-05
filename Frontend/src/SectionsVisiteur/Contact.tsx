@@ -14,10 +14,6 @@ function Contact() {
         {/* En-tête */}
         <div className="contact-entete">
           <h1 className="contact-titre">Contactez-nous</h1>
-          <p className="contact-sous-titre">
-            Une question, une suggestion ou besoin d'informations ? 
-            L'équipe de l'ONOS vous répond.
-          </p>
         </div>
 
         {/* Grille des coordonnées (centrée) */}

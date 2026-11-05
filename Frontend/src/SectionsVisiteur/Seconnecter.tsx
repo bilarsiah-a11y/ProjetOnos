@@ -1,21 +1,24 @@
-import { useState } from 'react'
-import type { FormEvent } from 'react'
+import { useState, useRef } from 'react'
+import type { FormEvent, KeyboardEvent, ChangeEvent } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import { api } from '../services/api'
 import '../SectionsVisiteurCss/Seconnecter.css'
+import imageConnexion from '../Public/Sary1.png' 
 
-type Etape = 'connexion' | 'oubli' | 'reinit'
+type Etape = 'connexion' | 'oubli' | 'code' | 'reinit'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const CODE_REGEX = /^[A-Za-z0-9]{6}$/
 
 export default function Seconnecter() {
   const { utilisateur, chargement, connexion } = useAuth()
   const [etape, setEtape] = useState<Etape>('connexion')
   const [mail, setMail] = useState('')
   const [motDePasse, setMotDePasse] = useState('')
-  const [code, setCode] = useState('')
+  
+  const [otp, setOtp] = useState<string[]>(Array(6).fill(''))
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([])
+
   const [nouveauMdp, setNouveauMdp] = useState('')
   const [confirmation, setConfirmation] = useState('')
   const [voirMdp, setVoirMdp] = useState(false)
@@ -64,7 +67,7 @@ export default function Seconnecter() {
     try {
       const r = await api.post<{ message: string }>('/api/auth/forgot-password', { mail: mail.trim() })
       setInfo(r.message || 'Un code de réinitialisation vous a été envoyé.')
-      setEtape('reinit')
+      setEtape('code')
     } catch (err) {
       setErreur(message(err))
     } finally {
@@ -72,13 +75,40 @@ export default function Seconnecter() {
     }
   }
 
+  const handleOtpChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value
+    if (isNaN(Number(val)) && val !== '') return
+
+    const newOtp = [...otp]
+    newOtp[index] = val.substring(val.length - 1)
+    setOtp(newOtp)
+
+    if (val !== '' && index < 5) {
+      inputRefs.current[index + 1]?.focus()
+    }
+  }
+
+  const handleOtpKeyDown = (index: number, e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace' && !otp[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus()
+    }
+  }
+
+  const validerCode = (e: FormEvent) => {
+    e.preventDefault()
+    const codeComplet = otp.join('')
+    if (codeComplet.length !== 6) {
+      setErreur('Veuillez saisir les 6 caractères du code.')
+      return
+    }
+    setErreur('')
+    setEtape('reinit')
+  }
+
   const reinitialiser = async (e: FormEvent) => {
     e.preventDefault()
     setErreur('')
-    if (!CODE_REGEX.test(code.trim())) {
-      setErreur('Le code doit contenir exactement 6 caractères.')
-      return
-    }
+    
     if (nouveauMdp.length < 8) {
       setErreur('Le mot de passe doit contenir au moins 8 caractères.')
       return
@@ -87,14 +117,15 @@ export default function Seconnecter() {
       setErreur('Les mots de passe ne correspondent pas.')
       return
     }
+    
     setEnvoi(true)
     try {
       const r = await api.post<{ message: string }>('/api/auth/reset-password', {
         mail: mail.trim(),
-        otp: code.trim(),
+        otp: otp.join(''),
         nouveau_mot_de_passe: nouveauMdp,
       })
-      setCode('')
+      setOtp(Array(6).fill(''))
       setNouveauMdp('')
       setConfirmation('')
       setMotDePasse('')
@@ -108,201 +139,180 @@ export default function Seconnecter() {
   }
 
   return (
-    <div className="login-page-wrapper">
-      <div className="login-card">
+    <section className="auth-page-custom">
+      <div className="auth-container">
         
-        {/* --- PANNEAU GAUCHE (Image & Branding) --- */}
-        <aside className="login-left-panel">
-          <div className="login-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-          </div>
+        {/* PARTIE GAUCHE : FORMULAIRE */}
+        <div className="auth-formulaire-custom">
+          <div className="auth-carte-custom">
+            <h1>
+              {etape === 'connexion' && 'Connexion'}
+              {etape === 'oubli' && 'Récupération'}
+              {etape === 'code' && 'Code de sécurité'}
+              {etape === 'reinit' && 'Nouveau mot de passe'}
+            </h1>
+            <p className="auth-sous">
+              {etape === 'connexion' && 'Accédez à votre espace professionnel.'}
+              {etape === 'oubli' && 'Indiquez votre email pour recevoir un code.'}
+              {etape === 'code' && 'Saisissez le code à 6 chiffres reçu par email.'}
+              {etape === 'reinit' && 'Choisissez votre nouveau mot de passe.'}
+            </p>
 
-          <div className="login-brand-center">
-            <svg className="brand-logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M12 21.5C12 21.5 17 17.5 17 11C17 7.5 14.5 5 12 5C9.5 5 7 7.5 7 11C7 17.5 12 21.5 12 21.5Z" fill="#ffffff" stroke="none" />
-              <path d="M7 11C7 7.5 9.5 5 12 5C14.5 5 17 7.5 17 11" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-            <h1>ONOS</h1>
-            <p>Ordre National des Odonto-<br/>Stomatologistes</p>
-            <div className="brand-separator"></div>
-            <span>Une profession engagée<br/>pour votre santé bucco-dentaire</span>
-          </div>
-        </aside>
-
-        {/* --- PANNEAU DROIT (Formulaire) --- */}
-        <main className="login-right-panel">
-          <div className="login-form-container">
-            
-            {/* Icônes d'alerte */}
-            {erreur && (
-              <div className="alert-box alert-error">
-                <span>{erreur}</span>
-              </div>
-            )}
-            {info && (
-              <div className="alert-box alert-success">
-                <span>{info}</span>
-              </div>
-            )}
-
-            {/* En-tête du formulaire */}
-            <div className="form-header">
-              <div className="header-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-              </div>
-              <div>
-                <h2>
-                  {etape === 'connexion' && 'Connexion'}
-                  {etape === 'oubli' && 'Récupération'}
-                  {etape === 'reinit' && 'Nouveau mot de passe'}
-                </h2>
-                <p>
-                  {etape === 'connexion' && 'Accédez à votre espace professionnel accrédité.'}
-                  {etape === 'oubli' && 'Indiquez votre email pour recevoir un code.'}
-                  {etape === 'reinit' && 'Saisissez le code reçu et votre nouveau mot de passe.'}
-                </p>
-              </div>
-            </div>
+            {erreur && <p className="auth-erreur">{erreur}</p>}
+            {info && <p className="auth-info">{info}</p>}
 
             {/* ÉTAPE 1 : CONNEXION */}
             {etape === 'connexion' && (
-              <form onSubmit={seConnecter} className="login-form">
-                <div className="form-group">
-                  <label>Adresse email</label>
-                  <div className="input-wrapper">
-                    <svg className="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                      <polyline points="22,6 12,13 2,6" />
-                    </svg>
-                    <input
-                      type="email"
-                      placeholder="nom@praticien.mg"
-                      value={mail}
-                      onChange={(e) => setMail(e.target.value)}
-                      required
-                    />
-                  </div>
+              <form onSubmit={seConnecter}>
+                <div className="auth-champ">
+                  <label htmlFor="i-mail">Adresse email</label>
+                  <input
+                    id="i-mail"
+                    type="email"
+                    placeholder="nom@praticien.mg"
+                    value={mail}
+                    onChange={(e) => setMail(e.target.value)}
+                    required
+                  />
                 </div>
 
-                <div className="form-group">
-                  <div className="label-row">
-                    <label>Mot de passe</label>
-                    <button type="button" className="text-link" onClick={() => changerEtape('oubli')}>
-                      Mot de passe oublié ?
-                    </button>
-                  </div>
-                  <div className="input-wrapper">
-                    <svg className="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
+                <div className="auth-champ">
+                  <label htmlFor="i-mdp">Mot de passe</label>
+                  <div className="auth-input-group">
                     <input
+                      id="i-mdp"
                       type={voirMdp ? 'text' : 'password'}
                       placeholder="••••••••"
                       value={motDePasse}
                       onChange={(e) => setMotDePasse(e.target.value)}
                       required
                     />
-                    <button type="button" className="eye-btn" onClick={() => setVoirMdp(!voirMdp)}>
+                    <button type="button" className="auth-eye-btn" onClick={() => setVoirMdp(!voirMdp)} aria-label="Voir le mot de passe">
                       {voirMdp ? (
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
                       ) : (
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                       )}
                     </button>
                   </div>
                 </div>
 
-                <button type="submit" className="submit-btn" disabled={envoi}>
-                  {envoi ? 'Chargement...' : 'Se connecter →'}
+                <button className="auth-btn" type="submit" disabled={envoi}>
+                  {envoi ? 'Chargement...' : 'Se connecter'}
                 </button>
 
-                <div className="form-footer">
-                  <span>Vous n'avez pas encore de compte ?</span>
-                  <Link to="/inscription">Créer un compte</Link>
+                <div className="auth-liens">
+                  <button type="button" className="auth-text-link" onClick={() => changerEtape('oubli')}>
+                    Mot de passe oublié ?
+                  </button>
                 </div>
               </form>
             )}
 
             {/* ÉTAPE 2 : OUBLI */}
             {etape === 'oubli' && (
-              <form onSubmit={demanderCode} className="login-form">
-                <div className="form-group">
-                  <label>Adresse email</label>
-                  <div className="input-wrapper">
-                    <svg className="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                    <input
-                      type="email"
-                      placeholder="nom@praticien.mg"
-                      value={mail}
-                      onChange={(e) => setMail(e.target.value)}
-                      required
-                    />
+              <form onSubmit={demanderCode}>
+                <div className="auth-champ">
+                  <label htmlFor="i-mail-oublie">Adresse email</label>
+                  <input
+                    id="i-mail-oublie"
+                    type="email"
+                    placeholder="nom@praticien.mg"
+                    value={mail}
+                    onChange={(e) => setMail(e.target.value)}
+                    required
+                  />
+                </div>
+                <button className="auth-btn" type="submit" disabled={envoi}>
+                  {envoi ? 'Envoi...' : 'Envoyer le code'}
+                </button>
+                <div className="auth-liens">
+                  <button type="button" className="auth-text-link" onClick={() => changerEtape('connexion')}>
+                    ← Retour à la connexion
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* ÉTAPE 3 : CODE OTP */}
+            {etape === 'code' && (
+              <form onSubmit={validerCode}>
+                <div className="auth-champ">
+                  <label>Code de sécurité</label>
+                  <div className="otp-container">
+                    {otp.map((digit, index) => (
+                      <input
+                        key={index}
+                        type="text"
+                        maxLength={1}
+                        value={digit}
+                        ref={(el) => {
+                          inputRefs.current[index] = el;
+                        }}
+                        onChange={(e) => handleOtpChange(index, e)}
+                        onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                        className="otp-input"
+                      />
+                    ))}
                   </div>
                 </div>
-                <button type="submit" className="submit-btn" disabled={envoi}>
-                  {envoi ? 'Envoi...' : 'Envoyer le code →'}
-                </button>
-                <button type="button" className="back-btn" onClick={() => changerEtape('connexion')}>
-                  ← Retour à la connexion
+                <button className="auth-btn" type="submit">
+                  Valider le code
                 </button>
               </form>
             )}
 
-            {/* ÉTAPE 3 : REINIT */}
+            {/* ÉTAPE 4 : NOUVEAU MOT DE PASSE */}
             {etape === 'reinit' && (
-              <form onSubmit={reinitialiser} className="login-form">
-                <div className="form-group">
-                  <label>Code de sécurité</label>
+              <form onSubmit={reinitialiser}>
+                <div className="auth-champ">
+                  <label htmlFor="i-new-mdp">Nouveau mot de passe</label>
                   <input
-                    type="text"
-                    className="otp-input"
-                    maxLength={6}
-                    placeholder="• • • • • •"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value.toUpperCase())}
+                    id="i-new-mdp"
+                    type="password"
+                    placeholder="Minimum 8 caractères"
+                    value={nouveauMdp}
+                    onChange={(e) => setNouveauMdp(e.target.value)}
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label>Nouveau mot de passe</label>
-                  <div className="input-wrapper">
-                    <input
-                      type="password"
-                      placeholder="Minimum 8 caractères"
-                      value={nouveauMdp}
-                      onChange={(e) => setNouveauMdp(e.target.value)}
-                      required
-                    />
-                  </div>
+                <div className="auth-champ">
+                  <label htmlFor="i-conf-mdp">Confirmation</label>
+                  <input
+                    id="i-conf-mdp"
+                    type="password"
+                    placeholder="Répétez le mot de passe"
+                    value={confirmation}
+                    onChange={(e) => setConfirmation(e.target.value)}
+                    required
+                  />
                 </div>
-                <div className="form-group">
-                  <label>Confirmation</label>
-                  <div className="input-wrapper">
-                    <input
-                      type="password"
-                      placeholder="Répétez le mot de passe"
-                      value={confirmation}
-                      onChange={(e) => setConfirmation(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-                <button type="submit" className="submit-btn" disabled={envoi}>
-                  {envoi ? 'Validation...' : 'Réinitialiser →'}
+                <button className="auth-btn" type="submit" disabled={envoi}>
+                  {envoi ? 'Validation...' : 'Réinitialiser'}
                 </button>
               </form>
             )}
 
           </div>
-        </main>
+        </div>
+
+        {/* PARTIE DROITE : IMAGE EN FOND */}
+        <aside 
+          className="auth-visuel-custom"
+          style={{ backgroundImage: `url(${imageConnexion})` }}
+        >
+          <div className="auth-texte-haut">
+            <h2>ONOS</h2>
+            <p>L'annuaire officiel des chirurgiens-dentistes de Madagascar.</p>
+          </div>
+          
+          <div className="auth-bas-gauche">
+            <span style={{ whiteSpace: 'nowrap' }}>Pas encore de compte ?</span>
+            <Link to="/inscription" className="auth-btn-connexion">S'inscrire</Link>
+          </div>
+        </aside>
+
       </div>
-    </div>
+    </section>
   )
 }

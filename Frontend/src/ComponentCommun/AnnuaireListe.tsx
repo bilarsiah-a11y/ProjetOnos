@@ -79,14 +79,14 @@ function AnnuaireListe({ reservation = false }: { reservation?: boolean }) {
               {filtres.length} dentiste{filtres.length > 1 ? 's' : ''} trouvé{filtres.length > 1 ? 's' : ''}
             </p>
             
-            {/* Grille de cartes */}
+            
             <ul className="liste-grille">
               {filtres.map((d) => {
                 const photo = urlImage(d.photo)
                 return (
                   <li key={d.id} className="liste-carte">
                     
-                    {/* Photo à gauche */}
+                   
                     <div className="liste-carte-photo-zone">
                       {photo ? (
                         <img className="liste-photo" src={photo} alt={`${d.prenom} ${d.nom}`} />
@@ -97,7 +97,7 @@ function AnnuaireListe({ reservation = false }: { reservation?: boolean }) {
                       )}
                     </div>
 
-                    {/* Contenu à droite */}
+                   
                     <div className="liste-infos">
                       <h3 className="liste-nom">{d.titre} {d.nom} {d.prenom} </h3>
                       <span className="liste-badge">{d.domaine} · {d.region}</span>

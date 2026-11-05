@@ -1,392 +1,372 @@
-/* ==========================================================================
-   PAGE DE CONNEXION - STYLE MAQUETTE
-   ========================================================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
-:root {
-  --font-login: 'Plus Jakarta Sans', sans-serif;
-  --primary-blue: #2563EB;
-  --primary-blue-hover: #1D4ED8;
-  --bg-page: #F0F4F8;
-  --text-dark: #0F172A;
-  --text-gray: #64748B;
-  --border-color: #E2E8F0;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-/* Wrapper principal de la page */
-.login-page-wrapper {
-  min-height: 100vh;
+/* =========================================================
+   CONTENEUR GLOBAL
+   ========================================================= */
+.auth-page-custom {
   display: flex;
-  align-items: center;
   justify-content: center;
-  background-color: var(--bg-page);
-  /* Motif de fond subtil (points) */
-  background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
-  background-size: 20px 20px;
-  font-family: var(--font-login);
-  padding: 20px;
+  align-items: center;
 }
 
-/* Carte principale */
-.login-card {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  width: 100%;
-  max-width: 1000px;
-  min-height: 600px;
-  background: #FFFFFF;
-  border-radius: 24px;
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+.auth-container {
+  display: flex;
+  /* width: 65%;
+  max-width: 950px; */
+  height: 500px; 
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   overflow: hidden;
+  border: 1px solid #f1f1f5;
 }
 
-/* --------------------------------------------------------------------------
-   PANNEAU GAUCHE (Image & Design)
-   -------------------------------------------------------------------------- */
-.login-left-panel {
-  position: relative;
-  /* L'IMAGE DE FOND EST ICI */
-  background-image: url('/chaise.png'); 
+/* =========================================================
+   PARTIE DROITE (Devenue Image)
+   ========================================================= */
+.auth-visuel-custom {
+  flex: 1;
   background-size: cover;
   background-position: center;
-  padding: 40px;
+  background-repeat: no-repeat;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: #FFFFFF;
+  position: relative;
 }
 
-/* Filtre bleu par-dessus l'image pour correspondre à la maquette */
-.login-left-panel::before {
+/* Voile sombre pour la lisibilité */
+.auth-visuel-custom::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.85) 0%, rgba(29, 78, 216, 0.9) 100%);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, rgba(91, 75, 219, 0.7) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.6) 100%);
   z-index: 1;
 }
 
-.login-left-panel > * {
+.auth-texte-haut, .auth-bas-gauche {
   position: relative;
   z-index: 2;
+  color: #ffffff;
 }
 
-/* Badge en haut */
-.login-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(4px);
-  padding: 8px 16px;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  width: fit-content;
+.auth-texte-haut h2 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin: 0 0 5px 0;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-/* Contenu central (Logo ONOS) */
-.login-brand-center {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.brand-logo {
-  width: 60px;
-  height: 60px;
-  margin-bottom: 16px;
-}
-
-.login-brand-center h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  margin: 0 0 8px 0;
-  letter-spacing: -1px;
-}
-
-.login-brand-center p {
+.auth-texte-haut p {
   font-size: 1rem;
-  font-weight: 500;
-  margin: 0 0 24px 0;
+  margin: 0;
   opacity: 0.9;
   line-height: 1.4;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
-.brand-separator {
-  width: 40px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.4);
-  margin-bottom: 24px;
+/* Bouton en bas à droite */
+.auth-bas-gauche {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255,255,255,0.3);
+  white-space: nowrap; 
+  margin-bottom: 25px; 
+  gap: 10px;
 }
 
-.login-brand-center span {
-  font-size: 0.9rem;
-  opacity: 0.8;
-  line-height: 1.5;
+.auth-btn-connexion {
+  background: #ffffff;
+  color: #5b4bdb;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-/* --------------------------------------------------------------------------
-   PANNEAU DROIT (Formulaire)
-   -------------------------------------------------------------------------- */
-.login-right-panel {
-  padding: 60px;
+.auth-btn-connexion:hover {
+  background: #f0f0f5;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   PARTIE GAUCHE (Devenue Formulaire)
+   ========================================================= */
+.auth-formulaire-custom {
+  flex: 1.1;
+  padding: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #FFFFFF;
 }
 
-.login-form-container {
+.auth-carte-custom {
   width: 100%;
   max-width: 380px;
 }
 
-/* En-tête du formulaire (Icône + Titre) */
-.form-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 32px;
+.auth-carte-custom h1 {
+  color: #5b4bdb;
+  font-size: 2.2rem;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
-.header-icon {
-  width: 48px;
-  height: 48px;
-  background: #EFF6FF;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary-blue);
-  flex-shrink: 0;
-}
-
-.header-icon svg {
-  width: 24px;
-  height: 24px;
-}
-
-.form-header h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin: 0 0 4px 0;
-}
-
-.form-header p {
+.auth-sous {
+  text-align: center;
+  color: #52526b;
   font-size: 0.9rem;
-  color: var(--text-gray);
-  margin: 0;
+  margin-bottom: 25px;
   line-height: 1.4;
 }
 
-/* Formulaire */
-.login-form {
+/* =========================================================
+   CHAMPS DU FORMULAIRE ET LABELS (ALIGNÉS À GAUCHE)
+   ========================================================= */
+.auth-champ {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 6px;
+  margin-bottom: 16px;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.form-group label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-dark);
-}
-
-.text-link {
-  background: none;
-  border: none;
-  color: var(--primary-blue);
+.auth-champ label {
   font-size: 0.85rem;
   font-weight: 600;
-  cursor: pointer;
-  padding: 0;
+  color: #1e1b4b;
+  text-align: left; /* Aligne le texte à gauche */
+  display: block;
+  margin-bottom: 2px;
 }
 
-.text-link:hover {
-  text-decoration: underline;
-}
-
-/* Inputs avec icônes */
-.input-wrapper {
+/* Conteneur du mot de passe avec l'œil */
+.auth-input-group {
   position: relative;
   display: flex;
   align-items: center;
-}
-
-.input-icon {
-  position: absolute;
-  left: 16px;
-  width: 20px;
-  height: 20px;
-  color: #94A3B8;
-}
-
-.input-wrapper input {
   width: 100%;
-  height: 52px;
-  background: #FFFFFF;
-  border: 1.5px solid var(--border-color);
-  border-radius: 12px;
-  padding: 0 16px 0 48px;
-  font-size: 0.95rem;
-  font-family: inherit;
-  color: var(--text-dark);
-  transition: all 0.2s ease;
 }
 
-.input-wrapper input:focus {
-  outline: none;
-  border-color: var(--primary-blue);
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+.auth-input-group input {
+  width: 100%;
+  padding-right: 40px; /* Laisse de la place pour l'icône */
 }
 
-.eye-btn {
+/* Bouton de l'œil (SVG) */
+.auth-eye-btn {
   position: absolute;
-  right: 16px;
+  right: 12px;
   background: none;
   border: none;
-  color: #94A3B8;
-  cursor: pointer;
-  padding: 4px;
-  display: flex;
-}
-
-.eye-btn svg {
-  width: 20px;
-  height: 20px;
-}
-
-/* Input OTP spécifique */
-.otp-input {
-  width: 100%;
-  height: 52px;
-  border: 1.5px solid var(--border-color);
-  border-radius: 12px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  text-align: center;
-  letter-spacing: 8px;
-  color: var(--primary-blue);
-}
-
-/* Bouton de soumission */
-.submit-btn {
-  width: 100%;
-  height: 52px;
-  background: var(--primary-blue);
-  color: #FFFFFF;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
+  color: #94a3b8;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s, transform 0.1s;
-  margin-top: 8px;
+  padding: 0;
+  transition: color 0.2s ease;
 }
 
-.submit-btn:hover:not(:disabled) {
-  background: var(--primary-blue-hover);
+.auth-eye-btn:hover {
+  color: #5b4bdb;
 }
 
-.submit-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+.auth-eye-btn svg {
+  width: 20px;
+  height: 20px;
 }
 
-.back-btn {
-  background: none;
+/* Style des inputs */
+.auth-champ input {
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #1e1b4b;
+  background: #f8f9fc;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth-champ input:focus {
+  outline: none;
+  border-color: #5b4bdb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.1);
+}
+
+/* =========================================================
+   BOUTONS ET MESSAGES
+   ========================================================= */
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  background: #5b4bdb;
+  color: #ffffff;
   border: none;
-  color: var(--text-gray);
-  font-size: 0.9rem;
-  font-weight: 600;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
-  text-align: center;
+  transition: background 0.2s ease;
   margin-top: 10px;
 }
 
-.back-btn:hover {
-  color: var(--text-dark);
+.auth-btn:hover {
+  background: #4a3bc0;
 }
 
-/* Footer (Lien inscription) */
-.form-footer {
-  margin-top: 24px;
+.auth-btn:disabled {
+  background: #a29bd6;
+  cursor: not-allowed;
+}
+
+.auth-erreur {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 15px;
   text-align: center;
-  font-size: 0.9rem;
-  color: var(--text-gray);
-  border-top: 1px solid var(--border-color);
-  padding-top: 24px;
 }
 
-.form-footer a {
-  display: block;
-  margin-top: 6px;
-  color: var(--primary-blue);
+.auth-info {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.auth-liens {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.auth-liens a, .auth-text-link {
+  color: #5b4bdb;
   font-weight: 700;
   text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
 }
 
-.form-footer a:hover {
+.auth-liens a:hover, .auth-text-link:hover {
   text-decoration: underline;
 }
 
-/* Alertes Box */
-.alert-box {
-  padding: 12px 16px;
+/* =========================================================
+   DESIGN DU CODE OTP (6 CASES)
+   ========================================================= */
+.otp-container {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.otp-input {
+  width: 45px;
+  height: 50px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e1b4b;
+  background: #f8f9fc;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  margin-bottom: 20px;
+  transition: all 0.2s ease;
 }
 
-.alert-error {
-  background: #FEF2F2;
-  color: #991B1B;
-  border: 1px solid #F87171;
+.otp-input:focus {
+  outline: none;
+  border-color: #5b4bdb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.1);
 }
 
-.alert-success {
-  background: #F0FDF4;
-  color: #166534;
-  border: 1px solid #4ADE80;
-}
-
-/* --------------------------------------------------------------------------
-   RESPONSIVE
-   -------------------------------------------------------------------------- */
-@media (max-width: 900px) {
-  .login-card {
-    grid-template-columns: 1fr;
-    max-width: 480px;
+/* =========================================================
+   RESPONSIVE (Mobile)
+   ========================================================= */
+@media (max-width: 850px) {
+  .auth-page-custom {
+    padding: 0;
+    background-color: #5b4bdb;
+    align-items: flex-end;
+  }
+  
+  .auth-container {
+    flex-direction: column; 
+    height: 95vh;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    border: none;
   }
 
-  .login-left-panel {
-    display: none; /* On cache le panneau image sur mobile */
+  .auth-visuel-custom {
+    flex: none;
+    height: 25%;
+    min-height: 250px;
+    background-color: #5b4bdb;
+    border-radius: 0;
+    padding: 10px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between; 
+    order: -1; 
   }
 
-  .login-right-panel {
-    padding: 40px 24px;
+  .auth-visuel-custom::before { display: none; }
+
+  /* CORRECTION DU BOUTON SUR MOBILE */
+  .auth-bas-gauche { 
+    display: flex; 
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    white-space: normal;
+    margin-bottom: 10px;
+  }
+  
+  .auth-btn-connexion {
+    width: 100%;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .auth-texte-haut h2 { font-size: 2.2rem; margin-bottom: 10px; }
+  .auth-texte-haut p { font-size: 0.9rem; }
+
+  .auth-formulaire-custom {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 30px 30px 0 0;
+    padding: 30px 20px;
+    align-items: flex-start;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+    overflow-y: auto;
+  }
+  
+  /* Ajustement pour le code OTP sur mobile */
+  .otp-input {
+    width: 40px;
+    height: 45px;
   }
 }

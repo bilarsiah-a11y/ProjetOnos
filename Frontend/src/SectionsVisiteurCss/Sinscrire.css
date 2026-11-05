@@ -1,0 +1,337 @@
+/* =========================================================
+   CONTENEUR GLOBAL
+   ========================================================= */
+.auth-page-custom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-container {
+  display: flex;
+  width: 65%;
+  max-width: 950px;
+  height: 500px; 
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid #f1f1f5;
+}
+
+/* =========================================================
+   PARTIE GAUCHE : L'IMAGE EN FOND (Inscription)
+   ========================================================= */
+.auth-visuel-custom {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* Voile sombre pour la lisibilité du texte */
+.auth-visuel-custom::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, rgba(91, 75, 219, 0.7) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.6) 100%);
+  z-index: 1;
+}
+
+.auth-texte-haut, .auth-bas-gauche {
+  position: relative;
+  z-index: 2;
+  color: #ffffff;
+}
+
+.auth-texte-haut h2 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin: 0 0 5px 0;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.auth-texte-haut p {
+  font-size: 1rem;
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.4;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* Bouton "Se connecter" en bas à gauche */
+.auth-bas-gauche {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255,255,255,0.3);
+  white-space: nowrap; 
+  margin-bottom: 25px; 
+  gap: 10px;
+}
+
+.auth-btn-connexion {
+  background: #ffffff;
+  color: #5b4bdb;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.auth-btn-connexion:hover {
+  background: #f0f0f5;
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   PARTIE DROITE : LE FORMULAIRE
+   ========================================================= */
+.auth-formulaire-custom {
+  flex: 1.1;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-carte-custom {
+  width: 100%;
+  max-width: 380px;
+}
+
+.auth-carte-custom h1 {
+  color: #5b4bdb;
+  font-size: 2.2rem;
+  margin-top: 0;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.auth-sous {
+  text-align: center;
+  color: #52526b;
+  font-size: 0.9rem;
+  margin-bottom: 25px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   CHAMPS DU FORMULAIRE ET LABELS (ALIGNÉS À GAUCHE)
+   ========================================================= */
+.auth-champ {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.auth-champ label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1e1b4b;
+  text-align: left; /* Aligne le texte à gauche */
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* Conteneur du mot de passe avec l'œil */
+.auth-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.auth-input-group input {
+  width: 100%;
+  padding-right: 40px; /* Laisse de la place pour l'icône */
+}
+
+/* Bouton de l'œil (SVG) */
+.auth-eye-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #94a3b8; /* Couleur grise */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.auth-eye-btn:hover {
+  color: #5b4bdb; /* Prend la couleur violette au survol */
+}
+
+.auth-eye-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Style des inputs */
+.auth-champ input {
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #1e1b4b;
+  background: #f8f9fc;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth-champ input:focus {
+  outline: none;
+  border-color: #5b4bdb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.1);
+}
+
+/* =========================================================
+   BOUTONS ET MESSAGES
+   ========================================================= */
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  background: #5b4bdb;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 10px;
+}
+
+.auth-btn:hover {
+  background: #4a3bc0;
+}
+
+.auth-btn:disabled {
+  background: #a29bd6;
+  cursor: not-allowed;
+}
+
+.auth-erreur {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.auth-info {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.auth-liens {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.auth-liens a, .auth-text-link {
+  color: #5b4bdb;
+  font-weight: 700;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.auth-liens a:hover, .auth-text-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   RESPONSIVE (Mobile)
+   ========================================================= */
+@media (max-width: 850px) {
+  .auth-page-custom {
+    padding: 0;
+    background-color: #5b4bdb;
+    align-items: flex-end;
+  }
+  
+  .auth-container {
+    flex-direction: column; 
+    height: 95vh;
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    border: none;
+  }
+
+  /* On remet l'image en fond avec sa vraie hauteur */
+  .auth-visuel-custom {
+    flex: none;
+    height: 35%;
+    min-height: 250px;
+    background-color: #5b4bdb;
+    /* On garde l'image de fond grâce au style inline dans le TSX */
+    border-radius: 0;
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between; /* Remet le texte en haut et le bouton en bas */
+  }
+
+  .auth-visuel-custom::before { display: none; }
+
+  /* CORRECTION DU BOUTON SUR MOBILE */
+  .auth-bas-gauche { 
+    display: flex; 
+    flex-direction: column; /* Empile le texte et le bouton */
+    gap: 10px;
+    width: 100%;
+    white-space: normal; /* Autorise le retour à la ligne */
+    margin-bottom: 10px;
+  }
+  
+  .auth-btn-connexion {
+    width: 100%; /* Le bouton prend toute la largeur de son conteneur */
+    text-align: center;
+    white-space: normal;
+  }
+
+  .auth-texte-haut h2 { font-size: 2.2rem; margin-bottom: 10px; }
+  .auth-texte-haut p { font-size: 0.9rem; }
+
+  .auth-formulaire-custom {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 30px 30px 0 0;
+    padding: 30px 20px;
+    align-items: flex-start;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+    overflow-y: auto;
+  }
+}
