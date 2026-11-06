@@ -16,6 +16,7 @@ export default function Seconnecter() {
   const [mail, setMail] = useState('')
   const [motDePasse, setMotDePasse] = useState('')
   
+  // Gestion du code OTP
   const [otp, setOtp] = useState<string[]>(Array(6).fill(''))
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
 
@@ -23,11 +24,26 @@ export default function Seconnecter() {
   const [confirmation, setConfirmation] = useState('')
   const [voirMdp, setVoirMdp] = useState(false)
   const [envoi, setEnvoi] = useState(false)
+  
+  // Gestion des alertes
   const [erreur, setErreur] = useState('')
   const [info, setInfo] = useState('')
+  const [succes, setSucces] = useState('') 
+  const [attente, setAttente] = useState(false) 
+  
+  // Pour bloquer la redirection le temps de lire le message
+  const [redirectionEnCours, setRedirectionEnCours] = useState(false)
+
+  // Fonction utilitaire pour afficher les messages pendant 3 secondes
+  const afficherMessage = (setter: (val: any) => void, message: string) => {
+    setter(message)
+    setTimeout(() => {
+      setter('')
+    }, 3000)
+  }
 
   if (chargement) return null
-  if (utilisateur) {
+  if (utilisateur && !redirectionEnCours) {
     return <Navigate to={utilisateur.role === 'admin' ? '/admin/accueil' : '/dentiste/accueil'} replace />
   }
 
@@ -35,6 +51,8 @@ export default function Seconnecter() {
     setEtape(e)
     setErreur('')
     setInfo('')
+    setSucces('')
+    setAttente(false)
   }
 
   const message = (err: unknown) =>
@@ -43,15 +61,39 @@ export default function Seconnecter() {
   const seConnecter = async (e: FormEvent) => {
     e.preventDefault()
     setErreur('')
+    setSucces('')
+    setAttente(false)
+
     if (!mail.trim() || !motDePasse) {
-      setErreur('Veuillez saisir votre adresse email et votre mot de passe.')
+      afficherMessage(setErreur, 'Veuillez saisir votre adresse email et votre mot de passe.')
       return
     }
+    
     setEnvoi(true)
     try {
       await connexion(mail.trim(), motDePasse)
+      
+      // CONNEXION RÉUSSIE
+      setSucces('Connexion réussie ! Redirection en cours...')
+      setRedirectionEnCours(true) // Bloque la redirection immédiate
+      
+      // On attend 3 secondes avant d'autoriser la redirection
+      setTimeout(() => {
+        setRedirectionEnCours(false)
+      }, 3000)
+
     } catch (err) {
-      setErreur(message(err))
+      const msg = message(err)
+      const lowerMsg = msg.toLowerCase()
+
+      // COMPTE EN ATTENTE
+      if (lowerMsg.includes('attente') || lowerMsg.includes('valid') || lowerMsg.includes('approuv') || lowerMsg.includes('actif')) {
+        setAttente(true)
+        setTimeout(() => setAttente(false), 3000) // Disparaît après 3s
+      } else {
+        // ERREUR CLASSIQUE
+        afficherMessage(setErreur, msg)
+      }
       setEnvoi(false)
     }
   }
@@ -59,17 +101,18 @@ export default function Seconnecter() {
   const demanderCode = async (e: FormEvent) => {
     e.preventDefault()
     setErreur('')
+    setInfo('')
     if (!EMAIL_REGEX.test(mail.trim())) {
-      setErreur('Adresse email invalide.')
+      afficherMessage(setErreur, 'Adresse email invalide.')
       return
     }
     setEnvoi(true)
     try {
       const r = await api.post<{ message: string }>('/api/auth/forgot-password', { mail: mail.trim() })
-      setInfo(r.message || 'Un code de réinitialisation vous a été envoyé.')
+      afficherMessage(setInfo, r.message || 'Un code de réinitialisation vous a été envoyé.')
       setEtape('code')
     } catch (err) {
-      setErreur(message(err))
+      afficherMessage(setErreur, message(err))
     } finally {
       setEnvoi(false)
     }
@@ -98,7 +141,7 @@ export default function Seconnecter() {
     e.preventDefault()
     const codeComplet = otp.join('')
     if (codeComplet.length !== 6) {
-      setErreur('Veuillez saisir les 6 caractères du code.')
+      afficherMessage(setErreur, 'Veuillez saisir les 6 caractères du code.')
       return
     }
     setErreur('')
@@ -110,11 +153,11 @@ export default function Seconnecter() {
     setErreur('')
     
     if (nouveauMdp.length < 8) {
-      setErreur('Le mot de passe doit contenir au moins 8 caractères.')
+      afficherMessage(setErreur, 'Le mot de passe doit contenir au moins 8 caractères.')
       return
     }
     if (nouveauMdp !== confirmation) {
-      setErreur('Les mots de passe ne correspondent pas.')
+      afficherMessage(setErreur, 'Les mots de passe ne correspondent pas.')
       return
     }
     
@@ -130,9 +173,9 @@ export default function Seconnecter() {
       setConfirmation('')
       setMotDePasse('')
       setEtape('connexion')
-      setInfo(r.message || 'Votre mot de passe a été modifié avec succès.')
+      afficherMessage(setInfo, r.message || 'Votre mot de passe a été modifié avec succès.')
     } catch (err) {
-      setErreur(message(err))
+      afficherMessage(setErreur, message(err))
     } finally {
       setEnvoi(false)
     }
@@ -158,8 +201,15 @@ export default function Seconnecter() {
               {etape === 'reinit' && 'Choisissez votre nouveau mot de passe.'}
             </p>
 
+            {/* AFFICHAGE DES ALERTES */}
             {erreur && <p className="auth-erreur">{erreur}</p>}
             {info && <p className="auth-info">{info}</p>}
+            {succes && <p className="auth-succes">{succes}</p>}
+            {attente && (
+              <p className="auth-attente">
+                Votre compte est en attente de validation par l'administrateur. Veuillez réessayer plus tard.
+              </p>
+            )}
 
             {/* ÉTAPE 1 : CONNEXION */}
             {etape === 'connexion' && (
@@ -197,8 +247,8 @@ export default function Seconnecter() {
                   </div>
                 </div>
 
-                <button className="auth-btn" type="submit" disabled={envoi}>
-                  {envoi ? 'Chargement...' : 'Se connecter'}
+                <button className="auth-btn" type="submit" disabled={envoi || succes !== ''}>
+                  {envoi ? 'Vérification...' : succes ? 'Connecté !' : 'Se connecter'}
                 </button>
 
                 <div className="auth-liens">

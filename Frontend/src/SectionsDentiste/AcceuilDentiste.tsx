@@ -37,6 +37,7 @@ function AcceuilDentiste() {
 
   return (
     <section className="dent-page">
+      {/* Titre avec la taille de la navbar (voir CSS) */}
       <h1 className="dent-titre">
         Bonjour {profil ? `${profil.titre} ${profil.nom}` : pseudo}
       </h1>
@@ -72,7 +73,17 @@ function AcceuilDentiste() {
       <div className="dent-carte">
         <h2>Dernières actualités</h2>
         {actualites.length === 0 ? (
-          <p className="dent-vide">Aucune actualité pour le moment.</p>
+          <div className="acc-dent-vide-container">
+            {/* Petite icône moderne pour combler le vide */}
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <p className="dent-vide">Aucune actualité pour le moment.</p>
+          </div>
         ) : (
           <ul className="acc-dent-actus">
             {actualites.map((a) => (

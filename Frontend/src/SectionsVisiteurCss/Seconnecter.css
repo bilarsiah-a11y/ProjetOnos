@@ -370,3 +370,28 @@
     height: 45px;
   }
 }
+/* Message de succès (Connexion réussie) */
+.auth-succes {
+  background: #e8f5e9; /* Vert clair */
+  color: #2e7d32;      /* Vert foncé */
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  text-align: center;
+  border: 1px solid #c8e6c9;
+  font-weight: 600;
+}
+
+/* Message d'attente de validation (Compte en attente) */
+.auth-attente {
+  background: #fff3e0; /* Orange clair */
+  color: #e65100;      /* Orange foncé */
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  text-align: center;
+  border: 1px solid #ffe0b2;
+  font-weight: 600;
+}

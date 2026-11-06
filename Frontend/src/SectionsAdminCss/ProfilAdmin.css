@@ -1,2 +1,172 @@
-.profil-page { max-width: 520px; }
-.profil-mail { color: #555; word-break: break-all; }
+/* =========================================================
+   CONTENEUR PRINCIPAL
+   ========================================================= */
+.profil-page {
+  background-color: #f8f9fc;
+  min-height: calc(100vh - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+}
+
+.profil-container {
+  width: 100%;
+  max-width: 600px;
+}
+
+.profil-container h1 {
+  font-size: 1.8rem;
+  color: #5b4bdb;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.profil-mail {
+  color: #52526b;
+  font-size: 1rem;
+  margin-bottom: 24px;
+  background: #f5f4fb;
+  padding: 12px 16px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.profil-mail strong {
+  color: #1e1b4b;
+}
+
+/* =========================================================
+   CARTE DU FORMULAIRE (Bordure rétrécie)
+   ========================================================= */
+.profil-carte {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px; /* Réduit de 32px à 24px */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f1f5;
+}
+
+/* =========================================================
+   CHAMPS ET LABELS
+   ========================================================= */
+.profil-champ {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.profil-champ label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e1b4b;
+}
+
+.profil-champ input {
+  padding: 12px 16px; /* Réduit de 14px à 12px */
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  color: #1e1b4b;
+  background: #f8f9fc;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.profil-champ input:focus {
+  outline: none;
+  border-color: #5b4bdb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.1);
+}
+
+/* --- CHAMPS AVEC ICONE OEIL --- */
+.profil-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.profil-input-group input {
+  padding-right: 45px; /* Laisse la place pour l'icône */
+}
+
+.profil-eye-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.profil-eye-btn:hover {
+  color: #5b4bdb;
+}
+
+.profil-eye-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* --- SÉPARATEUR --- */
+.profil-separateur {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 24px 0;
+}
+
+/* =========================================================
+   MESSAGES ET BOUTON
+   ========================================================= */
+.profil-erreur {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.profil-succes {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.profil-btn {
+  width: 100%;
+  padding: 14px;
+  background: #5b4bdb;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 10px;
+}
+
+.profil-btn:hover {
+  background: #4a3bc0;
+}
+
+.profil-btn:disabled {
+  background: #a29bd6;
+  cursor: not-allowed;
+}

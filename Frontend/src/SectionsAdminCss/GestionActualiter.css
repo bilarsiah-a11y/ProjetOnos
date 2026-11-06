@@ -1,9 +1,298 @@
-.act-formulaire h2, .act-sous-titre { font-size: 1.2rem; margin-top: 0; }
-.act-sous-titre { margin-top: 28px; }
-.act-apercu { max-width: 240px; border-radius: 8px; margin-top: 8px; }
-.act-liste { list-style: none; padding: 0; display: grid; gap: 12px; }
-.act-carte { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.act-image { width: 110px; height: 80px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
-.act-texte { flex: 1; min-width: 200px; display: flex; flex-direction: column; gap: 4px; word-break: break-word; }
-.act-texte p { margin: 0; color: #444; }
-.act-date { color: #777; font-size: .85rem; }
+/* =========================================================
+   CONTENEUR PRINCIPAL
+   ========================================================= */
+.act-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.act-page h1 {
+  font-size: 1.8rem;
+  color: #5b4bdb;
+  margin-bottom: 24px;
+}
+
+/* =========================================================
+   FORMULAIRE DE PUBLICATION
+   ========================================================= */
+.act-formulaire {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f1f5;
+  margin-bottom: 40px;
+}
+
+.act-formulaire h2 {
+  font-size: 1.2rem;
+  color: #1e1b4b;
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.act-champ {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.act-champ label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e1b4b;
+}
+
+/* --- CHAMPS CORRIGÉS POUR LE FOND BLANC (Inputs hors fichier + Textarea) --- */
+.act-champ input:not([type="file"]),
+.act-champ textarea {
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.95rem;
+  color: #1e1b4b !important; /* Force le texte foncé */
+  background-color: #ffffff !important; /* Force le fond blanc */
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.act-champ input:not([type="file"]):focus,
+.act-champ textarea:focus {
+  outline: none;
+  border-color: #5b4bdb;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.1);
+}
+
+.act-champ input::placeholder,
+.act-champ textarea::placeholder {
+  color: #94a3b8;
+}
+
+.act-champ textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* --- INPUT FILE --- */
+.act-file-wrapper {
+  border: 2px dashed #cbd5e1;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  background: #f8f9fc;
+  transition: all 0.2s ease;
+}
+
+.act-file-wrapper:hover {
+  border-color: #5b4bdb;
+  background: #f5f4fb;
+}
+
+.act-file-wrapper input[type="file"] {
+  font-size: 0.9rem;
+  color: #52526b;
+}
+
+.act-apercu {
+  max-width: 200px;
+  border-radius: 12px;
+  margin-top: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* --- BOUTONS ET MESSAGES --- */
+.act-btn {
+  width: 100%;
+  padding: 14px;
+  background: #5b4bdb;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.act-btn:hover {
+  background: #4a3bc0;
+}
+
+.act-btn:disabled {
+  background: #a29bd6;
+  cursor: not-allowed;
+}
+
+.act-erreur {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.act-succes {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   LISTE DES ACTUALITÉS
+   ========================================================= */
+.act-sous-titre {
+  font-size: 1.3rem;
+  color: #1e1b4b;
+  margin-bottom: 20px;
+}
+
+.act-vide {
+  text-align: center;
+  color: #777;
+  padding: 40px 0;
+  font-size: 1.05rem;
+}
+
+.act-liste {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.act-carte {
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #f1f1f5;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.act-carte:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(91, 75, 219, 0.08);
+}
+
+/* Image à gauche */
+.act-image {
+  width: 140px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.act-image-vide {
+  width: 140px;
+  height: 100px;
+  border-radius: 12px;
+  background: #f5f4fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+/* Contenu au centre */
+.act-texte {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.act-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.act-texte strong {
+  font-size: 1.1rem;
+  color: #1e1b4b;
+  line-height: 1.3;
+}
+
+.act-date {
+  font-size: 0.8rem;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.act-texte p {
+  margin: 4px 0 0 0;
+  color: #52526b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Bouton supprimer à droite */
+.act-btn-danger {
+  background: #fdecea;
+  color: #d64545;
+  border: none;
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.act-btn-danger:hover {
+  background: #d64545;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.act-btn-danger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 600px) {
+  .act-carte {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .act-image, .act-image-vide {
+    width: 100%;
+    height: 180px;
+  }
+
+  .act-btn-danger {
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+  }
+}

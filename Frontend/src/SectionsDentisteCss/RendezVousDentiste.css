@@ -1,53 +1,426 @@
-.dent-carte h2 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+/* =========================================
+   MODERNISATION DE LA PAGE RENDEZ-VOUS
+   ========================================= */
+
+/* 1. Titre et Badge */
+.dent-titre {
+  font-size: 1.25rem; /* Taille identique à l'accueil */
+  font-weight: 700;
+  color: #4c1d95; 
+  margin-bottom: 8px;
+}
+
+.dent-carte h2 { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  flex-wrap: wrap; 
+  font-size: 1.15rem;
+  color: #1f2937;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f3f4f6;
+}
+
 .rv-badge {
-  background: #e08a00; color: #fff; font-size: .8rem; font-weight: 600;
-  padding: 3px 10px; border-radius: 12px;
+  background: linear-gradient(135deg, #f59e0b, #ea580c); /* Dégradé Orange */
+  color: #fff; 
+  font-size: .75rem; 
+  font-weight: 700;
+  padding: 4px 12px; 
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
-.rv-option { display: flex; align-items: center; gap: 8px; color: #555; margin-bottom: 14px; }
-.rv-aide { color: #666; font-size: .92rem; margin: 0 0 16px; }
-.rv-liste { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+
+/* 2. Option d'affichage */
+.rv-option { 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  color: #4b5563; 
+  margin-bottom: 20px; 
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.rv-option input[type="checkbox"] {
+  accent-color: #7c3aed; /* Violet pour la case à cocher */
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.rv-aide { 
+  color: #6b7280; 
+  font-size: .9rem; 
+  margin: 0 0 20px; 
+  line-height: 1.5;
+}
+
+/* 3. Liste des rendez-vous */
+.rv-liste { 
+  list-style: none; 
+  padding: 0; 
+  margin: 0; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px; 
+}
+
 .rv-rdv {
-  display: grid; gap: 12px; align-items: center; padding: 14px 16px;
-  border: 1px solid #e3e0fb; border-radius: 10px; color: #333;
-  grid-template-columns: minmax(130px, 1fr) minmax(160px, 2fr) auto;
+  display: grid; 
+  gap: 16px; 
+  align-items: center; 
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #f3f4f6; 
+  border-radius: 12px; 
+  color: #333;
+  grid-template-columns: minmax(140px, 1fr) minmax(180px, 2fr) auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
-.rv-rdv.rv-annule { opacity: .6; }
+
+/* Effet de bordure colorée à gauche selon le statut */
+.rv-rdv::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+}
+
+.rv-rdv.rv-en_attente::before { background: #f59e0b; } /* Orange */
+.rv-rdv.rv-confirme::before { background: #10b981; } /* Vert */
+.rv-rdv.rv-annule::before { background: #9ca3af; } /* Gris */
+
+/* Effet au survol */
+.rv-rdv:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(109, 40, 217, 0.08);
+}
+
+.rv-rdv.rv-annule { 
+  opacity: .65; 
+  background: #fafafa;
+}
 .rv-rdv.rv-annule .rv-quand { text-decoration: line-through; }
-.rv-quand { display: flex; flex-direction: column; gap: 2px; text-transform: capitalize; }
-.rv-heure { font-size: 1.2rem; font-weight: 700; color: #5b4bdb; }
-.rv-patient { display: flex; flex-direction: column; gap: 2px; word-break: break-word; }
-.rv-patient a { color: #5b4bdb; text-decoration: none; }
-.rv-patient span { color: #666; font-size: .9rem; }
-.rv-motif { font-style: italic; }
-.rv-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: flex-end; }
-.rv-statut { font-size: .8rem; font-weight: 600; padding: 4px 10px; border-radius: 12px; }
-.rv-statut-en_attente { background: #fff1d6; color: #8a5a00; }
-.rv-statut-confirme { background: #e6f6ec; color: #1e7a43; }
-.rv-statut-annule { background: #eee; color: #666; }
-.rv-actions .dent-btn { padding: 8px 14px; }
 
-.rv-duree { max-width: 240px; }
+.rv-quand { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 4px; 
+  text-transform: capitalize; 
+}
+
+.rv-quand strong {
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.rv-heure { 
+  font-size: 1.4rem; 
+  font-weight: 800; 
+  color: #5b4bdb; 
+  letter-spacing: -0.5px;
+}
+
+.rv-patient { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 4px; 
+  word-break: break-word; 
+}
+
+.rv-patient strong {
+  font-size: 1.05rem;
+  color: #1f2937;
+}
+
+.rv-patient a { 
+  color: #7c3aed; 
+  text-decoration: none; 
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.rv-patient a:hover {
+  color: #4c1d95;
+  text-decoration: underline;
+}
+
+.rv-patient span { 
+  color: #6b7280; 
+  font-size: .9rem; 
+}
+
+.rv-motif { 
+  font-style: italic; 
+  color: #4b5563;
+  background: #f9fafb;
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 4px;
+  font-size: 0.85rem;
+}
+
+/* 4. Actions et Statuts */
+.rv-actions { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 10px; 
+  align-items: center; 
+  justify-content: flex-end; 
+}
+
+.rv-statut { 
+  font-size: .75rem; 
+  font-weight: 700; 
+  padding: 4px 12px; 
+  border-radius: 20px; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rv-statut-en_attente { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.rv-statut-confirme { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+.rv-statut-annule { background: #f3f4f6; color: #4b5563; border: 1px solid #e5e7eb; }
+
+/* Boutons d'action spécifiques */
+.rv-actions .dent-btn { 
+  padding: 8px 16px; 
+  font-size: 0.85rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.rv-actions .dent-btn:not(.dent-btn-danger) {
+  background: linear-gradient(135deg, #10b981, #059669); /* Dégradé Vert */
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  border: none;
+  color: white;
+}
+
+.rv-actions .dent-btn:not(.dent-btn-danger):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.rv-actions .dent-btn-danger {
+  background: #fff1f2;
+  color: #e11d48;
+  border: 1px solid #fecdd3;
+}
+
+.rv-actions .dent-btn-danger:hover {
+  background: #ffe4e6;
+  color: #be123c;
+}
+
+/* 5. Section Horaires */
+.rv-duree { 
+  max-width: 260px;
+  margin-bottom: 24px;
+}
+
+.rv-duree label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.rv-duree select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
+  color: #1f2937;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.rv-duree select:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
 .rv-jour {
-  display: grid; gap: 8px; padding: 10px 0; border-top: 1px solid #eee;
-  grid-template-columns: 100px 1fr; align-items: start; color: #333;
+  display: grid; 
+  gap: 12px; 
+  padding: 16px 0; 
+  border-top: 1px solid #f3f4f6;
+  grid-template-columns: 120px 1fr; 
+  align-items: start; 
+  color: #333;
 }
-.rv-jour-nom { font-weight: 600; padding-top: 6px; }
-.rv-plages { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
-.rv-ferme { color: #999; padding-top: 6px; }
-.rv-plage { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.rv-plage input[type="time"] {
-  padding: 8px 10px; border: 1px solid #ccc; border-radius: 8px; font: inherit; color: #333; background: #fff;
-}
-.rv-retirer { background: none; border: none; color: #d64545; cursor: pointer; font-size: 1.1rem; }
-.rv-ajouter { background: none; border: none; color: #5b4bdb; cursor: pointer; font: inherit; padding: 0; text-decoration: underline; }
 
-@media (max-width: 640px) {
-  .rv-rdv { grid-template-columns: 1fr; }
-  .rv-actions { justify-content: flex-start; }
-  .rv-jour { grid-template-columns: 1fr; }
+.rv-jour-nom { 
+  font-weight: 700; 
+  color: #4b5563;
+  padding-top: 10px; 
+  font-size: 0.95rem;
 }
+
+.rv-plages { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+  align-items: flex-start; 
+}
+
+.rv-ferme { 
+  color: #9ca3af; 
+  padding-top: 10px; 
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.rv-plage { 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  flex-wrap: wrap;
+  background: #f9fafb;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #f3f4f6;
+}
+
+/* Modernisation des Selecteurs d'heure */
 .rv-heure-select {
-  padding: 8px 10px; border: 1px solid #ccc; border-radius: 8px;
-  font: inherit; color: #333; background: #fff;
+  padding: 8px 12px; 
+  border: 1px solid #d1d5db; 
+  border-radius: 8px;
+  font: inherit; 
+  color: #1f2937; 
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
 }
-.rv-apercu { margin: 0; color: #666; font-size: .85rem; max-width: 520px; }
+
+.rv-heure-select:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+.rv-plage span {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.rv-retirer { 
+  background: #fee2e2; 
+  border: none; 
+  color: #ef4444; 
+  cursor: pointer; 
+  font-size: 1rem; 
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.rv-retirer:hover {
+  background: #fecaca;
+}
+
+.rv-ajouter { 
+  background: none; 
+  border: none; 
+  color: #7c3aed; 
+  cursor: pointer; 
+  font: inherit; 
+  font-weight: 600;
+  padding: 4px 0; 
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rv-ajouter:hover {
+  color: #4c1d95;
+  text-decoration: underline;
+}
+
+.rv-apercu { 
+  margin: 0; 
+  color: #6b7280; 
+  font-size: .85rem; 
+  max-width: 100%;
+  background: #f0fdf4; /* Vert très clair pour l'aperçu */
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #dcfce7;
+  line-height: 1.4;
+}
+
+/* Bouton d'enregistrement principal */
+.dent-btn {
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+  margin-top: 20px;
+}
+
+.dent-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.3);
+}
+
+.dent-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 6. Responsive (Mobile) */
+@media (max-width: 768px) {
+  .rv-rdv { 
+    grid-template-columns: 1fr; 
+    gap: 12px;
+  }
+  
+  .rv-actions { 
+    justify-content: flex-start; 
+    border-top: 1px solid #f3f4f6;
+    padding-top: 12px;
+    margin-top: 4px;
+  }
+  
+  .rv-jour { 
+    grid-template-columns: 1fr; 
+    gap: 8px;
+  }
+  
+  .rv-jour-nom {
+    padding-top: 0;
+    margin-bottom: 4px;
+  }
+  
+  .rv-plage {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

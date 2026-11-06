@@ -28,7 +28,7 @@ const creneauxDuJour = (plages: Horaire[], duree: number): string[] => {
   const triees = [...plages].sort((a, b) => a.heure_debut.localeCompare(b.heure_debut))
   for (const p of triees) {
     let t = enMinutes(p.heure_debut)
-      const fin = Math.min(enMinutes(p.heure_fin), enMinutes(HEURE_FERMETURE))
+    const fin = Math.min(enMinutes(p.heure_fin), enMinutes(HEURE_FERMETURE))
     while (t + duree <= fin) {
       resultat.push(deMinutes(t))
       t += duree
@@ -159,7 +159,7 @@ function BlocHoraires({
   onSauve: () => Promise<void>
 }) {
   const [duree, setDuree] = useState(reglages.duree_rdv)
-    const [horaires, setHoraires] = useState<Horaire[]>(
+  const [horaires, setHoraires] = useState<Horaire[]>(
     reglages.horaires
       .map((h) => ({
         ...h,

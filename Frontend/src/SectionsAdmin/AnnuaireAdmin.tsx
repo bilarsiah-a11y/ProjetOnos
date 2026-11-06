@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api, urlImage } from '../services/api'
 import type { Dentiste, OptionsProfil } from '../types'
-import '../SectionsAdminCss/AdminCommun.css'
 import '../SectionsAdminCss/AnnuaireAdmin.css'
 
 function AnnuaireAdmin() {
@@ -36,7 +35,7 @@ function AnnuaireAdmin() {
   )
 
   return (
-    <section className="adm-page">
+    <section className="annuaire-admin-page">
       <h1>Annuaire des dentistes</h1>
 
       <div className="ann-filtres">
@@ -76,15 +75,19 @@ function AnnuaireAdmin() {
         <ul className="ann-liste">
           {filtres.map((d) => {
             const photo = urlImage(d.photo)
+            const nomAffiche = d.nom ? d.nom : 'Inconnu'
+            const prenomAffiche = d.prenom ? d.prenom : ''
+            const initiale = nomAffiche.charAt(0).toUpperCase()
+
             return (
               <li key={d.id} className="adm-carte ann-carte">
                 {photo ? (
-                  <img className="ann-photo" src={photo} alt={`${d.prenom} ${d.nom}`} />
+                  <img className="ann-photo" src={photo} alt={`${prenomAffiche} ${nomAffiche}`} />
                 ) : (
-                  <span className="ann-photo ann-photo-vide">{d.nom.charAt(0).toUpperCase()}</span>
+                  <span className="ann-photo ann-photo-vide">{initiale}</span>
                 )}
                 <div className="ann-infos">
-                  <strong>{d.titre} {d.prenom} {d.nom}</strong>
+                  <strong>{d.titre} {prenomAffiche} {nomAffiche}</strong>
                   <span>{d.domaine} · {d.region}</span>
                   {d.adresse && <span>{d.adresse}</span>}
                   <span>

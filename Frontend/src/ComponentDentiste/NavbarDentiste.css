@@ -192,3 +192,111 @@
     display: none; /* sur mobile, on ne montre que l'avatar */
   }
 }
+/* =========================================
+   MODALE DE CONFIRMATION (Déconnexion)
+   ========================================= */
+
+.pd-modale-fond {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(17, 24, 39, 0.6); /* Fond sombre transparent */
+  backdrop-filter: blur(4px); /* Effet de flou moderne */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* Pour être au-dessus de la navbar */
+  animation: fadeInModale 0.2s ease-out;
+}
+
+.pd-modale-boite {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 24px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUpModale 0.3s ease-out;
+  text-align: center;
+}
+
+.pd-modale-icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: #fee2e2; /* Rouge clair */
+  color: #ef4444; /* Rouge */
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.pd-modale-boite h3 {
+  margin-top: 0;
+  color: #1f2937;
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+}
+
+.pd-modale-boite p {
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.pd-modale-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* Bouton Annuler de la modale */
+.pd-btn-annuler {
+  background: #f3f4f6;
+  color: #4b5563;
+  box-shadow: none;
+  border: 1px solid #e5e7eb;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.pd-btn-annuler:hover {
+  background: #e5e7eb;
+}
+
+/* Bouton Danger (Rouge) de la modale */
+.dent-btn-danger {
+  background: #e11d48;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(225, 29, 72, 0.2);
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dent-btn-danger:hover {
+  background: #be123c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(225, 29, 72, 0.3);
+}
+
+/* Animations */
+@keyframes fadeInModale {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpModale {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}

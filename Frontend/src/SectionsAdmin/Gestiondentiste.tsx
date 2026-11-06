@@ -47,10 +47,12 @@ function Gestiondentiste() {
 
   return (
     <section className="gestion-dentiste">
-      <h1>
-        Gestion des dentistes
-        {dentistes.length > 0 && <span className="gd-badge">{dentistes.length}</span>}
-      </h1>
+      <div className="gd-header">
+        <h1>
+          Gestion des dentistes
+          {dentistes.length > 0 && <span className="gd-badge">{dentistes.length}</span>}
+        </h1>
+      </div>
 
       <input
         className="gd-recherche"
@@ -63,9 +65,9 @@ function Gestiondentiste() {
       {erreur && <p className="gd-erreur">{erreur}</p>}
 
       {chargement ? (
-        <p>Chargement...</p>
+        <p className="gd-texte-vide">Chargement...</p>
       ) : filtres.length === 0 ? (
-        <p className="gd-vide">
+        <p className="gd-texte-vide">
           {dentistes.length === 0 ? 'Aucun dentiste validé pour le moment.' : 'Aucun résultat.'}
         </p>
       ) : (
@@ -83,17 +85,28 @@ function Gestiondentiste() {
 
                 <div className="gd-infos">
                   <strong>{nom ? `${d.titre ?? ''} ${nom}`.trim() : 'Profil non complété'}</strong>
-                  <span>{d.mail}</span>
+                  <span className="gd-mail">{d.mail}</span>
                   {d.domaine && <span>{d.domaine}{d.region ? ` · ${d.region}` : ''}</span>}
                   {d.contact && <span>Contact : {d.contact}</span>}
                 </div>
 
                 <button
-                  className="gd-supprimer"
+                  className="gd-btn-supprimer"
                   disabled={enCours === d.id}
                   onClick={() => supprimer(d)}
+                  title="Supprimer ce dentiste"
                 >
-                  {enCours === d.id ? 'Suppression...' : 'Supprimer'}
+                  {enCours === d.id ? (
+                    <span className="gd-loader">...</span>
+                  ) : (
+                    // Icône de corbeille SVG
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      <line x1="10" y1="11" x2="10" y2="17"></line>
+                      <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
+                  )}
                 </button>
               </li>
             )

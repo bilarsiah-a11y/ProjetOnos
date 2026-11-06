@@ -3,7 +3,6 @@ import type { FormEvent, ReactNode } from 'react'
 import { api, ApiError, urlImage } from '../services/api'
 import { useAuth } from '../AuthContext'
 import type { OptionsProfil, ProfilDentiste } from '../types'
-import '../SectionsDentisteCss/CommunDentiste.css'
 import '../SectionsDentisteCss/ProfilDentsite.css'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -113,7 +112,7 @@ function FormulaireProfil({
 
   return (
     <form className="dent-carte" onSubmit={enregistrer}>
-      <h2>Mes informations</h2>
+      <h2>Mes informations professionnelles</h2>
 
       <div className="dent-grille">
         <Champ id="pf-titre" label="Titre *">
@@ -189,6 +188,7 @@ function BlocPhoto({
   const [erreur, setErreur] = useState('')
   const [succes, setSucces] = useState('')
   const champ = useRef<HTMLInputElement>(null)
+  const [modaleOuverte, setModaleOuverte] = useState(false)
 
   if (!profil) {
     return (
@@ -228,8 +228,8 @@ function BlocPhoto({
     }
   }
 
-  const supprimer = async () => {
-    if (!window.confirm('Supprimer votre photo ?')) return
+  const confirmerSuppression = async () => {
+    setModaleOuverte(false)
     setErreur('')
     setSucces('')
     setEnvoi(true)
@@ -245,35 +245,82 @@ function BlocPhoto({
   }
 
   return (
-    <div className="dent-carte">
-      <h2>Ma photo</h2>
+    <>
+      <div className="dent-carte">
+        <h2>Ma photo de profil</h2>
 
-      <div className="pd-photo-ligne">
-        {photo ? (
-          <img className="pd-photo" src={photo} alt="Ma photo" />
-        ) : (
-          <span className="pd-photo pd-photo-vide">{profil.nom.charAt(0).toUpperCase()}</span>
-        )}
-        <div className="pd-photo-actions">
-          <input
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            ref={champ}
-            disabled={envoi}
-            onChange={(e) => choisir(e.target.files?.[0])}
-          />
-          {profil.photo && (
-            <button className="dent-btn dent-btn-danger" disabled={envoi} onClick={supprimer}>
-              Supprimer la photo
-            </button>
+        <div className="pd-photo-ligne">
+          {photo ? (
+            <img className="pd-photo" src={photo} alt="Ma photo" />
+          ) : (
+            <span className="pd-photo pd-photo-vide">{profil.nom.charAt(0).toUpperCase()}</span>
           )}
-          <small>JPG, PNG ou WebP, 5 Mo maximum.</small>
+          
+          <div className="pd-photo-actions">
+            <p className="pd-photo-texte">
+              {photo 
+                ? "Vous pouvez modifier votre photo actuelle en choisissant un nouveau fichier." 
+                : "Ajoutez une photo pour personnaliser votre profil (sinon, l'initiale de votre nom sera affichée)."}
+            </p>
+            
+            <div className="pd-photo-boutons">
+              <input
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                ref={champ}
+                disabled={envoi}
+                onChange={(e) => choisir(e.target.files?.[0])}
+                id="upload-photo"
+                style={{ display: 'none' }}
+              />
+              <label htmlFor="upload-photo" className="dent-btn pd-btn-upload">
+                {envoi ? 'Chargement...' : photo ? 'Changer la photo' : 'Choisir une image'}
+              </label>
+
+              {photo && (
+                <button 
+                  className="dent-btn dent-btn-danger" 
+                  disabled={envoi} 
+                  onClick={() => setModaleOuverte(true)} 
+                  type="button"
+                >
+                  Supprimer
+                </button>
+              )}
+            </div>
+          </div>
         </div>
+
+        {erreur && <p className="dent-erreur">{erreur}</p>}
+        {succes && <p className="dent-succes">{succes}</p>}
       </div>
 
-      {erreur && <p className="dent-erreur">{erreur}</p>}
-      {succes && <p className="dent-succes">{succes}</p>}
-    </div>
+      {modaleOuverte && (
+        <div className="pd-modale-fond" onClick={() => setModaleOuverte(false)}>
+          <div className="pd-modale-boite" onClick={(e) => e.stopPropagation()}>
+            <h3>Supprimer la photo ?</h3>
+            <p>
+              Êtes-vous sûr de vouloir supprimer votre photo de profil ? 
+              L'initiale de votre nom sera affichée à la place.
+            </p>
+            <div className="pd-modale-actions">
+              <button 
+                className="dent-btn pd-btn-annuler" 
+                onClick={() => setModaleOuverte(false)}
+              >
+                Annuler
+              </button>
+              <button 
+                className="dent-btn dent-btn-danger" 
+                onClick={confirmerSuppression}
+              >
+                Oui, supprimer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 
@@ -338,7 +385,7 @@ function BlocCompte() {
 
   return (
     <form className="dent-carte" onSubmit={enregistrer}>
-      <h2>Mon compte</h2>
+      <h2>Paramètres de connexion</h2>
       <p className="pd-mail">Email actuel : <strong>{utilisateur?.mail}</strong></p>
 
       <Champ id="pc-mail" label="Nouvel email (facultatif)">
@@ -375,6 +422,8 @@ function ProfilDentsite() {
   const [options, setOptions] = useState<OptionsProfil | null>(null)
   const [chargement, setChargement] = useState(true)
   const [erreur, setErreur] = useState('')
+  
+  const [ongletActif, setOngletActif] = useState<'pro' | 'compte'>('pro')
 
   const chargerProfil = async () => {
     try {
@@ -396,7 +445,7 @@ function ProfilDentsite() {
 
   return (
     <section className="dent-page">
-      <h1 className="dent-titre">Mon profil</h1>
+      <h1 className="dent-titre">Mon Espace</h1>
 
       {erreur && <p className="dent-erreur">{erreur}</p>}
 
@@ -410,9 +459,35 @@ function ProfilDentsite() {
                 Complétez ce formulaire pour apparaître dans l'annuaire. Les champs marqués d'un * sont obligatoires.
               </p>
             )}
-            <FormulaireProfil options={options} profil={profil} onSauve={chargerProfil} />
-            <BlocPhoto profil={profil} onChange={chargerProfil} />
-            <BlocCompte />
+
+            <div className="pd-onglets">
+              <button 
+                className={`pd-onglet ${ongletActif === 'pro' ? 'actif' : ''}`}
+                onClick={() => setOngletActif('pro')}
+              >
+                Profil Professionnel
+              </button>
+              <button 
+                className={`pd-onglet ${ongletActif === 'compte' ? 'actif' : ''}`}
+                onClick={() => setOngletActif('compte')}
+              >
+                Mon Compte
+              </button>
+            </div>
+
+            {ongletActif === 'pro' && (
+              <div className="pd-contenu-onglet">
+                {/* L'image est maintenant TOUT EN HAUT */}
+                <BlocPhoto profil={profil} onChange={chargerProfil} />
+                <FormulaireProfil options={options} profil={profil} onSauve={chargerProfil} />
+              </div>
+            )}
+
+            {ongletActif === 'compte' && (
+              <div className="pd-contenu-onglet">
+                <BlocCompte />
+              </div>
+            )}
           </>
         )
       )}

@@ -27,13 +27,11 @@ import RequireDentiste from './RequireDentiste'
 import RendezVousDentiste from './SectionsDentiste/RendezVousDentiste'
 import AcceuilDentiste from './SectionsDentiste/AcceuilDentiste'
 import AnnuaireDentiste from './SectionsDentiste/AnnuaireDentiste'
-import DeconnectionDentiste from './SectionsDentiste/DeconnectionDentiste'
 import ProfilDentsite from './SectionsDentiste/ProfilDentsite'
 
 // PageAdmin
 import AcceuilAdmin from './SectionsAdmin/AcceuilAdmin'
 import AnnuaireAdmin from './SectionsAdmin/AnnuaireAdmin'
-import Deconnexionadmin from './SectionsAdmin/Deconnexionadmin'
 import GestionActualiter from './SectionsAdmin/GestionActualiter'
 import Notification from './SectionsAdmin/Notification'
 import ProfilAdmin from './SectionsAdmin/ProfilAdmin'
@@ -93,7 +91,6 @@ function App() {
             <Route path="/dentiste/accueil" element={<LayoutDentiste><AcceuilDentiste /></LayoutDentiste>} />
             <Route path="/dentiste/annuaire" element={<LayoutDentiste><AnnuaireDentiste /></LayoutDentiste>} />
             <Route path="/dentiste/profil" element={<LayoutDentiste><ProfilDentsite /></LayoutDentiste>} />
-            <Route path="/dentiste/deconnexion" element={<LayoutDentiste><DeconnectionDentiste /></LayoutDentiste>} />
             <Route path="/dentiste/rendez-vous" element={<LayoutDentiste><RendezVousDentiste /></LayoutDentiste>} />
           </Route>
         {/* Espace Admin */}
@@ -104,7 +101,7 @@ function App() {
             <Route path="/admin/dentistes" element={<LayoutAdmin><Gestiondentiste /></LayoutAdmin>} />
             <Route path="/admin/notifications" element={<LayoutAdmin><Notification /></LayoutAdmin>} />
             <Route path="/admin/profil" element={<LayoutAdmin><ProfilAdmin /></LayoutAdmin>} />
-            <Route path="/admin/deconnexion" element={<LayoutAdmin><Deconnexionadmin /></LayoutAdmin>} />
+
           </Route>
       </Routes>
       </AuthProvider>

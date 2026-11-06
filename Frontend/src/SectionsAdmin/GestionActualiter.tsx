@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { api, urlImage } from '../services/api'
 import type { Actualite } from '../types'
-import '../SectionsAdminCss/AdminCommun.css'
 import '../SectionsAdminCss/GestionActualiter.css'
 
 const TAILLE_MAX_MO = 5
@@ -47,7 +46,7 @@ function GestionActualiter() {
       setImage(null)
       return
     }
-        if (!TYPES_ACCEPTES.includes(fichier.type)) {
+    if (!TYPES_ACCEPTES.includes(fichier.type)) {
       setErreur('Format accepté : JPG, PNG ou WebP.')
       return
     }
@@ -81,7 +80,7 @@ function GestionActualiter() {
       setContenu('')
       setImage(null)
       if (champImage.current) champImage.current.value = ''
-      setSucces('Actualité publiée.')
+      setSucces('Actualité publiée avec succès.')
     } catch (err) {
       setErreur(err instanceof Error ? err.message : 'Une erreur est survenue')
     } finally {
@@ -108,71 +107,90 @@ function GestionActualiter() {
     new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
 
   return (
-    <section className="adm-page">
+    <section className="act-page">
       <h1>Gestion des actualités</h1>
 
-      <form className="adm-carte act-formulaire" onSubmit={publier}>
-        <h2>Nouvelle actualité</h2>
+      <form className="act-formulaire" onSubmit={publier}>
+        <h2>Publier une nouvelle actualité</h2>
 
-        <div className="adm-champ">
-          <label htmlFor="act-titre">Titre</label>
-          <input id="act-titre" value={titre} onChange={(e) => setTitre(e.target.value)} />
+        <div className="act-champ">
+          <label htmlFor="act-titre">Titre de l'actualité</label>
+          {/* 👇 AJOUT DE type="text" ICI 👇 */}
+          <input 
+            type="text"
+            id="act-titre" 
+            placeholder="Ex: Nouvelles directives sanitaires..."
+            value={titre} 
+            onChange={(e) => setTitre(e.target.value)} 
+          />
         </div>
 
-        <div className="adm-champ">
+        <div className="act-champ">
           <label htmlFor="act-contenu">Contenu</label>
           <textarea
             id="act-contenu"
-            rows={5}
+            rows={4}
+            placeholder="Écrivez votre article ici..."
             value={contenu}
             onChange={(e) => setContenu(e.target.value)}
           />
         </div>
 
-        <div className="adm-champ">
-          <label htmlFor="act-image">Image (facultatif)</label>
-          <input
-            id="act-image"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            ref={champImage}
-            onChange={(e) => choisirImage(e.target.files?.[0])}
-          />
+        <div className="act-champ">
+          <label htmlFor="act-image">Image d'illustration (facultatif)</label>
+          <div className="act-file-wrapper">
+            <input
+              id="act-image"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              ref={champImage}
+              onChange={(e) => choisirImage(e.target.files?.[0])}
+            />
+          </div>
           {apercu && <img className="act-apercu" src={apercu} alt="Aperçu" />}
         </div>
 
-        {erreur && <p className="adm-erreur">{erreur}</p>}
-        {succes && <p className="adm-succes">{succes}</p>}
+        {erreur && <p className="act-erreur">{erreur}</p>}
+        {succes && <p className="act-succes">{succes}</p>}
 
-        <button className="adm-btn" type="submit" disabled={envoi}>
-          {envoi ? 'Publication...' : 'Publier'}
+        <button className="act-btn" type="submit" disabled={envoi}>
+          {envoi ? 'Publication en cours...' : "Publier l'actualité"}
         </button>
       </form>
 
-      <h2 className="act-sous-titre">Actualités publiées ({actualites.length})</h2>
+      <h2 className="act-sous-titre">Actualités en ligne ({actualites.length})</h2>
 
       {chargement ? (
-        <p>Chargement...</p>
+        <p>Chargement des actualités...</p>
       ) : actualites.length === 0 ? (
-        <p className="adm-vide">Aucune actualité pour le moment.</p>
+        <p className="act-vide">Aucune actualité n'a été publiée pour le moment.</p>
       ) : (
         <ul className="act-liste">
           {actualites.map((a) => {
             const img = urlImage(a.image)
             return (
-              <li key={a.id} className="adm-carte act-carte">
-                {img && <img className="act-image" src={img} alt={a.titre} />}
+              <li key={a.id} className="act-carte">
+                {img ? (
+                  <img className="act-image" src={img} alt={a.titre} />
+                ) : (
+                  <div className="act-image-vide">📰</div>
+                )}
+                
                 <div className="act-texte">
-                  <strong>{a.titre}</strong>
-                  <span className="act-date">{formaterDate(a.created_at)}</span>
+                  <div className="act-header">
+                    <strong>{a.titre}</strong>
+                    <span className="act-date">📅 {formaterDate(a.created_at)}</span>
+                  </div>
                   <p>{a.contenu.length > 160 ? `${a.contenu.slice(0, 160)}...` : a.contenu}</p>
                 </div>
+
                 <button
-                  className="adm-btn adm-btn-danger"
+                  className="act-btn-danger"
                   disabled={enCours === a.id}
                   onClick={() => supprimer(a)}
+                  title="Supprimer"
                 >
-                  {enCours === a.id ? 'Suppression...' : 'Supprimer'}
+                  {enCours === a.id ? '...' : '🗑️'}
                 </button>
               </li>
             )

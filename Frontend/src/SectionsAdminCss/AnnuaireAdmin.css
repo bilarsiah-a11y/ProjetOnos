@@ -1,14 +1,155 @@
+/* =========================================================
+   CONTENEUR DE LA PAGE
+   ========================================================= */
+.annuaire-admin-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.annuaire-admin-page h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.6rem;
+  color: #5b4bdb; /* Titre violet comme sur le tableau de bord */
+  margin-bottom: 24px;
+}
+
+/* =========================================================
+   FILTRES
+   ========================================================= */
 .ann-filtres {
-  display: grid; gap: 12px; margin: 12px 0;
+  display: grid;
+  gap: 12px;
+  margin: 12px 0 24px 0;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
-.ann-filtres .adm-champ { margin-bottom: 0; }
-.ann-liste { list-style: none; padding: 0; display: grid; gap: 12px; }
-.ann-carte { display: flex; align-items: center; gap: 14px; }
-.ann-photo { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
-.ann-photo-vide {
-  background: #e0dfff; color: #5b4bdb; font-weight: 700; font-size: 1.4rem;
-  display: flex; align-items: center; justify-content: center;
+
+.ann-filtres .adm-champ {
+  margin-bottom: 0;
 }
-.ann-infos { display: flex; flex-direction: column; gap: 3px; min-width: 0; word-break: break-word; }
-.ann-infos span { color: #666; font-size: .9rem; }
+
+/* Style global des champs */
+.adm-champ {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.adm-champ input,
+.adm-champ select {
+  padding: 10px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  width: 100%;
+  background: #ffffff;
+  color: #1e1b4b;
+  transition: all 0.2s ease;
+}
+
+.adm-champ input:focus,
+.adm-champ select:focus {
+  outline: none;
+  border-color: #5b4bdb;
+  box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.1);
+}
+
+/* =========================================================
+   LISTE DES CARTES
+   ========================================================= */
+.ann-liste {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.adm-carte {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f1f1f5;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.adm-carte:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(91, 75, 219, 0.08);
+}
+
+.ann-carte {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* --- PHOTO --- */
+.ann-photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid #f8f9fc;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.ann-photo-vide {
+  background: #f5f4fb;
+  color: #5b4bdb;
+  font-weight: 700;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- INFOS --- */
+.ann-infos {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.ann-infos strong {
+  color: #1e1b4b;
+  font-size: 1.05rem;
+}
+
+.ann-infos span {
+  color: #52526b;
+  font-size: 0.9rem;
+}
+
+/* =========================================================
+   MESSAGES (Erreur, Vide, Succès)
+   ========================================================= */
+.adm-erreur {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.adm-succes {
+  background: #e6f6ec;
+  color: #1e7a43;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.adm-vide {
+  color: #777;
+  text-align: center;
+  padding: 40px 0;
+}

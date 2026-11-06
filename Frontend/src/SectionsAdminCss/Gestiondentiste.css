@@ -1,31 +1,207 @@
-.gestion-dentiste { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
-.gestion-dentiste h1 { display: flex; align-items: center; gap: 10px; font-size: 1.6rem; }
+/* =========================================================
+   CONTENEUR PRINCIPAL
+   ========================================================= */
+.gestion-dentiste {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.gd-header h1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.8rem;
+  color: #5b4bdb;
+  margin-bottom: 20px;
+}
+
 .gd-badge {
-  background: #5b4bdb; color: #fff; font-size: .85rem;
-  min-width: 24px; height: 24px; padding: 0 8px; border-radius: 12px;
-  display: inline-flex; align-items: center; justify-content: center;
+  background: #5b4bdb;
+  color: #ffffff;
+  font-size: 0.85rem;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
 }
+
+/* =========================================================
+   BARRE DE RECHERCHE
+   ========================================================= */
 .gd-recherche {
-  width: 100%; box-sizing: border-box; margin: 8px 0 16px;
-  padding: 10px 14px; border: 1px solid #ccc; border-radius: 8px; font: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 0 24px 0;
+  padding: 14px 18px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font: inherit;
+  font-size: 0.95rem;
+  color: #1e1b4b;
+  background: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
 }
-.gd-erreur { background: #fdecea; color: #b3261e; padding: 10px 14px; border-radius: 8px; }
-.gd-vide { color: #777; text-align: center; padding: 40px 0; }
-.gd-liste { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+
+.gd-recherche:focus {
+  outline: none;
+  border-color: #5b4bdb;
+  box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.1);
+}
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+.gd-erreur {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.gd-texte-vide {
+  color: #777;
+  text-align: center;
+  padding: 40px 0;
+  font-size: 1.05rem;
+}
+
+/* =========================================================
+   LISTE DES DENTISTES
+   ========================================================= */
+.gd-liste {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .gd-carte {
-  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-  background: #fff; border-radius: 10px; padding: 14px 18px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #f1f1f5;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.gd-photo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+
+.gd-carte:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(91, 75, 219, 0.08);
+}
+
+/* --- PHOTO --- */
+.gd-photo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid #f8f9fc;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
 .gd-photo-vide {
-  background: #e0dfff; color: #5b4bdb; font-weight: 700; font-size: 1.3rem;
-  display: flex; align-items: center; justify-content: center;
+  background: #f5f4fb;
+  color: #5b4bdb;
+  font-weight: 700;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.gd-infos { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 200px; word-break: break-word; }
-.gd-infos span { color: #666; font-size: .88rem; }
-.gd-supprimer {
-  background: #d64545; color: #fff; border: none; border-radius: 6px;
-  padding: 8px 16px; cursor: pointer; font: inherit;
+
+/* --- INFOS --- */
+.gd-infos {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 200px;
+  word-break: break-word;
 }
-.gd-supprimer:disabled { opacity: .6; cursor: not-allowed; }
+
+.gd-infos strong {
+  color: #1e1b4b;
+  font-size: 1.05rem;
+}
+
+.gd-infos span {
+  color: #52526b;
+  font-size: 0.9rem;
+}
+
+.gd-mail {
+  color: #5b4bdb !important;
+  font-weight: 500;
+}
+
+/* =========================================================
+   BOUTON CORBEILLE (SUPPRIMER)
+   ========================================================= */
+.gd-btn-supprimer {
+  background: #fdecea; /* Rouge très clair */
+  color: #d64545; /* Rouge */
+  border: none;
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.gd-btn-supprimer svg {
+  width: 20px;
+  height: 20px;
+}
+
+.gd-btn-supprimer:hover {
+  background: #d64545;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.gd-btn-supprimer:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.gd-loader {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 600px) {
+  .gd-carte {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 16px;
+  }
+
+  .gd-infos {
+    align-items: center;
+  }
+
+  .gd-btn-supprimer {
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+  }
+}
