@@ -1,7 +1,4 @@
-
-
 .dent-page {
-  /* Réduction de la largeur pour que ça ne s'étire pas trop */
   max-width: 700px; 
   margin: 0 auto;
   padding: 24px 16px;
@@ -139,9 +136,8 @@
   flex-shrink: 0;
 }
 
-/* L'initiale si pas de photo (Demande 4) */
 .pd-photo-vide {
-  background: linear-gradient(135deg, #ede9fe, #e0e7ff); /* Fond dégradé doux */
+  background: linear-gradient(135deg, #ede9fe, #e0e7ff);
   color: #5b4bdb;
   font-weight: 800;
   font-size: 3rem;
@@ -163,26 +159,6 @@
   font-size: 0.95rem;
   margin: 0;
   line-height: 1.4;
-}
-
-.pd-photo-boutons {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-/* Le bouton caché qui remplace le "Choose File" moche */
-.pd-btn-upload {
-  display: inline-block;
-  cursor: pointer;
-  text-align: center;
-  margin: 0; /* Enlève la marge par défaut du dent-btn */
-}
-
-.pd-photo-actions small {
-  color: #9ca3af;
-  font-size: 0.8rem;
 }
 
 /* 4. Boutons et Messages */
@@ -215,12 +191,24 @@
   color: #e11d48;
   border: 1px solid #fecdd3;
   box-shadow: none;
-  padding: 10px 20px;
 }
 
 .dent-btn-danger:hover:not(:disabled) {
   background: #ffe4e6;
   color: #be123c;
+  box-shadow: none;
+}
+
+.pd-btn-annuler {
+  background: #f3f4f6;
+  color: #4b5563;
+  box-shadow: none;
+  border: 1px solid #e5e7eb;
+}
+
+.pd-btn-annuler:hover:not(:disabled) {
+  background: #e5e7eb;
+  transform: none;
   box-shadow: none;
 }
 
@@ -267,32 +255,15 @@
   font-size: 0.95rem;
 }
 
-/* Responsive ajustements */
-@media (max-width: 600px) {
-  .pd-photo-ligne {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .pd-photo-boutons {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-  }
-}
-/* ... (Garde tout le CSS précédent) ... */
-
-/* =========================================
-   MODALE DE CONFIRMATION (Popup)
-   ========================================= */
-
+/* 5. Modale */
 .pd-modale-fond {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(17, 24, 39, 0.6); /* Gris très foncé transparent */
-  backdrop-filter: blur(4px); /* Effet de flou moderne */
+  background: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -330,27 +301,57 @@
   gap: 12px;
 }
 
-/* Bouton Annuler spécifique pour la modale */
-.pd-btn-annuler {
-  background: #f3f4f6;
-  color: #4b5563;
-  box-shadow: none;
-  border: 1px solid #e5e7eb;
-}
-
-.pd-btn-annuler:hover:not(:disabled) {
-  background: #e5e7eb;
-  transform: none;
-  box-shadow: none;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(20px) scale(0.95); }
   to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Responsive ajustements */
+@media (max-width: 600px) {
+  .pd-photo-ligne {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* =========================================
+   DESIGN DU CODE OTP (6 CASES)
+   ========================================= */
+.otp-container {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+/* On bat la spécificité de .dent-champ input */
+.dent-champ .otp-input {
+  width: 45px;
+  height: 50px;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0;
+  text-align: center;
+  text-transform: uppercase; 
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1e1b4b;
+  background: #f8f9fc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.dent-champ .otp-input:focus {
+  outline: none;
+  border-color: #5b4bdb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.1);
+}
+
+@media (max-width: 600px) {
+  .dent-champ .otp-input {
+    height: 45px;
+    font-size: 1.2rem;
+  }
 }

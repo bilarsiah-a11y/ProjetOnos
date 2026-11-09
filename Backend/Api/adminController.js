@@ -4,6 +4,7 @@ const sendMail = require('../Utils/sendMail');
 const { supprimerFichier } = require('../Utils/upload');
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+let adminOtpStore = {};
 
 // GET /api/admin/demandes : inscriptions en attente
 exports.listerDemandes = async (req, res) => {
@@ -71,12 +72,11 @@ exports.refuserDemande = async (req, res) => {
       return res.status(404).json({ message: 'Demande introuvable ou déjà traitée' });
     }
 
-    // L'email ne doit pas bloquer le refus s'il échoue
     try {
       await sendMail(
         rows[0].mail,
-        "Onos : réponse à votre demande d'inscription",
-        "Bonjour,\n\nAprès examen, votre demande d'inscription sur Onos n'a pas pu être acceptée.\n\nPour toute question, vous pouvez nous contacter."
+        "Onos : Réponse à votre demande d'inscription",
+        "Bonjour,\n\nAprès examen, votre demande d'inscription sur Onos n'a pas pu être acceptée."
       );
     } catch (e) {
       console.error('Email de refus non envoyé :', e.message);
@@ -140,6 +140,7 @@ exports.supprimerDentiste = async (req, res) => {
 // PUT /api/admin/compte : modifier son email et/ou son mot de passe
 exports.modifierCompte = async (req, res) => {
   try {
+    
     const actuel = req.body.mot_de_passe_actuel || '';
     const nouveauMail = (req.body.nouveau_mail || '').trim().toLowerCase();
     const nouveauMdp = req.body.nouveau_mot_de_passe || '';
@@ -154,6 +155,7 @@ exports.modifierCompte = async (req, res) => {
       return res.status(400).json({ message: 'Le mot de passe doit contenir au moins 8 caractères' });
     }
 
+    // Si tu veux forcer le mot de passe actuel EN PLUS de l'OTP :
     const { rows } = await pool.query(
       `SELECT mot_de_passe FROM utilisateur WHERE id = $1`,
       [req.user.id]
@@ -183,6 +185,69 @@ exports.modifierCompte = async (req, res) => {
     if (err.code === '23505') {
       return res.status(409).json({ message: 'Cette adresse email est déjà utilisée' });
     }
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};
+
+// NOUVELLE FONCTION : Demander l'envoi de l'OTP
+exports.demanderOtpModification = async (req, res) => {
+  try {
+    const { mail } = req.body;
+
+    // 1. Vérifier si l'email correspond à l'admin connecté
+    const { rows } = await pool.query(
+      `SELECT id, mail FROM utilisateur WHERE id = $1 AND role = 'admin'`,
+      [req.user.id]
+    );
+    
+    if (!rows[0] || rows[0].mail !== mail) {
+      return res.status(400).json({ message: "L'adresse email ne correspond pas à votre compte administrateur." });
+    }
+
+    // 2. Générer un code à 6 chiffres
+    const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+    
+    // 3. Stocker le code avec une expiration (ex: 10 minutes)
+    adminOtpStore[req.user.id] = {
+      code: otpCode,
+      expiresAt: Date.now() + 10 * 60 * 1000 // 10 minutes
+    };
+
+    // 4. Envoyer le mail
+    await sendMail(
+      mail,
+      "Code de sécurité - Modification de compte Onos",
+      `Voici votre code de sécurité pour modifier vos identifiants : ${otpCode}\n\nCe code expirera dans 10 minutes.`
+    );
+
+    res.json({ message: "Code OTP envoyé avec succès" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur lors de l\'envoi du code' });
+  }
+};
+
+// NOUVELLE FONCTION : Vérifier l'OTP (utilisée par le front)
+exports.verifierOtpModification = async (req, res) => {
+  try {
+    const { otp } = req.body;
+    const record = adminOtpStore[req.user.id];
+
+    if (!record || record.code !== otp) {
+      return res.status(400).json({ message: "Code OTP invalide." });
+    }
+
+    if (Date.now() > record.expiresAt) {
+      delete adminOtpStore[req.user.id];
+      return res.status(400).json({ message: "Le code OTP a expiré." });
+    }
+
+    // Si valide, on supprime l'OTP pour qu'il ne soit pas réutilisé
+    delete adminOtpStore[req.user.id];
+    
+    res.json({ message: "Code validé" });
+  } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Erreur serveur' });
   }

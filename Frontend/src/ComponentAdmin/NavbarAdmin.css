@@ -29,28 +29,71 @@
   letter-spacing: 1px;
 }
 
-/* ===== LIENS ===== */
+/* ===== LIENS / ICÔNES ===== */
 .navbar-admin-links {
   display: flex;
   list-style: none;
-  gap: 22px;
+  gap: 35px;
   margin: 0;
   padding: 0;
 }
 
-.navbar-admin-links li a {
-  color: #E0DFFF;
-  text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.navbar-admin-links li a:hover {
+.nav-icon-link {
   color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* Important pour le badge */
+  opacity: 0.65; /* Les icônes inactives sont un peu transparentes */
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-/* ===== PROFIL (style image 2 : plat, sans fond) ===== */
+.nav-icon-link:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* --- ÉTAT ACTIF (Quand on est sur la page) --- */
+.nav-icon-link.active {
+  opacity: 1; /* Blanc pur */
+  transform: scale(1.1);
+}
+
+/* On peut ajouter un petit point ou un trait sous l'icône active */
+.nav-icon-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: #ffffff;
+  border-radius: 50%;
+}
+
+/* ===== BADGE DE NOTIFICATION ===== */
+.badge-notification {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background-color: #ef4444; /* Rouge */
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px; 
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #3b307d; /* Bordure pour le détacher du fond */
+  box-sizing: content-box;
+  z-index: 10;
+}
+
+/* ===== PROFIL ===== */
 .navbar-admin-profil {
   position: relative;
 }
@@ -161,17 +204,35 @@
   z-index: 1001;
 }
 
-.burger-panel a {
+.burger-link {
   color: #1e293b;
   text-decoration: none;
   font-weight: 600;
   padding: 10px 12px;
   border-radius: 8px;
   transition: background 0.2s ease;
+  display: flex;
+  align-items: center;
 }
 
-.burger-panel a:hover {
+.burger-link:hover {
   background: #f1f5f9;
+}
+
+/* État actif pour le menu burger */
+.burger-link.active {
+  background: #e0e7ff; /* Un petit fond bleu clair */
+  color: #4B2E83; /* La couleur de ta navbar */
+}
+
+.badge-notification-mobile {
+  background-color: #ef4444;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: auto;
 }
 
 /* ===== RESPONSIVE ===== */
@@ -187,11 +248,10 @@
 
   .burger {
     display: block;
-
     position: relative;
   }
 
   .navbar-admin-pseudo {
-    display: none; /* sur mobile, on ne montre que l'avatar (initiale) */
+    display: none;
   }
 }

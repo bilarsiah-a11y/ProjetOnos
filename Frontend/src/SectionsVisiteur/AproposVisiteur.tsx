@@ -1,3 +1,4 @@
+
 import photoGroupe from '../Public/Sary2.png'
 import '../SectionsVisiteurCss/AproposVisiteur.css'
 
@@ -19,7 +20,7 @@ const VALEURS = [
   {
     titre: "Déontologie",
     texte: "Un respect strict des règles professionnelles pour garantir la qualité des soins.",
-    icone: "⚖️", // Tu pourras remplacer par de vraies icônes SVG plus tard
+    icone: "⚖️",
     couleur: "bleu"
   },
   {
@@ -57,7 +58,7 @@ function AproposVisiteur() {
 
       {/* ===== NOS MISSIONS ===== */}
       <section className="apropos-section">
-        <div className="apropos-inner">
+        <div className="apropos-inner-missions">
           <h2 className="apropos-titre-section">Nos missions</h2>
           <ul className="apropos-liste-numerotee">
             {MISSIONS.map((mission, index) => (

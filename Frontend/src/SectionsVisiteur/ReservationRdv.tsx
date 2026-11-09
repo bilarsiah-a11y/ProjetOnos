@@ -5,7 +5,6 @@ import type { Dentiste } from '../types'
 import '../SectionsVisiteurCss/ReservationRdv.css'
 
 const TEL_REGEX = /^\+?[\d\s.-]{8,20}$/
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const JOURS_MAX = 6
 
 const versISO = (d: Date) =>
@@ -43,8 +42,6 @@ function ReservationRdv({ dentiste, onFermer }: { dentiste: Dentiste; onFermer: 
   
   const [nom, setNom] = useState('')
   const [telephone, setTelephone] = useState('')
-  const [email, setEmail] = useState('')
-  const [motif, setMotif] = useState('')
   const [envoi, setEnvoi] = useState(false)
   const [erreur, setErreur] = useState('')
   const [succes, setSucces] = useState('')
@@ -104,10 +101,7 @@ function ReservationRdv({ dentiste, onFermer }: { dentiste: Dentiste; onFermer: 
       setErreur('Numéro de téléphone invalide.')
       return
     }
-    if (email.trim() && !EMAIL_REGEX.test(email.trim())) {
-      setErreur('Adresse email invalide.')
-      return
-    }
+
 
     setEnvoi(true)
     try {
@@ -117,8 +111,6 @@ function ReservationRdv({ dentiste, onFermer }: { dentiste: Dentiste; onFermer: 
         heure,
         nom: nom.trim(),
         telephone: telephone.trim(),
-        email: email.trim() || undefined,
-        motif: motif.trim() || undefined,
       })
       setSucces(r.message)
     } catch (err) {
@@ -225,14 +217,7 @@ function ReservationRdv({ dentiste, onFermer }: { dentiste: Dentiste; onFermer: 
                   <label htmlFor="rdv-tel">Téléphone *</label>
                   <input id="rdv-tel" type="tel" value={telephone} onChange={(e) => setTelephone(e.target.value)} />
                 </div>
-                <div className="rdv-champ">
-                  <label htmlFor="rdv-email">Email (facultatif)</label>
-                  <input id="rdv-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div className="rdv-champ">
-                  <label htmlFor="rdv-motif">Motif (facultatif)</label>
-                  <textarea id="rdv-motif" rows={2} value={motif} onChange={(e) => setMotif(e.target.value)} />
-                </div>
+
 
                 {erreur && <p className="rdv-erreur">{erreur}</p>}
 

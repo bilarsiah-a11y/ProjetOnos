@@ -1,4 +1,3 @@
-
 /* =========================================================
    TYPOGRAPHIE & EN-TÊTE
    ========================================================= */
@@ -6,9 +5,24 @@
   padding: 20px 0 10px;
 }
 
-/* 1. Taille réduite pour le titre principal */
+/* Conteneur global pour le reste de la page */
+.apropos-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Conteneur spécifique pour les missions (plus étroit et centré) */
+.apropos-inner-missions {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.apropos-centre { text-align: center; }
+
 .apropos-titre {
-  font-size: 2rem; /* Réduit de 2.5rem à 2rem */
+  font-size: 2rem;
   font-weight: 800;
   color: #1e1b4b;
   margin: 0 0 12px;
@@ -19,14 +33,14 @@
 .apropos-sous-titre {
   max-width: 800px;
   margin: 0 auto;
-  font-size: 1rem; /* Un peu plus petit pour équilibrer */
+  font-size: 1rem;
   line-height: 1.7;
   color: #52526b;
 }
 
 .apropos-titre-section {
   text-align: center;
-  font-size: 1.6rem; /* Réduit aussi pour être cohérent */
+  font-size: 1.6rem;
   font-weight: 800;
   color: #1e1b4b;
   margin-bottom: 30px;
@@ -46,20 +60,20 @@
 }
 
 /* =========================================================
-   LISTE DES MISSIONS (Numérotée)
+   LISTE DES MISSIONS (Rétrécie et centrée)
    ========================================================= */
 .apropos-liste-numerotee {
   list-style: none;
   margin: 0 auto;
   padding: 0;
-  max-width: 850px;
+  width: 100%;
 }
 
 .apropos-liste-numerotee li {
   display: flex;
   align-items: flex-start;
   gap: 20px;
-  padding: 16px 0;
+  padding: 18px 0;
   border-bottom: 1px solid #e2e8f0;
 }
 
@@ -71,19 +85,19 @@
   font-size: 1.2rem;
   font-weight: 800;
   color: #5b4bdb;
-  opacity: 0.3;
+  opacity: 0.4; /* Légèrement plus visible */
   min-width: 35px;
   margin-top: 2px;
 }
 
 .apropos-texte-item {
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: #2d2d3a;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* =========================================================
-   HISTOIRE & PHOTO (Sans carte, directement sur le fond)
+   HISTOIRE & PHOTO
    ========================================================= */
 .apropos-grille-2 {
   display: grid;
@@ -143,11 +157,11 @@
 }
 
 /* =========================================================
-   3. NOUVELLE FORME POUR LES VALEURS (Style Image 1)
+   NOS VALEURS
    ========================================================= */
 .apropos-grille-valeurs {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 colonnes */
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   max-width: 1000px;
   margin: 0 auto;
@@ -176,7 +190,6 @@
   margin-bottom: 16px;
 }
 
-/* Forme de l'icône */
 .apropos-icone {
   display: flex;
   align-items: center;
@@ -187,19 +200,9 @@
   font-size: 1.2rem;
 }
 
-/* Couleurs spécifiques pour les icônes */
-.couleur-bleu .apropos-icone {
-  background: #eef4ff;
-  color: #3b82f6;
-}
-.couleur-vert .apropos-icone {
-  background: #ecfdf5;
-  color: #10b981;
-}
-.couleur-violet .apropos-icone {
-  background: #f5f3ff;
-  color: #8b5cf6;
-}
+.couleur-bleu .apropos-icone { background: #eef4ff; color: #3b82f6; }
+.couleur-vert .apropos-icone { background: #ecfdf5; color: #10b981; }
+.couleur-violet .apropos-icone { background: #f5f3ff; color: #8b5cf6; }
 
 .apropos-carte-valeur h3 {
   font-size: 1.1rem;
@@ -224,12 +227,10 @@
     gap: 30px;
   }
   
-  .apropos-image-bloc {
-    order: -1;
-  }
+  .apropos-image-bloc { order: -1; }
   
   .apropos-grille-valeurs {
-    grid-template-columns: 1fr; /* 1 colonne sur mobile */
+    grid-template-columns: 1fr;
   }
   
   .apropos-carte-valeur {

@@ -11,7 +11,7 @@
   display: flex;
   /* width: 65%;
   max-width: 950px; */
-  height: 500px; 
+  height: 500px;
   background: #ffffff;
   border-radius: 20px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
@@ -65,7 +65,7 @@
   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
-/* Bouton en bas à droite */
+/* Bouton en bas */
 .auth-bas-gauche {
   display: flex;
   align-items: center;
@@ -76,8 +76,8 @@
   border-radius: 12px;
   font-size: 0.95rem;
   border: 1px solid rgba(255,255,255,0.3);
-  white-space: nowrap; 
-  margin-bottom: 25px; 
+  white-space: nowrap;
+  margin-bottom: 25px;
   gap: 10px;
 }
 
@@ -143,7 +143,7 @@
   font-size: 0.85rem;
   font-weight: 600;
   color: #1e1b4b;
-  text-align: left; /* Aligne le texte à gauche */
+  text-align: left;
   display: block;
   margin-bottom: 2px;
 }
@@ -185,7 +185,7 @@
   height: 20px;
 }
 
-/* Style des inputs */
+/* Style des inputs classiques */
 .auth-champ input {
   padding: 12px 16px;
   border: 1px solid #e2e8f0;
@@ -231,6 +231,7 @@
   cursor: not-allowed;
 }
 
+/* Message d'erreur */
 .auth-erreur {
   background: #fdecea;
   color: #b3261e;
@@ -241,6 +242,7 @@
   text-align: center;
 }
 
+/* Message d'information */
 .auth-info {
   background: #e8f5e9;
   color: #2e7d32;
@@ -249,6 +251,32 @@
   font-size: 0.9rem;
   margin-bottom: 15px;
   text-align: center;
+}
+
+/* Message de succès (Connexion réussie) */
+.auth-succes {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  text-align: center;
+  border: 1px solid #c8e6c9;
+  font-weight: 600;
+}
+
+/* Message d'attente de validation (Compte en attente) */
+.auth-attente {
+  background: #fff3e0;
+  color: #e65100;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  text-align: center;
+  border: 1px solid #ffe0b2;
+  font-weight: 600;
 }
 
 .auth-liens {
@@ -271,7 +299,7 @@
 }
 
 /* =========================================================
-   DESIGN DU CODE OTP (6 CASES)
+   DESIGN DU CODE OTP (6 CASES, lettres + chiffres)
    ========================================================= */
 .otp-container {
   display: flex;
@@ -280,20 +308,27 @@
   margin-top: 5px;
 }
 
-.otp-input {
+/* Sélecteur plus spécifique pour battre ".auth-champ input"
+   (c'était lui qui écrasait le padding et bloquait la saisie) */
+.auth-champ .otp-input {
   width: 45px;
   height: 50px;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0;
   text-align: center;
-  font-size: 1.2rem;
+  text-transform: uppercase; /* Affiche les lettres en majuscules */
+  font-size: 1.3rem;
   font-weight: 700;
   color: #1e1b4b;
   background: #f8f9fc;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
-.otp-input:focus {
+.auth-champ .otp-input:focus {
   outline: none;
   border-color: #5b4bdb;
   background: #ffffff;
@@ -309,9 +344,9 @@
     background-color: #5b4bdb;
     align-items: flex-end;
   }
-  
+
   .auth-container {
-    flex-direction: column; 
+    flex-direction: column;
     height: 95vh;
     width: 100%;
     border-radius: 0;
@@ -329,22 +364,22 @@
     padding: 10px;
     align-items: center;
     text-align: center;
-    justify-content: space-between; 
-    order: -1; 
+    justify-content: space-between;
+    order: -1;
   }
 
   .auth-visuel-custom::before { display: none; }
 
-  /* CORRECTION DU BOUTON SUR MOBILE */
-  .auth-bas-gauche { 
-    display: flex; 
+  /* Bouton "S'inscrire" sur mobile */
+  .auth-bas-gauche {
+    display: flex;
     flex-direction: column;
     gap: 10px;
     width: 100%;
     white-space: normal;
     margin-bottom: 10px;
   }
-  
+
   .auth-btn-connexion {
     width: 100%;
     text-align: center;
@@ -363,35 +398,15 @@
     box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
     overflow-y: auto;
   }
-  
-  /* Ajustement pour le code OTP sur mobile */
-  .otp-input {
-    width: 40px;
+
+  /* Code OTP sur mobile (même sélecteur spécifique) */
+  .auth-champ .otp-input {
     height: 45px;
+    font-size: 1.2rem;
   }
 }
-/* Message de succès (Connexion réussie) */
-.auth-succes {
-  background: #e8f5e9; /* Vert clair */
-  color: #2e7d32;      /* Vert foncé */
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  margin-bottom: 15px;
-  text-align: center;
-  border: 1px solid #c8e6c9;
-  font-weight: 600;
-}
-
-/* Message d'attente de validation (Compte en attente) */
-.auth-attente {
-  background: #fff3e0; /* Orange clair */
-  color: #e65100;      /* Orange foncé */
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  margin-bottom: 15px;
-  text-align: center;
-  border: 1px solid #ffe0b2;
-  font-weight: 600;
+.auth-text-link:disabled {
+  color: #94a3b8;
+  cursor: not-allowed;
+  text-decoration: none;
 }

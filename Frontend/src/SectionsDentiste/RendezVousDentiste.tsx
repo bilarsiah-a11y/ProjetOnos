@@ -22,7 +22,6 @@ const HEURES = Array.from(
   (_, k) => deMinutes(6 * 60 + k * 15)
 )
 
-// Créneaux que les patients verront pour une journée
 const creneauxDuJour = (plages: Horaire[], duree: number): string[] => {
   const resultat: string[] = []
   const triees = [...plages].sort((a, b) => a.heure_debut.localeCompare(b.heure_debut))
@@ -71,15 +70,31 @@ function BlocRdv({ rdvs, onChange }: { rdvs: Rdv[]; onChange: () => Promise<void
   const [afficherAnnules, setAfficherAnnules] = useState(false)
   const [enCours, setEnCours] = useState<number | null>(null)
   const [erreur, setErreur] = useState('')
+  
+  // --- ÉTAT POUR LA POPUP D'ANNULATION ---
+  const [rdvAAnnuler, setRdvAAnnuler] = useState<Rdv | null>(null)
 
-  const agir = async (r: Rdv, action: 'confirmer' | 'annuler') => {
-    if (action === 'annuler' && !window.confirm(`Annuler le rendez-vous de ${r.nom_patient} ?`)) {
-      return
+  const confirmerAnnulation = async () => {
+    if (!rdvAAnnuler) return
+    
+    setEnCours(rdvAAnnuler.id)
+    setErreur('')
+    try {
+      await api.patch(`/api/rdv/${rdvAAnnuler.id}/annuler`)
+      await onChange()
+      setRdvAAnnuler(null) // Ferme la modale
+    } catch (e) {
+      setErreur(message(e))
+    } finally {
+      setEnCours(null)
     }
+  }
+
+  const confirmerRdv = async (r: Rdv) => {
     setEnCours(r.id)
     setErreur('')
     try {
-      await api.patch(`/api/rdv/${r.id}/${action}`)
+      await api.patch(`/api/rdv/${r.id}/confirmer`)
       await onChange()
     } catch (e) {
       setErreur(message(e))
@@ -92,65 +107,97 @@ function BlocRdv({ rdvs, onChange }: { rdvs: Rdv[]; onChange: () => Promise<void
   const aTraiter = rdvs.filter((r) => r.statut === 'en_attente').length
 
   return (
-    <div className="dent-carte">
-      <h2>
-        Rendez-vous à venir
-        {aTraiter > 0 && <span className="rv-badge">{aTraiter} à traiter</span>}
-      </h2>
+    <>
+      <div className="dent-carte">
+        <h2>
+          Rendez-vous à venir
+          {aTraiter > 0 && <span className="rv-badge">{aTraiter} à traiter</span>}
+        </h2>
 
-      <label className="rv-option">
-        <input
-          type="checkbox"
-          checked={afficherAnnules}
-          onChange={(e) => setAfficherAnnules(e.target.checked)}
-        />
-        Afficher les rendez-vous annulés
-      </label>
+        <label className="rv-option">
+          <input
+            type="checkbox"
+            checked={afficherAnnules}
+            onChange={(e) => setAfficherAnnules(e.target.checked)}
+          />
+          Afficher les rendez-vous annulés
+        </label>
 
-      {erreur && <p className="dent-erreur">{erreur}</p>}
+        {erreur && <p className="dent-erreur">{erreur}</p>}
 
-      {visibles.length === 0 ? (
-        <p className="dent-vide">Aucun rendez-vous à venir.</p>
-      ) : (
-        <ul className="rv-liste">
-          {visibles.map((r) => (
-            <li key={r.id} className={`rv-rdv rv-${r.statut}`}>
-              <div className="rv-quand">
-                <strong>{formaterDate(r.date_rdv)}</strong>
-                <span className="rv-heure">{r.heure}</span>
-              </div>
+        {visibles.length === 0 ? (
+          <p className="dent-vide">Aucun rendez-vous à venir.</p>
+        ) : (
+          <ul className="rv-liste">
+            {visibles.map((r) => (
+              <li key={r.id} className={`rv-rdv rv-${r.statut}`}>
+                <div className="rv-quand">
+                  <strong>{formaterDate(r.date_rdv)}</strong>
+                  <span className="rv-heure">{r.heure}</span>
+                </div>
 
-              <div className="rv-patient">
-                <strong>{r.nom_patient}</strong>
-                <a href={`tel:${r.telephone.replace(/\s/g, '')}`}>{r.telephone}</a>
-                {r.email && <span>{r.email}</span>}
-                {r.motif && <span className="rv-motif">« {r.motif} »</span>}
-              </div>
+                <div className="rv-patient">
+                  <strong>{r.nom_patient}</strong>
+                  <a href={`tel:${r.telephone.replace(/\s/g, '')}`}>{r.telephone}</a>
+                  {r.email && <span>{r.email}</span>}
+                  {r.motif && <span className="rv-motif">« {r.motif} »</span>}
+                </div>
 
-              <div className="rv-actions">
-                <span className={`rv-statut rv-statut-${r.statut}`}>{LIBELLES[r.statut]}</span>
-                {r.statut === 'en_attente' && (
-                  <button className="dent-btn" disabled={enCours === r.id}
-                    onClick={() => agir(r, 'confirmer')}>
-                    Confirmer
-                  </button>
-                )}
-                {r.statut !== 'annule' && (
-                  <button className="dent-btn dent-btn-danger" disabled={enCours === r.id}
-                    onClick={() => agir(r, 'annuler')}>
-                    Annuler
-                  </button>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div className="rv-actions">
+                  <span className={`rv-statut rv-statut-${r.statut}`}>{LIBELLES[r.statut]}</span>
+                  {r.statut === 'en_attente' && (
+                    <button className="dent-btn" disabled={enCours === r.id}
+                      onClick={() => confirmerRdv(r)}>
+                      Confirmer
+                    </button>
+                  )}
+                  {r.statut !== 'annule' && (
+                    <button className="dent-btn dent-btn-danger" disabled={enCours === r.id}
+                      onClick={() => setRdvAAnnuler(r)}> {/* <-- Ouvre la modale */}
+                      Annuler
+                    </button>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* --- MODALE DE CONFIRMATION D'ANNULATION --- */}
+      {rdvAAnnuler && (
+        <div className="modal-overlay" onClick={() => setRdvAAnnuler(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Annuler le rendez-vous</h2>
+            <p>
+              Voulez-vous vraiment annuler le rendez-vous de <strong>{rdvAAnnuler.nom_patient}</strong> prévu le {formaterDate(rdvAAnnuler.date_rdv)} à {rdvAAnnuler.heure} ?
+              <br /><br />
+              Le patient sera retiré de votre planning.
+            </p>
+            <div className="modal-actions">
+              <button 
+                className="modal-btn-annuler" 
+                onClick={() => setRdvAAnnuler(null)}
+                disabled={enCours === rdvAAnnuler.id}
+              >
+                Retour
+              </button>
+              <button 
+                className="modal-btn-confirmer" 
+                onClick={confirmerAnnulation}
+                disabled={enCours === rdvAAnnuler.id}
+              >
+                {enCours === rdvAAnnuler.id ? 'Annulation...' : 'Oui, annuler'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
-    </div>
+    </>
   )
 }
 
-/* ---------- Horaires ---------- */
+/* ---------- Horaires (inchangé) ---------- */
 
 function BlocHoraires({
   reglages, onSauve,
@@ -219,11 +266,6 @@ function BlocHoraires({
   return (
     <div className="dent-carte">
       <h2>Mes horaires</h2>
-      <p className="rv-aide">
-        Les patients réservent dans les 7 prochains jours, uniquement sur les créneaux listés
-        ci-dessous. Ces horaires se répètent chaque semaine. Sans aucune plage, le bouton
-        « Prendre rendez-vous » n'apparaît pas sur votre fiche.
-      </p>
 
       <div className="dent-champ rv-duree">
         <label htmlFor="rv-duree">Durée d'un rendez-vous</label>

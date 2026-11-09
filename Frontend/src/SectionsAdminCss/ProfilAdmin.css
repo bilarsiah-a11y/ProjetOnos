@@ -2,54 +2,93 @@
    CONTENEUR PRINCIPAL
    ========================================================= */
 .profil-page {
-  background-color: #f8f9fc;
   min-height: calc(100vh - 70px);
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 40px 20px;
+  padding: 20px 10px;
 }
 
 .profil-container {
   width: 100%;
-  max-width: 600px;
+  max-width: 550px;
 }
 
 .profil-container h1 {
   font-size: 1.8rem;
-  color: #5b4bdb;
-  margin-top: 0;
-  margin-bottom: 8px;
-}
-
-.profil-mail {
-  color: #52526b;
-  font-size: 1rem;
-  margin-bottom: 24px;
-  background: #f5f4fb;
-  padding: 12px 16px;
-  border-radius: 10px;
-  display: inline-block;
-}
-
-.profil-mail strong {
   color: #1e1b4b;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.profil-desc {
+  color: #52526b;
+  font-size: 0.95rem;
+  margin-bottom: 24px;
+  line-height: 1.5;
 }
 
 /* =========================================================
-   CARTE DU FORMULAIRE (Bordure rétrécie)
+   ÉTAPE 1 : CARTE D'AFFICHAGE DU PROFIL
+   ========================================================= */
+.profil-info-carte {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f1f5;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.profil-avatar-large {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4B2E83, #2E5EAA);
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(75, 46, 131, 0.3);
+}
+
+.profil-info-texts h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #1e1b4b;
+}
+
+.profil-role {
+  margin: 0 0 4px 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #5b4bdb;
+  font-weight: 700;
+}
+
+.profil-email {
+  margin: 4px 0 0 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   FORMULAIRES (ÉTAPES 2 & 3)
    ========================================================= */
 .profil-carte {
   background: #ffffff;
   border-radius: 16px;
-  padding: 24px; /* Réduit de 32px à 24px */
+  padding: 24px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   border: 1px solid #f1f1f5;
 }
 
-/* =========================================================
-   CHAMPS ET LABELS
-   ========================================================= */
 .profil-champ {
   display: flex;
   flex-direction: column;
@@ -64,7 +103,7 @@
 }
 
 .profil-champ input {
-  padding: 12px 16px; /* Réduit de 14px à 12px */
+  padding: 12px 16px;
   border: 1px solid #e2e8f0;
   border-radius: 10px;
   font-size: 1rem;
@@ -91,7 +130,7 @@
 }
 
 .profil-input-group input {
-  padding-right: 45px; /* Laisse la place pour l'icône */
+  padding-right: 45px;
 }
 
 .profil-eye-btn {
@@ -117,7 +156,6 @@
   height: 20px;
 }
 
-/* --- SÉPARATEUR --- */
 .profil-separateur {
   height: 1px;
   background: #e2e8f0;
@@ -125,29 +163,51 @@
 }
 
 /* =========================================================
-   MESSAGES ET BOUTON
+   DESIGN DU CODE OTP (6 CASES)
    ========================================================= */
-.profil-erreur {
-  background: #fdecea;
-  color: #b3261e;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  margin-bottom: 20px;
-  text-align: center;
+.otp-container {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  margin-top: 5px;
 }
 
-.profil-succes {
-  background: #e8f5e9;
-  color: #2e7d32;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  margin-bottom: 20px;
+/* On bat la spécificité de .profil-champ input */
+.profil-champ .otp-input {
+  width: 45px;
+  height: 50px;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 0;
   text-align: center;
-  font-weight: 600;
+  text-transform: uppercase; 
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #5b4bdb; /* Couleur violette pour l'admin */
+  background: #f8f9fc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
+.profil-champ .otp-input:focus {
+  outline: none;
+  border-color: #5b4bdb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(91, 75, 219, 0.1);
+}
+
+@media (max-width: 600px) {
+  .profil-champ .otp-input {
+    height: 45px;
+    font-size: 1.2rem;
+  }
+}
+
+/* =========================================================
+   BOUTONS ET MESSAGES
+   ========================================================= */
 .profil-btn {
   width: 100%;
   padding: 14px;
@@ -169,4 +229,42 @@
 .profil-btn:disabled {
   background: #a29bd6;
   cursor: not-allowed;
+}
+
+.profil-btn-retour {
+  width: 100%;
+  padding: 14px;
+  background: transparent;
+  color: #64748b;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: color 0.2s ease;
+}
+
+.profil-btn-retour:hover {
+  color: #1e1b4b;
+}
+
+.profil-erreur {
+  background: #fdecea;
+  color: #b3261e;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.profil-succes {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
 }

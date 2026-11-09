@@ -17,6 +17,10 @@ function GestionActualiter() {
   const [enCours, setEnCours] = useState<number | null>(null)
   const [erreur, setErreur] = useState('')
   const [succes, setSucces] = useState('')
+  
+  // --- ÉTAT POUR LA MODALE DE SUPPRESSION ---
+  const [actualiteASupprimer, setActualiteASupprimer] = useState<Actualite | null>(null)
+
   const champImage = useRef<HTMLInputElement>(null)
   const TYPES_ACCEPTES = ['image/jpeg', 'image/png', 'image/webp']
 
@@ -88,14 +92,18 @@ function GestionActualiter() {
     }
   }
 
-  const supprimer = async (a: Actualite) => {
-    if (!window.confirm(`Supprimer l'actualité « ${a.titre} » ?`)) return
-    setEnCours(a.id)
+  // --- LOGIQUE DE SUPPRESSION (Appelée par la modale) ---
+  const confirmerSuppression = async () => {
+    if (!actualiteASupprimer) return
+    
+    setEnCours(actualiteASupprimer.id)
     setErreur('')
     setSucces('')
+    
     try {
-      await api.delete(`/api/actualites/${a.id}`)
-      setActualites((liste) => liste.filter((x) => x.id !== a.id))
+      await api.delete(`/api/actualites/${actualiteASupprimer.id}`)
+      setActualites((liste) => liste.filter((x) => x.id !== actualiteASupprimer.id))
+      setActualiteASupprimer(null) // Ferme la modale
     } catch (err) {
       setErreur(err instanceof Error ? err.message : 'Une erreur est survenue')
     } finally {
@@ -107,97 +115,128 @@ function GestionActualiter() {
     new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
 
   return (
-    <section className="act-page">
-      <h1>Gestion des actualités</h1>
+    <>
+      <section className="act-page">
+        <h1>Gestion des actualités</h1>
 
-      <form className="act-formulaire" onSubmit={publier}>
-        <h2>Publier une nouvelle actualité</h2>
+        <form className="act-formulaire" onSubmit={publier}>
+          <h2>Publier une nouvelle actualité</h2>
 
-        <div className="act-champ">
-          <label htmlFor="act-titre">Titre de l'actualité</label>
-          {/* 👇 AJOUT DE type="text" ICI 👇 */}
-          <input 
-            type="text"
-            id="act-titre" 
-            placeholder="Ex: Nouvelles directives sanitaires..."
-            value={titre} 
-            onChange={(e) => setTitre(e.target.value)} 
-          />
-        </div>
-
-        <div className="act-champ">
-          <label htmlFor="act-contenu">Contenu</label>
-          <textarea
-            id="act-contenu"
-            rows={4}
-            placeholder="Écrivez votre article ici..."
-            value={contenu}
-            onChange={(e) => setContenu(e.target.value)}
-          />
-        </div>
-
-        <div className="act-champ">
-          <label htmlFor="act-image">Image d'illustration (facultatif)</label>
-          <div className="act-file-wrapper">
-            <input
-              id="act-image"
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              ref={champImage}
-              onChange={(e) => choisirImage(e.target.files?.[0])}
+          <div className="act-champ">
+            <label htmlFor="act-titre">Titre de l'actualité</label>
+            <input 
+              type="text"
+              id="act-titre" 
+              placeholder="Ex: Nouvelles directives sanitaires..."
+              value={titre} 
+              onChange={(e) => setTitre(e.target.value)} 
             />
           </div>
-          {apercu && <img className="act-apercu" src={apercu} alt="Aperçu" />}
-        </div>
 
-        {erreur && <p className="act-erreur">{erreur}</p>}
-        {succes && <p className="act-succes">{succes}</p>}
+          <div className="act-champ">
+            <label htmlFor="act-contenu">Contenu</label>
+            <textarea
+              id="act-contenu"
+              rows={4}
+              placeholder="Écrivez votre article ici..."
+              value={contenu}
+              onChange={(e) => setContenu(e.target.value)}
+            />
+          </div>
 
-        <button className="act-btn" type="submit" disabled={envoi}>
-          {envoi ? 'Publication en cours...' : "Publier l'actualité"}
-        </button>
-      </form>
+          <div className="act-champ">
+            <label htmlFor="act-image">Image d'illustration (facultatif)</label>
+            <div className="act-file-wrapper">
+              <input
+                id="act-image"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                ref={champImage}
+                onChange={(e) => choisirImage(e.target.files?.[0])}
+              />
+            </div>
+            {apercu && <img className="act-apercu" src={apercu} alt="Aperçu" />}
+          </div>
 
-      <h2 className="act-sous-titre">Actualités en ligne ({actualites.length})</h2>
+          {erreur && <p className="act-erreur">{erreur}</p>}
+          {succes && <p className="act-succes">{succes}</p>}
 
-      {chargement ? (
-        <p>Chargement des actualités...</p>
-      ) : actualites.length === 0 ? (
-        <p className="act-vide">Aucune actualité n'a été publiée pour le moment.</p>
-      ) : (
-        <ul className="act-liste">
-          {actualites.map((a) => {
-            const img = urlImage(a.image)
-            return (
-              <li key={a.id} className="act-carte">
-                {img ? (
-                  <img className="act-image" src={img} alt={a.titre} />
-                ) : (
-                  <div className="act-image-vide">📰</div>
-                )}
-                
-                <div className="act-texte">
-                  <div className="act-header">
-                    <strong>{a.titre}</strong>
-                    <span className="act-date">📅 {formaterDate(a.created_at)}</span>
+          <button className="act-btn" type="submit" disabled={envoi}>
+            {envoi ? 'Publication en cours...' : "Publier l'actualité"}
+          </button>
+        </form>
+
+        <h2 className="act-sous-titre">Actualités en ligne ({actualites.length})</h2>
+
+        {chargement ? (
+          <p>Chargement des actualités...</p>
+        ) : actualites.length === 0 ? (
+          <p className="act-vide">Aucune actualité n'a été publiée pour le moment.</p>
+        ) : (
+          <ul className="act-liste">
+            {actualites.map((a) => {
+              const img = urlImage(a.image)
+              return (
+                <li key={a.id} className="act-carte">
+                  {img ? (
+                    <img className="act-image" src={img} alt={a.titre} />
+                  ) : (
+                    <div className="act-image-vide">📰</div>
+                  )}
+                  
+                  <div className="act-texte">
+                    <div className="act-header">
+                      <strong>{a.titre}</strong>
+                    
+                    </div>
+                    <p>{a.contenu.length > 160 ? `${a.contenu.slice(0, 160)}...` : a.contenu}</p>
                   </div>
-                  <p>{a.contenu.length > 160 ? `${a.contenu.slice(0, 160)}...` : a.contenu}</p>
-                </div>
 
-                <button
-                  className="act-btn-danger"
-                  disabled={enCours === a.id}
-                  onClick={() => supprimer(a)}
-                  title="Supprimer"
-                >
-                  {enCours === a.id ? '...' : '🗑️'}
-                </button>
-              </li>
-            )
-          })}
-        </ul>
+                  <button
+                    className="act-btn-danger"
+                    disabled={enCours === a.id}
+                    onClick={() => setActualiteASupprimer(a)} // <-- Ouvre la modale
+                    title="Supprimer"
+                  >
+                    {enCours === a.id ? '...' : '🗑️'}
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </section>
+
+      {/* --- MODALE DE CONFIRMATION DE SUPPRESSION --- */}
+      {actualiteASupprimer && (
+        <div className="modal-overlay" onClick={() => setActualiteASupprimer(null)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Supprimer l'actualité</h2>
+            <p>
+              Êtes-vous sûr de vouloir supprimer définitivement l'actualité <strong>« {actualiteASupprimer.titre} »</strong> ?
+              <br /><br />
+              Cette action est irréversible.
+            </p>
+            <div className="modal-actions">
+              <button 
+                className="modal-btn-annuler" 
+                onClick={() => setActualiteASupprimer(null)}
+                disabled={enCours === actualiteASupprimer.id}
+              >
+                Annuler
+              </button>
+              <button 
+                className="modal-btn-confirmer" 
+                onClick={confirmerSuppression}
+                disabled={enCours === actualiteASupprimer.id}
+              >
+                {enCours === actualiteASupprimer.id ? 'Suppression...' : 'Supprimer'}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
-    </section>
+    </>
   )
 }
 

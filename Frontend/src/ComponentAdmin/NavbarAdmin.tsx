@@ -1,15 +1,24 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+
+
+import { useState, useEffect } from 'react'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
+import { 
+  House,              // Pour l'Accueil
+  BookUser,           // Pour l'Annuaire
+  Newspaper,          // Pour Gestion actualité
+  Stethoscope,        // Pour Gestion dentiste
+  Bell                // Pour Notification
+} from 'lucide-react'
 import '../ComponentCommun/MenuBurger.css'
 import './NavbarAdmin.css'
 
 const LIENS = [
-  { to: '/admin/accueil', label: 'Accueil' },
-  { to: '/admin/annuaire', label: 'Annuaire' },
-  { to: '/admin/actualites', label: 'Gestion actualité' },
-  { to: '/admin/dentistes', label: 'Gestion dentiste' },
-  { to: '/admin/notifications', label: 'Notification' },
+  { to: '/admin/accueil', label: 'Accueil', icon: House },
+  { to: '/admin/annuaire', label: 'Annuaire', icon: BookUser },
+  { to: '/admin/actualites', label: 'Gestion actualité', icon: Newspaper },
+  { to: '/admin/dentistes', label: 'Gestion dentiste', icon: Stethoscope },
+  { to: '/admin/notifications', label: 'Notification', icon: Bell },
 ]
 
 function NavbarAdmin() {
@@ -17,9 +26,24 @@ function NavbarAdmin() {
   const navigate = useNavigate()
   const [ouvert, setOuvert] = useState(false)
   const [menuOuvert, setMenuOuvert] = useState(false)
-  
-  // État pour gérer la popup de déconnexion
   const [modaleDeconnexion, setModaleDeconnexion] = useState(false)
+
+  // ÉTAT DYNAMIQUE POUR LE NOMBRE DE NOTIFICATIONS
+  const [nombreNotifications, setNombreNotifications] = useState(0)
+
+  // ÉCOUTEUR D'ÉVÉNEMENT
+  useEffect(() => {
+    const handleUpdate = (e: Event) => {
+      const customEvent = e as CustomEvent<number>;
+      setNombreNotifications(customEvent.detail)
+    }
+
+    window.addEventListener('update-notifications', handleUpdate)
+
+    return () => {
+      window.removeEventListener('update-notifications', handleUpdate)
+    }
+  }, [])
 
   const mail = utilisateur?.mail ?? ''
   const pseudo = mail.split('@')[0]
@@ -36,15 +60,31 @@ function NavbarAdmin() {
     <>
       <nav className="navbar-admin">
         <Link to="/admin/accueil" className="navbar-admin-logo">
-          <span>ONOS</span>
+          <span>ONOS</span> <br />
+          <p>Page Admin</p>
         </Link>
 
         <ul className="navbar-admin-links">
-          {LIENS.map((l) => (
-            <li key={l.to}>
-              <Link to={l.to}>{l.label}</Link>
-            </li>
-          ))}
+          {LIENS.map((l) => {
+            const Icon = l.icon;
+            return (
+              <li key={l.to}>
+                {/* On utilise NavLink ici pour avoir la classe "active" automatiquement */}
+                <NavLink 
+                  to={l.to} 
+                  title={l.label} 
+                  className={({ isActive }) => isActive ? "nav-icon-link active" : "nav-icon-link"}
+                >
+                  <Icon size={22} strokeWidth={1.8} />
+                  
+                  {/* BADGE DYNAMIQUE */}
+                  {l.label === 'Notification' && nombreNotifications > 0 && (
+                    <span className="badge-notification">{nombreNotifications}</span>
+                  )}
+                </NavLink>
+              </li>
+            )
+          })}
         </ul>
 
         <div className="burger">
@@ -61,11 +101,23 @@ function NavbarAdmin() {
           </button>
           {menuOuvert && (
             <div className="burger-panel">
-              {LIENS.map((l) => (
-                <Link key={l.to} to={l.to} onClick={() => setMenuOuvert(false)}>
-                  {l.label}
-                </Link>
-              ))}
+              {LIENS.map((l) => {
+                const Icon = l.icon;
+                return (
+                  <NavLink 
+                    key={l.to} 
+                    to={l.to} 
+                    onClick={() => setMenuOuvert(false)} 
+                    className={({ isActive }) => isActive ? "burger-link active" : "burger-link"}
+                  >
+                    <Icon size={20} strokeWidth={1.8} style={{ marginRight: '10px' }} />
+                    {l.label}
+                    {l.label === 'Notification' && nombreNotifications > 0 && (
+                      <span className="badge-notification-mobile">{nombreNotifications}</span>
+                    )}
+                  </NavLink>
+                )
+              })}
             </div>
           )}
         </div>
@@ -101,7 +153,6 @@ function NavbarAdmin() {
         </div>
       </nav>
 
-      {/* --- POPUP DE CONFIRMATION DE DÉCONNEXION --- */}
       {modaleDeconnexion && (
         <div className="modal-overlay" onClick={() => setModaleDeconnexion(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>

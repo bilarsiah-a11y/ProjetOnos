@@ -21,12 +21,6 @@
   margin: 0 0 10px 0;
 }
 
-.annuaire-sous-titre {
-  font-size: 1.05rem;
-  color: #52526b;
-  margin: 0;
-}
-
 /* =========================================================
    CONTENEUR DE LA LISTE
    ========================================================= */
@@ -80,10 +74,12 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
+/* --- CARTE HORIZONTALE MAIS CENTRÉE --- */
 .liste-carte {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center; /* <-- C'est ce qui centre le contenu dans la carte */
   background: #ffffff;
   border-radius: 16px;
   padding: 20px;
@@ -126,39 +122,46 @@
 .liste-infos {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  width: 100%;
+  gap: 4px;
   min-width: 0;
+  align-items: center; /* <-- Centre le texte à l'intérieur du bloc infos */
+  text-align: center;  /* <-- Centre le texte */
 }
 
+/* Nouveau style pour le nom et prénom */
 .liste-nom {
   margin: 0;
   font-size: 1.15rem;
   font-weight: 800;
   color: #1e1b4b;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+/* Nouveau style pour le titre (Docteur...) */
+.liste-titre {
+  font-size: 0.85rem;
+  color: #52526b;
+  margin-bottom: 4px;
+  font-weight: 500;
 }
 
 .liste-badge {
   display: inline-block;
-  align-self: flex-start;
   background: #f5f4fb;
   color: #5b4bdb;
   padding: 4px 10px;
   border-radius: 99px;
   font-size: 0.75rem;
   font-weight: 600;
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 .liste-adresse,
 .liste-contact {
   color: #52526b;
   font-size: 0.85rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.3;
 }
 
 .liste-infos a {
@@ -174,7 +177,6 @@
 /* --- BOUTON RDV --- */
 .liste-rdv-btn {
   margin-top: 10px;
-  align-self: flex-start;
   border: none;
   border-radius: 99px;
   padding: 8px 16px;
@@ -214,6 +216,7 @@
   font-size: 0.95rem;
   font-weight: 500;
   margin: 0 0 20px;
+  text-align: center;
 }
 
 /* =========================================================
@@ -228,21 +231,14 @@
 @media (max-width: 600px) {
   .liste-carte {
     flex-direction: column;
-    text-align: center;
+    padding: 24px 16px;
+    gap: 14px;
   }
-
-  .liste-badge,
-  .liste-rdv-btn {
-    align-self: center;
-  }
-
-  .liste-nom,
-  .liste-adresse,
-  .liste-contact {
+  
+  .liste-nom {
     white-space: normal;
   }
 }
-
 
 /* --- BOUTON GÉOLOCALISATION --- */
 .liste-geo-btn {
@@ -281,7 +277,11 @@
   font-size: 0.9rem;
   font-weight: 600;
   margin-bottom: 20px;
-  display: inline-block;
+  display: block;
+  text-align: center;
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* --- POPUP (MODAL) --- */

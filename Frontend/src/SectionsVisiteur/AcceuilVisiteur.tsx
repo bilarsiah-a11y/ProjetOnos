@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api, urlImage } from '../services/api'
@@ -33,7 +32,7 @@ function AcceuilVisiteur() {
   return (
     <div className="acc-full">
     
-      {/* ===== Intro & Engagement (Fusionnés) ===== */}
+      {/* ===== Intro & Engagement ===== */}
       <section className="acc-section acc-intro-section">
         <div className="acc-inner acc-centre">
           <h1 className="acc-intro-titre">
@@ -107,7 +106,7 @@ function AcceuilVisiteur() {
           </h2>
           <p className="acc-sous-titre">
             Accédez rapidement aux services et informations dont vous avez besoin
-            Trouvez le  dentiste près de chez vous . 
+            Trouvez le dentiste près de chez vous . 
             ONOS réunit les dentistes de Madagascar dans un annuaire simple à consulter,
             avec leurs coordonnées et leur domaine d'exercice.
           </p>
@@ -128,28 +127,37 @@ function AcceuilVisiteur() {
           ) : actualites.length === 0 ? (
             <p className="vis-vide">Aucune actualité pour le moment.</p>
           ) : (
-            <div className="vis-grille">
+            <div className="acc-actu-grille">
               {actualites.map((a) => {
                 const img = urlImage(a.image)
                 const complete = ouverte === a.id
                 return (
-                  <article key={a.id} className="vis-carte acc-actu">
-                    {img && <img className="acc-actu-image" src={img} alt={a.titre} />}
-                    <span className="acc-actu-date">{formaterDate(a.created_at)}</span>
-                    <h3>{a.titre}</h3>
-                    <p>
-                      {complete || a.contenu.length <= 140
-                        ? a.contenu
-                        : `${a.contenu.slice(0, 140)}...`}
-                    </p>
-                    {a.contenu.length > 140 && (
-                      <button
-                        className="acc-actu-lien"
-                        onClick={() => setOuverte(complete ? null : a.id)}
-                      >
-                        {complete ? 'Réduire' : 'Lire la suite'}
-                      </button>
-                    )}
+                  <article key={a.id} className="acc-actu-carte">
+                    <div className="acc-actu-image-zone">
+                      {img ? (
+                        <img className="acc-actu-img" src={img} alt={a.titre} />
+                      ) : (
+                        <div className="acc-actu-img-vide">📰</div>
+                      )}
+                    </div>
+
+                    <div className="acc-actu-contenu">
+                      <span className="acc-actu-date">{formaterDate(a.created_at)}</span>
+                      <h3 className="acc-actu-titre">{a.titre}</h3>
+                      <p className="acc-actu-texte">
+                        {complete || a.contenu.length <= 140
+                          ? a.contenu
+                          : `${a.contenu.slice(0, 140)}...`}
+                      </p>
+                      {a.contenu.length > 140 && (
+                        <button
+                          className="acc-actu-btn"
+                          onClick={() => setOuverte(complete ? null : a.id)}
+                        >
+                          {complete ? 'Réduire' : 'Lire la suite'}
+                        </button>
+                      )}
+                    </div>
                   </article>
                 )
               })}

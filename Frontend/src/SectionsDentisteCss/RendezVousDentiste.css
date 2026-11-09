@@ -4,7 +4,7 @@
 
 /* 1. Titre et Badge */
 .dent-titre {
-  font-size: 1.25rem; /* Taille identique à l'accueil */
+  font-size: 1.25rem; 
   font-weight: 700;
   color: #4c1d95; 
   margin-bottom: 8px;
@@ -13,21 +13,21 @@
 .dent-carte h2 { 
   display: flex; 
   align-items: center; 
-  gap: 12px; 
+  gap: 10px; 
   flex-wrap: wrap; 
-  font-size: 1.15rem;
+  font-size: 1.1rem; /* Réduit */
   color: #1f2937;
-  margin-bottom: 20px;
-  padding-bottom: 12px;
+  margin-bottom: 16px; /* Réduit */
+  padding-bottom: 10px;
   border-bottom: 2px solid #f3f4f6;
 }
 
 .rv-badge {
-  background: linear-gradient(135deg, #f59e0b, #ea580c); /* Dégradé Orange */
+  background: linear-gradient(135deg, #f59e0b, #ea580c); 
   color: #fff; 
-  font-size: .75rem; 
+  font-size: .7rem; /* Réduit */
   font-weight: 700;
-  padding: 4px 12px; 
+  padding: 3px 10px; /* Réduit */
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
   letter-spacing: 0.5px;
@@ -38,25 +38,18 @@
 .rv-option { 
   display: flex; 
   align-items: center; 
-  gap: 10px; 
+  gap: 8px; 
   color: #4b5563; 
-  margin-bottom: 20px; 
+  margin-bottom: 16px; /* Réduit */
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 0.85rem; /* Réduit pour ressembler à la navbar */
 }
 
 .rv-option input[type="checkbox"] {
-  accent-color: #7c3aed; /* Violet pour la case à cocher */
-  width: 18px;
-  height: 18px;
+  accent-color: #7c3aed; 
+  width: 16px; /* Réduit */
+  height: 16px;
   cursor: pointer;
-}
-
-.rv-aide { 
-  color: #6b7280; 
-  font-size: .9rem; 
-  margin: 0 0 20px; 
-  line-height: 1.5;
 }
 
 /* 3. Liste des rendez-vous */
@@ -66,47 +59,30 @@
   margin: 0; 
   display: flex; 
   flex-direction: column; 
-  gap: 16px; 
+  gap: 10px; /* Réduit l'espace entre les cartes */
 }
 
 .rv-rdv {
   display: grid; 
-  gap: 16px; 
+  gap: 12px; 
   align-items: center; 
-  padding: 20px;
+  padding: 10px 16px; /* Réduit la hauteur de la carte */
   background: #fff;
   border: 1px solid #f3f4f6; 
-  border-radius: 12px; 
+  border-radius: 10px; /* Un peu moins arrondi pour le style compact */
   color: #333;
-  grid-template-columns: minmax(140px, 1fr) minmax(180px, 2fr) auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  grid-template-columns: minmax(130px, 1fr) minmax(160px, 2fr) auto;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
-  overflow: hidden;
 }
 
-/* Effet de bordure colorée à gauche selon le statut */
-.rv-rdv::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 6px;
-}
-
-.rv-rdv.rv-en_attente::before { background: #f59e0b; } /* Orange */
-.rv-rdv.rv-confirme::before { background: #10b981; } /* Vert */
-.rv-rdv.rv-annule::before { background: #9ca3af; } /* Gris */
-
-/* Effet au survol */
 .rv-rdv:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(109, 40, 217, 0.08);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.06);
 }
 
 .rv-rdv.rv-annule { 
-  opacity: .65; 
+  opacity: .6; 
   background: #fafafa;
 }
 .rv-rdv.rv-annule .rv-quand { text-decoration: line-through; }
@@ -114,31 +90,32 @@
 .rv-quand { 
   display: flex; 
   flex-direction: column; 
-  gap: 4px; 
+  gap: 2px; 
   text-transform: capitalize; 
 }
 
 .rv-quand strong {
-  font-size: 0.95rem;
-  color: #374151;
+  font-size: 0.85rem; /* Réduit */
+  color: #4b5563;
 }
 
 .rv-heure { 
-  font-size: 1.4rem; 
+  font-size: 1.15rem; /* Réduit pour être plus discret */
   font-weight: 800; 
   color: #5b4bdb; 
-  letter-spacing: -0.5px;
+  letter-spacing: -0.3px;
 }
 
 .rv-patient { 
   display: flex; 
   flex-direction: column; 
-  gap: 4px; 
+  gap: 2px; 
   word-break: break-word; 
 }
 
 .rv-patient strong {
-  font-size: 1.05rem;
+  font-size: 0.95rem; /* Réduit pour ressembler à la navbar */
+  font-weight: 600;
   color: #1f2937;
 }
 
@@ -146,6 +123,7 @@
   color: #7c3aed; 
   text-decoration: none; 
   font-weight: 500;
+  font-size: 0.85rem;
   transition: color 0.2s;
 }
 
@@ -156,33 +134,33 @@
 
 .rv-patient span { 
   color: #6b7280; 
-  font-size: .9rem; 
+  font-size: .8rem; 
 }
 
 .rv-motif { 
   font-style: italic; 
   color: #4b5563;
   background: #f9fafb;
-  padding: 4px 8px;
-  border-radius: 6px;
+  padding: 2px 6px; 
+  border-radius: 4px;
   display: inline-block;
-  margin-top: 4px;
-  font-size: 0.85rem;
+  margin-top: 2px;
+  font-size: 0.75rem; /* Très petit et discret */
 }
 
 /* 4. Actions et Statuts */
 .rv-actions { 
   display: flex; 
   flex-wrap: wrap; 
-  gap: 10px; 
+  gap: 6px; 
   align-items: center; 
   justify-content: flex-end; 
 }
 
 .rv-statut { 
-  font-size: .75rem; 
+  font-size: .65rem; /* Réduit */
   font-weight: 700; 
-  padding: 4px 12px; 
+  padding: 3px 8px; /* Réduit */
   border-radius: 20px; 
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -192,25 +170,26 @@
 .rv-statut-confirme { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
 .rv-statut-annule { background: #f3f4f6; color: #4b5563; border: 1px solid #e5e7eb; }
 
-/* Boutons d'action spécifiques */
+/* Boutons d'action spécifiques (Style compact) */
 .rv-actions .dent-btn { 
-  padding: 8px 16px; 
-  font-size: 0.85rem;
-  border-radius: 8px;
+  padding: 5px 12px; /* BOUTONS PLUS PETITS */
+  font-size: 0.75rem; /* Texte plus petit */
+  border-radius: 6px;
   font-weight: 600;
   transition: all 0.2s ease;
+  margin: 0;
 }
 
 .rv-actions .dent-btn:not(.dent-btn-danger) {
-  background: linear-gradient(135deg, #10b981, #059669); /* Dégradé Vert */
-  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  background: linear-gradient(135deg, #10b981, #059669); 
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
   border: none;
   color: white;
 }
 
 .rv-actions .dent-btn:not(.dent-btn-danger):hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4);
 }
 
 .rv-actions .dent-btn-danger {
@@ -227,23 +206,24 @@
 /* 5. Section Horaires */
 .rv-duree { 
   max-width: 260px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .rv-duree label {
   display: block;
   font-weight: 600;
   color: #374151;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
 }
 
 .rv-duree select {
   width: 100%;
-  padding: 10px 12px;
+  padding: 8px 12px;
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font: inherit;
+  font-size: 0.9rem;
   color: #1f2937;
   background: #fff;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -258,9 +238,9 @@
 .rv-jour {
   display: grid; 
   gap: 12px; 
-  padding: 16px 0; 
+  padding: 14px 0; 
   border-top: 1px solid #f3f4f6;
-  grid-template-columns: 120px 1fr; 
+  grid-template-columns: 100px 1fr; 
   align-items: start; 
   color: #333;
 }
@@ -268,41 +248,41 @@
 .rv-jour-nom { 
   font-weight: 700; 
   color: #4b5563;
-  padding-top: 10px; 
-  font-size: 0.95rem;
+  padding-top: 8px; 
+  font-size: 0.9rem;
 }
 
 .rv-plages { 
   display: flex; 
   flex-direction: column; 
-  gap: 12px; 
+  gap: 10px; 
   align-items: flex-start; 
 }
 
 .rv-ferme { 
   color: #9ca3af; 
-  padding-top: 10px; 
+  padding-top: 8px; 
   font-style: italic;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .rv-plage { 
   display: flex; 
   align-items: center; 
-  gap: 10px; 
+  gap: 8px; 
   flex-wrap: wrap;
   background: #f9fafb;
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 8px;
   border: 1px solid #f3f4f6;
 }
 
-/* Modernisation des Selecteurs d'heure */
 .rv-heure-select {
-  padding: 8px 12px; 
+  padding: 6px 10px; 
   border: 1px solid #d1d5db; 
-  border-radius: 8px;
+  border-radius: 6px;
   font: inherit; 
+  font-size: 0.85rem;
   color: #1f2937; 
   background: #fff;
   cursor: pointer;
@@ -318,6 +298,7 @@
 .rv-plage span {
   color: #6b7280;
   font-weight: 500;
+  font-size: 0.85rem;
 }
 
 .rv-retirer { 
@@ -325,9 +306,9 @@
   border: none; 
   color: #ef4444; 
   cursor: pointer; 
-  font-size: 1rem; 
-  width: 28px;
-  height: 28px;
+  font-size: 0.85rem; 
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -345,8 +326,9 @@
   color: #7c3aed; 
   cursor: pointer; 
   font: inherit; 
+  font-size: 0.85rem;
   font-weight: 600;
-  padding: 4px 0; 
+  padding: 2px 0; 
   transition: color 0.2s;
   display: flex;
   align-items: center;
@@ -361,22 +343,23 @@
 .rv-apercu { 
   margin: 0; 
   color: #6b7280; 
-  font-size: .85rem; 
+  font-size: .8rem; 
   max-width: 100%;
-  background: #f0fdf4; /* Vert très clair pour l'aperçu */
-  padding: 8px 12px;
+  background: #f0fdf4; 
+  padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid #dcfce7;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 /* Bouton d'enregistrement principal */
 .dent-btn {
   background: linear-gradient(135deg, #7c3aed, #2563eb);
   color: white;
-  padding: 12px 24px;
+  padding: 10px 20px;
   border-radius: 8px;
   font-weight: 600;
+  font-size: 0.9rem;
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -399,19 +382,19 @@
 @media (max-width: 768px) {
   .rv-rdv { 
     grid-template-columns: 1fr; 
-    gap: 12px;
+    gap: 10px;
   }
   
   .rv-actions { 
     justify-content: flex-start; 
     border-top: 1px solid #f3f4f6;
-    padding-top: 12px;
+    padding-top: 10px;
     margin-top: 4px;
   }
   
   .rv-jour { 
     grid-template-columns: 1fr; 
-    gap: 8px;
+    gap: 6px;
   }
   
   .rv-jour-nom {
@@ -423,4 +406,90 @@
     width: 100%;
     justify-content: space-between;
   }
+}
+
+/* =========================================
+   MODALE DE CONFIRMATION D'ANNULATION
+   ========================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(2px);
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  width: 90%;
+  max-width: 450px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: #1e1b4b;
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+.modal-content p {
+  color: #52526b;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.modal-btn-annuler, 
+.modal-btn-confirmer {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.modal-btn-annuler {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.modal-btn-annuler:hover {
+  background: #e2e8f0;
+}
+
+.modal-btn-confirmer {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.modal-btn-confirmer:hover {
+  background: #dc2626;
+}
+
+.modal-btn-annuler:disabled,
+.modal-btn-confirmer:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }

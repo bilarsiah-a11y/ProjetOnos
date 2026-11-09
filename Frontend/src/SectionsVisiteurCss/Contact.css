@@ -1,3 +1,11 @@
+/* =========================================================
+   CONTENEUR DE LA PAGE & FOND
+   ========================================================= */
+
+.contact-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
 
 /* =========================================================
    EN-TÊTE
@@ -7,18 +15,22 @@
   margin-bottom: 50px;
 }
 
-/* Titre principal (Style Navbar) */
+/* Titre principal avec un dégradé de texte (Violet vers Bleu) */
 .contact-titre {
-  font-size: 1.8rem; /* Taille réduite pour ressembler à la navbar */
-  font-weight: 700;
-  color: #1e1b4b;
+  font-size: 2rem;
+  font-weight: 800;
   margin: 0 0 12px;
   letter-spacing: -0.5px;
+  
+  /* Création du texte en dégradé */
+  background: linear-gradient(90deg, #4B2E83 0%, #2E5EAA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* Sous-titre (Style Navbar) */
 .contact-sous-titre {
-  font-size: 0.95rem; /* Taille de texte de la navbar */
+  font-size: 1rem;
   color: #52526b;
   line-height: 1.6;
   max-width: 600px;
@@ -27,14 +39,12 @@
 }
 
 /* =========================================================
-   GRILLE DES COORDONNÉES (Centrée, 2 colonnes max)
+   GRILLE DES CARTES
    ========================================================= */
 .contact-grille {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* S'adapte automatiquement */
-  gap: 20px;
-  max-width: 800px; /* Réduit pour centrer les cartes au milieu de la page */
-  margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
 }
 
 /* =========================================================
@@ -42,74 +52,91 @@
    ========================================================= */
 .contact-carte {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  align-items: center; /* Centre verticalement l'icône et le texte */
+  gap: 20px;
   background: #ffffff;
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid #f1f1f5;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 28px;
+  border-radius: 20px; /* Bords un peu plus arrondis */
+  border: 1px solid #ffffff; /* Bordure blanche pour adoucir */
+  box-shadow: 0 8px 30px rgba(75, 46, 131, 0.05); /* Ombre légèrement violacée */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .contact-carte:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(91, 75, 219, 0.08);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(75, 46, 131, 0.12);
+  border-color: #eaddff; /* Petite bordure violette au survol */
 }
 
-/* Icône */
+/* =========================================================
+   ICÔNES (Le fameux mélange Bleu/Violet)
+   ========================================================= */
 .contact-icone {
-  font-size: 1.4rem;
-  background: #f5f4fb;
-  width: 48px;
-  height: 48px;
+  /* Dégradé doux en fond */
+  background: linear-gradient(135deg, #ede9fe 0%, #e0e7ff 100%);
+  width: 54px;
+  height: 54px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 12px;
+  border-radius: 14px;
   flex-shrink: 0;
+  
+  /* Couleur de l'icône SVG (Violet) */
+  color: #5b4bdb; 
 }
 
-/* Texte */
+/* =========================================================
+   TEXTE
+   ========================================================= */
 .contact-texte {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .contact-carte h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: #1e1b4b;
+  color: #1e1b4b; /* Bleu nuit très foncé */
 }
 
 .contact-carte p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: #52526b;
   line-height: 1.5;
 }
 
 .contact-carte a {
-  color: #5b4bdb;
+  color: #2E5EAA; /* Liens en bleu (rappel de la navbar) */
   text-decoration: none;
   font-weight: 600;
+  transition: color 0.2s ease;
 }
 
 .contact-carte a:hover {
+  color: #4B2E83; /* Les liens deviennent violets au survol */
   text-decoration: underline;
 }
 
 /* =========================================================
    RESPONSIVE
    ========================================================= */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .contact-grille {
-    grid-template-columns: 1fr; /* 1 colonne sur mobile */
+    grid-template-columns: 1fr; /* 1 seule colonne sur mobile */
+    gap: 16px;
   }
   
   .contact-carte {
     padding: 20px;
+  }
+  
+  .contact-titre {
+    font-size: 1.6rem;
   }
 }

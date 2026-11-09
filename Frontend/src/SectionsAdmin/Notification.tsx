@@ -1,3 +1,5 @@
+
+
 import { useEffect, useState } from 'react'
 import { api } from '../services/api'
 import type { Demande } from '../types'
@@ -8,20 +10,24 @@ function Notification() {
   const [chargement, setChargement] = useState(true)
   const [erreur, setErreur] = useState('')
   const [enCours, setEnCours] = useState<number | null>(null)
-
-  // État pour gérer la demande sélectionnée à droite
   const [selectionnee, setSelectionnee] = useState<Demande | null>(null)
-  
-  // État pour le motif de refus
   const [motifRefus, setMotifRefus] = useState('')
   const [afficherMotif, setAfficherMotif] = useState(false)
+
+  // --- FONCTION POUR METTRE À JOUR LA NAVBAR ---
+  const mettreAJourBadgeNavbar = (nombre: number) => {
+    // On envoie un événement personnalisé à la Navbar
+    const event = new CustomEvent('update-notifications', { detail: nombre })
+    window.dispatchEvent(event)
+  }
 
   useEffect(() => {
     api
       .get<Demande[]>('/api/admin/demandes')
       .then((data) => {
         setDemandes(data)
-        if (data.length > 0) setSelectionnee(data[0]) // Sélectionne la première par défaut
+        if (data.length > 0) setSelectionnee(data[0])
+        mettreAJourBadgeNavbar(data.length) // <--- Mise à jour au chargement
       })
       .catch((e: Error) => setErreur(e.message))
       .finally(() => setChargement(false))
@@ -39,16 +45,15 @@ function Notification() {
       if (action === 'accepter') {
         await api.patch(`/api/admin/demandes/${demande.id}/accepter`)
       } else {
-        // 👇 On pourrait envoyer le motif à l'API si ton backend le gère :
-        // await api.delete(`/api/admin/demandes/${demande.id}`, { data: { motif: motifRefus } })
         await api.delete(`/api/admin/demandes/${demande.id}`)
       }
 
       const nouvelleListe = demandes.filter((d) => d.id !== demande.id)
       setDemandes(nouvelleListe)
-      
-      // Mettre à jour la sélection
       setSelectionnee(nouvelleListe.length > 0 ? nouvelleListe[0] : null)
+      
+      mettreAJourBadgeNavbar(nouvelleListe.length) // <--- Mise à jour après une action
+
       setAfficherMotif(false)
       setMotifRefus('')
       

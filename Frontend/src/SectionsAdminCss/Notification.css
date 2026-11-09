@@ -1,9 +1,8 @@
-/* =========================================================
-   CONTENEUR PRINCIPAL
-   ========================================================= */
+/* CONTENEUR PRINCIPAL (Centré) */
 .notification-page {
+  max-width: 950px; 
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 16px 20px; 
 }
 
 .notification-header h1 {
@@ -44,19 +43,16 @@
   font-size: 1.05rem;
 }
 
-/* =========================================================
-   LAYOUT EN 2 COLONNES (Gauche / Droite)
-   ========================================================= */
+/* LAYOUT EN 2 COLONNES (Colonne droite rétrécie) */
 .notification-layout {
   display: grid;
-  grid-template-columns: 350px 1fr;
+  /* La colonne de gauche (liste) est plus large, celle de droite (détails) plus étroite */
+  grid-template-columns: 420px 1fr; 
   gap: 24px;
   align-items: start;
 }
 
-/* =========================================================
-   PANNEAU GAUCHE (Liste)
-   ========================================================= */
+/* PANNEAU GAUCHE (Liste) */
 .notification-liste-panneau {
   background: #ffffff;
   border-radius: 16px;
@@ -131,15 +127,16 @@
   text-overflow: ellipsis;
 }
 
-/* =========================================================
+/* 
    PANNEAU DROIT (Détails)
-   ========================================================= */
+    */
 .notification-detail-panneau {
   background: #ffffff;
   border-radius: 16px;
   border: 1px solid #f1f1f5;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-  padding: 30px;
+  padding: 24px; 
+  max-width: 400px; /
 }
 
 .detail-header {
@@ -152,22 +149,23 @@
 }
 
 .detail-avatar {
-  width: 64px;
-  height: 64px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   background: #5b4bdb;
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 1.8rem;
+  flex-shrink: 0;
 }
 
 .detail-header h2 {
   margin: 0 0 4px 0;
   color: #1e1b4b;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
 .detail-header p {
@@ -251,7 +249,7 @@
 }
 
 .detail-actions button {
-  padding: 14px 20px;
+  padding: 12px 16px; /* Boutons un peu moins larges */
   border: none;
   border-radius: 10px;
   font-size: 0.95rem;
@@ -313,7 +311,7 @@
 /* =========================================================
    RESPONSIVE
    ========================================================= */
-@media (max-width: 850px) {
+@media (max-width: 900px) {
   .notification-layout {
     grid-template-columns: 1fr; /* On empile sur mobile */
   }
